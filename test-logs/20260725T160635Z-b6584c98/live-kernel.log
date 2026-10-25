@@ -1,0 +1,19 @@
+[ 3814.610019] waynoway kernel: piix4_smbus 0000:00:14.0: validated legacy ASF resources: I/O 0xb20, GSI 7
+[ 3814.610397] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Controller at 0xb00, revision 0
+[ 3814.610656] waynoway kernel: piix4_smbus 0000:00:14.0: Using register 0x02 for SMBus port selection
+[ 3814.614011] waynoway kernel: ee1004 2-0050: 512 byte EE1004-compliant SPD EEPROM, read-only
+[ 3814.614318] waynoway kernel: i2c i2c-2: Successfully instantiated SPD at 0x50
+[ 3814.614578] waynoway kernel: piix4_smbus 0000:00:14.0: Auxiliary SMBus Host Controller at 0xb20
+[ 3814.614839] waynoway kernel: piix4_smbus 0000:00:14.0: ASF IRQ 7 prepared as level-low shared interrupt
+[ 3814.615151] waynoway kernel: i2c i2c-4: event-driven ASF Host Notify enabled
+[ 3815.504088] waynoway kernel: psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
+[ 3815.544070] waynoway kernel: psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
+[ 3815.544628] waynoway kernel: psmouse serio1: synaptics: Trying to set up SMBus access
+[ 3815.594024] waynoway kernel: rmi4_smbus 4-002c: registering SMbus-connected sensor
+[ 3815.710019] waynoway kernel: rmi4_f01 rmi4-00.fn01: found RMI device, manufacturer: Synaptics, product: TM3471-030, fw id: 3942087
+[ 3815.787210] waynoway kernel: input: Synaptics TM3471-030 as /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/input/input25
+[ 3815.798039] waynoway kernel: serio: RMI4 PS/2 pass-through port at rmi4-00.fn03
+[ 3815.907017] waynoway kernel: psmouse serio4: trackpoint: Elan TrackPoint firmware: 0x12, buttons: 3/3
+[ 3815.933034] waynoway kernel: input: TPPS/2 Elan TrackPoint as /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/rmi4-00.fn03/serio4/input/input26
+[ 3815.934025] waynoway kernel: rmi4_f03 rmi4-00.fn03: rmi_f03_pt_write: Failed to write to F03 TX register (-6).
+[ 3815.934401] waynoway kernel: psmouse serio4: Failed to enable mouse on rmi4-00.fn03/serio0

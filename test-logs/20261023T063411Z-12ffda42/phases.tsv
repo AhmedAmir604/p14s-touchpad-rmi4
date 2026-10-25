@@ -1,0 +1,16 @@
+70.16	probe-settle	start
+73.22	probe-settle	end
+73.27	idle-hands-off	start
+134.28	idle-hands-off	end
+176.25	one-finger-motion	start
+191.51	one-finger-motion	end
+198.53	two-finger-scroll	start
+213.79	two-finger-scroll	end
+223.58	clickpad-press	start
+238.85	clickpad-press	end
+267.38	upper-left	start
+282.65	upper-left	end
+284.26	upper-middle	start
+299.53	upper-middle	end
+299.53	upper-right	start
+314.80	upper-right	end

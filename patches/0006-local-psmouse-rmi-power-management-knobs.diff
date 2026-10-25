@@ -1,0 +1,48 @@
+--- a/drivers/input/mouse/synaptics.c	2026-10-23 11:59:27.776971170 +0500
++++ b/drivers/input/mouse/synaptics.c	2026-10-23 11:59:27.789696066 +0500
+@@ -1795,6 +1795,17 @@
+ module_param_named(synaptics_intertouch, synaptics_intertouch, int, 0644);
+ MODULE_PARM_DESC(synaptics_intertouch, "Use a secondary bus for the Synaptics device.");
+ 
++/*
++ * Local experiment knobs (P14s Gen 2a): F01 power management passed to
++ * rmi_core through pdata. doze_interval 0 keeps the per-PnP-ID value below.
++ */
++static bool synaptics_rmi_nosleep;
++module_param(synaptics_rmi_nosleep, bool, 0644);
++MODULE_PARM_DESC(synaptics_rmi_nosleep, "Set the F01 NoSleep bit on RMI4 SMBus companions (experiment)");
++static unsigned char synaptics_rmi_doze_interval;
++module_param(synaptics_rmi_doze_interval, byte, 0644);
++MODULE_PARM_DESC(synaptics_rmi_doze_interval, "Override the F01 doze interval on RMI4 SMBus companions, 0 = per-PnP-ID default (experiment)");
++
+ static int synaptics_create_intertouch(struct psmouse *psmouse,
+ 				       struct synaptics_device_info *info,
+ 				       bool leave_breadcrumbs)
+@@ -1805,10 +1816,12 @@
+ 	const struct rmi_device_platform_data pdata = {
+ 		.reset_delay_ms = 30,
+ 		.power_management = {
+-			.doze_interval =
+-				psmouse_matches_pnp_id(psmouse,
+-						       rmi_doze_interval_pnp_ids) ?
+-					6 : 0,
++			.nosleep = synaptics_rmi_nosleep ?
++				RMI_REG_STATE_ON : RMI_REG_STATE_DEFAULT,
++			.doze_interval = synaptics_rmi_doze_interval ?:
++				(psmouse_matches_pnp_id(psmouse,
++							rmi_doze_interval_pnp_ids) ?
++					6 : 0),
+ 		},
+ 		.sensor_pdata = {
+ 			.sensor_type = rmi_sensor_touchpad,
+@@ -1827,6 +1840,10 @@
+ 		.flags = I2C_CLIENT_HOST_NOTIFY,
+ 	};
+ 
++	psmouse_info(psmouse, "intertouch pdata: nosleep=%d doze_interval=%u\n",
++		     pdata.power_management.nosleep == RMI_REG_STATE_ON,
++		     pdata.power_management.doze_interval);
++
+ 	return psmouse_smbus_init(psmouse, &intertouch_board,
+ 				  &pdata, sizeof(pdata), true,
+ 				  leave_breadcrumbs);

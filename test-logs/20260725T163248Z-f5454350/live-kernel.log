@@ -1,0 +1,23 @@
+[   80.735021] waynoway kernel: i2c_piix4: loading out-of-tree module taints kernel.
+[   80.735111] waynoway kernel: i2c_piix4: module verification failed: signature and/or required key missing - tainting kernel
+[   80.737013] waynoway kernel: piix4_smbus 0000:00:14.0: validated legacy ASF resources: I/O 0xb20, GSI 7
+[   80.737382] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Controller at 0xb00, revision 0
+[   80.737724] waynoway kernel: piix4_smbus 0000:00:14.0: Using register 0x02 for SMBus port selection
+[   80.740019] waynoway kernel: ee1004 2-0050: 512 byte EE1004-compliant SPD EEPROM, read-only
+[   80.740456] waynoway kernel: i2c i2c-2: Successfully instantiated SPD at 0x50
+[   80.740726] waynoway kernel: piix4_smbus 0000:00:14.0: Auxiliary SMBus Host Controller at 0xb20
+[   80.740995] waynoway kernel: piix4_smbus 0000:00:14.0: ASF IRQ 7 prepared as level-low shared interrupt
+[   80.741314] waynoway kernel: i2c i2c-4: event-driven ASF Host Notify enabled
+[   81.615049] waynoway kernel: psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
+[   81.649042] waynoway kernel: psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
+[   81.649637] waynoway kernel: psmouse serio1: synaptics: Trying to set up SMBus access
+[   81.699021] waynoway kernel: rmi4_smbus 4-002c: registering SMbus-connected sensor
+[   81.817045] waynoway kernel: rmi4_f01 rmi4-00.fn01: found RMI device, manufacturer: Synaptics, product: TM3471-030, fw id: 3942087
+[   81.896013] waynoway kernel: input: Synaptics TM3471-030 as /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/input/input22
+[   81.907021] waynoway kernel: serio: RMI4 PS/2 pass-through port at rmi4-00.fn03
+[   81.986022] waynoway kernel: psmouse serio3: trackpoint: Elan TrackPoint firmware: 0x12, buttons: 3/3
+[   82.013020] waynoway kernel: input: TPPS/2 Elan TrackPoint as /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/rmi4-00.fn03/serio3/input/input23
+[   82.528046] waynoway kernel: i2c i2c-4: RMI4 DeviceError/-ENXIO: rw=R cmd=07 size=5 len=0 first=00 host=06 control=14 asf=00 slave=00 bank=01 sem=01
+[   82.528631] waynoway kernel: rmi4_physical rmi4-00: Failed to read irqs, code=-6
+[   82.638048] waynoway kernel: i2c i2c-4: ASF bus collision; disabling the auxiliary bus
+[   82.638630] waynoway kernel: rmi4_f12 rmi4-00.fn12: Failed to read object data. Code: -5.

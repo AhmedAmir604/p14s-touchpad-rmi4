@@ -1,0 +1,45 @@
+#!/bin/bash
+# touchpad-check: is the pad on RMI4/SMBus, and are the DKMS modules the
+# ones loaded?  Run after every kernel update.  Exit 0 only when all good.
+set -u
+ok=1
+name=p14s-touchpad
+rel=$(uname -r)
+echo "kernel: $rel"
+stale_initrd=0
+for m in i2c_piix4 rmi_smbus psmouse; do
+	# modprobe's resolution for this name (depmod prefers /updates); the
+	# file is i2c-piix4.ko*, so do not build the name from the module name.
+	file=$(modinfo -n "$m" 2>/dev/null || true)
+	if [[ $file != */updates/* ]]; then
+		echo "  $m: modprobe resolves to ${file:-nothing}, not a DKMS copy under /updates (dkms status: $(dkms status "$name" 2>/dev/null | tr '\n' ' '))"
+		ok=0
+		continue
+	fi
+	want=$(modinfo -F srcversion "$file")
+	if [[ -r /sys/module/$m/srcversion ]]; then
+		have=$(< "/sys/module/$m/srcversion")
+		if [[ $have == "$want" ]]; then
+			echo "  $m: loaded from DKMS copy ($have)"
+		else
+			echo "  $m: LOADED MODULE IS NOT THE DKMS COPY (loaded $have, dkms $want)"
+			ok=0
+			stale_initrd=1
+		fi
+	else
+		echo "  $m: not loaded"
+		ok=0
+	fi
+done
+if grep -q 'rmi4-' <(grep -A4 'Synaptics' /proc/bus/input/devices | grep Phys); then
+	echo "  touchpad: RMI4/SMBus ($(grep -A1 'rmi4_f01\|Synaptics TM' /proc/bus/input/devices | grep -o 'Name=.*' | head -n 1))"
+else
+	echo "  touchpad: NOT on RMI4 ($(grep 'Name=.*Synaptics' /proc/bus/input/devices | head -n 1)); PS/2 fallback"
+	ok=0
+fi
+echo "  Host Notify: $(journalctl -k -b --no-pager 2>/dev/null | grep -c 'SMBus Host Notify enabled via ASF') enable line(s) this boot"
+echo "  collisions this boot: $(journalctl -k -b --no-pager 2>/dev/null | grep -c 'lost the bus') retried, $(journalctl -k -b --no-pager 2>/dev/null | grep -c 'still failing') still failing, $(journalctl -k -b --no-pager 2>/dev/null | grep -c 'Failed to read') RMI read failures"
+if (( stale_initrd )); then
+	echo "  hint: a module loaded from the initramfs is the stock copy; run 'sudo update-initramfs -u' and reboot"
+fi
+(( ok )) && echo "OK" || { echo "NOT OK"; exit 1; }

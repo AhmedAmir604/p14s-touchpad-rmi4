@@ -1,0 +1,67 @@
+Run 20261023T063411Z-12ffda42 (exp2)
+This script will perform exactly one patched load and then restore stock.
+Removing stock psmouse and i2c_piix4...
+Loading the local module's i2c-smbus dependency...
+Loading event-driven module...
+Loading patched rmi_smbus and psmouse...
+Waiting for the RMI4 touchpad and F03 TrackPoint input devices...
+probe-settle: 3s remaining
+Capturing /dev/input/event7: Synaptics TM3471-030
+Capturing /dev/input/event8: TPPS/2 Elan TrackPoint
+
+HANDS OFF the touchpad and upper buttons for the idle baseline.
+idle-hands-off: 60s remaining
+idle-hands-off: 55s remaining
+idle-hands-off: 50s remaining
+idle-hands-off: 45s remaining
+idle-hands-off: 40s remaining
+idle-hands-off: 35s remaining
+idle-hands-off: 30s remaining
+idle-hands-off: 25s remaining
+idle-hands-off: 20s remaining
+idle-hands-off: 15s remaining
+idle-hands-off: 10s remaining
+idle-hands-off: 5s remaining
+
+Next: move one finger continuously around the touchpad for 15 seconds.
+Waiting for ENTER while health monitoring continues...
+one-finger-motion: 15s remaining
+one-finger-motion: 10s remaining
+one-finger-motion: 5s remaining
+
+Next: perform continuous two-finger scrolling for 15 seconds.
+Waiting for ENTER while health monitoring continues...
+two-finger-scroll: 15s remaining
+two-finger-scroll: 10s remaining
+two-finger-scroll: 5s remaining
+
+Next: press and release the lower clickpad five times over 15 seconds.
+Waiting for ENTER while health monitoring continues...
+clickpad-press: 15s remaining
+clickpad-press: 10s remaining
+clickpad-press: 5s remaining
+
+Next: press the UPPER LEFT physical button five times over 15 seconds.
+Waiting for ENTER while health monitoring continues...
+upper-left: 15s remaining
+upper-left: 10s remaining
+upper-left: 5s remaining
+
+Next: press the UPPER MIDDLE physical button five times over 15 seconds.
+Waiting for ENTER while health monitoring continues...
+upper-middle: 15s remaining
+upper-middle: 10s remaining
+upper-middle: 5s remaining
+
+Next: press the UPPER RIGHT physical button five times over 15 seconds.
+Waiting for ENTER while health monitoring continues...
+upper-right: 15s remaining
+upper-right: 10s remaining
+upper-right: 5s remaining
+
+Next: s2idle suspend for 30s via rtcwake. HANDS OFF; the machine wakes by itself.
+Waiting for ENTER while health monitoring continues...
+Restoring the stock PS/2 path...
+Stock modules, SynPS/2 touchpad, and TrackPoint are present.
+Logs: /home/report-israel/kernelhack/test-logs/20261023T063411Z-12ffda42
+A reboot is still required to restore IRQ 7's original route.

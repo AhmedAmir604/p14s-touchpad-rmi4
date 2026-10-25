@@ -1,0 +1,2 @@
+1c86171ebe9aea78c77028a8a60ab53ed128451ba286bae7e62a2a07bc80bcf1  /home/report-israel/kernelhack/i2c-piix4.c
+c261265e6e933b88f0a474214c644b795c2867f69093521a51807bbdce16f52a  /home/report-israel/kernelhack/i2c-piix4.ko

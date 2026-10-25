@@ -1,0 +1,28 @@
+filename:       /home/report-israel/kernelhack/i2c-piix4.ko
+license:        GPL
+description:    PIIX4 SMBus driver
+author:         Philip Edelbrock <phil@netroedge.com>
+author:         Frodo Looijaard <frodol@dds.nl>
+srcversion:     49B543B4BC16A533773F07E
+alias:          pci:v00001166d00000408sv*sd*bc*sc*i*
+alias:          pci:v00001166d00000205sv*sd*bc*sc*i*
+alias:          pci:v00001166d00000203sv*sd*bc*sc*i*
+alias:          pci:v00001166d00000201sv*sd*bc*sc*i*
+alias:          pci:v00001166d00000200sv*sd*bc*sc*i*
+alias:          pci:v00001D94d0000790Bsv*sd*bc*sc*i*
+alias:          pci:v00001022d0000790Bsv*sd*bc*sc*i*
+alias:          pci:v00001022d0000780Bsv*sd*bc*sc*i*
+alias:          pci:v00001002d00004385sv*sd*bc*sc*i*
+alias:          pci:v00001002d00004372sv*sd*bc*sc*i*
+alias:          pci:v00001002d00004363sv*sd*bc*sc*i*
+alias:          pci:v00001002d00004353sv*sd*bc*sc*i*
+alias:          pci:v00001055d00009463sv*sd*bc*sc*i*
+alias:          pci:v00008086d0000719Bsv*sd*bc*sc*i*
+alias:          pci:v00008086d00007113sv*sd*bc*sc*i*
+depends:        i2c-smbus
+name:           i2c_piix4
+retpoline:      Y
+vermagic:       7.0.0-27-generic SMP preempt mod_unload modversions 
+parm:           force:Forcibly enable the PIIX4. DANGEROUS! (int)
+parm:           force_addr:Forcibly enable the PIIX4 at the given address. EXTREMELY DANGEROUS! (int)
+parm:           asf_host_notify:Enable validated AMD ASF Host Notify support on the auxiliary bus (bool)

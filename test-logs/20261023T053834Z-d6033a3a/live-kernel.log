@@ -1,0 +1,23 @@
+[   74.711016] waynoway kernel: i2c_piix4: loading out-of-tree module taints kernel.
+[   74.711087] waynoway kernel: i2c_piix4: module verification failed: signature and/or required key missing - tainting kernel
+[   74.711116] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Controller at 0xb00, revision 0
+[   74.711389] waynoway kernel: piix4_smbus 0000:00:14.0: Using register 0x02 for SMBus port selection
+[   74.714012] waynoway kernel: ee1004 2-0050: 512 byte EE1004-compliant SPD EEPROM, read-only
+[   74.714304] waynoway kernel: i2c i2c-2: Successfully instantiated SPD at 0x50
+[   74.714566] waynoway kernel: piix4_smbus 0000:00:14.0: Auxiliary SMBus Host Controller at 0xb20
+[   74.714826] waynoway kernel: piix4_smbus 0000:00:14.0: ASF SMBus slave (SMB0001) at 0x0b20, GSI IRQ 7 (level/low)
+[   74.715047] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Notify enabled via ASF (IRQ 7)
+[   74.962070] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Controller at 0xb00, revision 0
+[   74.962422] waynoway kernel: piix4_smbus 0000:00:14.0: Using register 0x02 for SMBus port selection
+[   74.965008] waynoway kernel: ee1004 2-0050: 512 byte EE1004-compliant SPD EEPROM, read-only
+[   74.965269] waynoway kernel: i2c i2c-2: Successfully instantiated SPD at 0x50
+[   74.965481] waynoway kernel: piix4_smbus 0000:00:14.0: Auxiliary SMBus Host Controller at 0xb20
+[   75.956363] waynoway kernel: psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
+[   75.995314] waynoway kernel: psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
+[   75.995845] waynoway kernel: psmouse serio1: synaptics: Trying to set up SMBus access
+[   75.998042] waynoway kernel: psmouse serio1: synaptics: SMbus companion is not ready yet
+[   76.066363] waynoway kernel: psmouse serio1: synaptics: Touchpad model: 1, fw: 10.32, id: 0x1e2a1, caps: 0xf01ea3/0x940300/0x12e800/0x500000, board id: 3471, fw id: 3942087
+[   76.066895] waynoway kernel: psmouse serio1: synaptics: serio: Synaptics pass-through port at isa0060/serio1/input0
+[   76.111043] waynoway kernel: input: SynPS/2 Synaptics TouchPad as /devices/platform/i8042/serio1/input/input21
+[   76.639041] waynoway kernel: psmouse serio3: trackpoint: Elan TrackPoint firmware: 0x12, buttons: 3/3
+[   76.866055] waynoway kernel: input: TPPS/2 Elan TrackPoint as /devices/platform/i8042/serio1/serio3/input/input22

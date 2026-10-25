@@ -1,0 +1,12 @@
+# Kbuild outputs (root tree and exp2/)
+*.ko
+*.o
+*.mod
+*.mod.c
+*.cmd
+.*.cmd
+.module-common.o
+Module.symvers
+modules.order
+*.orig.bak
+*.rej

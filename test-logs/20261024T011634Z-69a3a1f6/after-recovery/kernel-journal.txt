@@ -1,0 +1,1505 @@
+[    0.939295] waynoway kernel: Linux version 7.0.0-38-generic (buildd@lcy02-amd64-070) (x86_64-linux-gnu-gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0, GNU ld (GNU Binutils for Ubuntu) 2.46) #38-Ubuntu SMP PREEMPT_DYNAMIC Fri Sep  4 09:10:14 UTC 2026 (Ubuntu 7.0.0-38.38-generic 7.0.14)
+[    0.939356] waynoway kernel: Command line: BOOT_IMAGE=/vmlinuz-7.0.0-38-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro quiet splash crashkernel=2G-4G:320M,4G-32G:512M,32G-64G:1024M,64G-128G:2048M,128G-:4096M
+[    0.939367] waynoway kernel: KERNEL supported cpus:
+[    0.939375] waynoway kernel:   Intel GenuineIntel
+[    0.939381] waynoway kernel:   AMD AuthenticAMD
+[    0.939389] waynoway kernel:   Hygon HygonGenuine
+[    0.939398] waynoway kernel:   Centaur CentaurHauls
+[    0.939406] waynoway kernel:   zhaoxin   Shanghai  
+[    0.939411] waynoway kernel: BIOS-provided physical RAM map:
+[    0.939419] waynoway kernel: BIOS-e820: [mem 0x0000000000000000-0x000000000009efff]  System RAM
+[    0.939428] waynoway kernel: BIOS-e820: [mem 0x000000000009f000-0x000000000009ffff]  device reserved
+[    0.939436] waynoway kernel: BIOS-e820: [gap 0x00000000000a0000-0x00000000000dffff]
+[    0.939445] waynoway kernel: BIOS-e820: [mem 0x00000000000e0000-0x00000000000fffff]  device reserved
+[    0.939453] waynoway kernel: BIOS-e820: [mem 0x0000000000100000-0x0000000009bfffff]  System RAM
+[    0.939463] waynoway kernel: BIOS-e820: [mem 0x0000000009c00000-0x0000000009da0fff]  device reserved
+[    0.939471] waynoway kernel: BIOS-e820: [mem 0x0000000009da1000-0x0000000009efffff]  System RAM
+[    0.939477] waynoway kernel: BIOS-e820: [mem 0x0000000009f00000-0x0000000009f0efff]  ACPI NVS
+[    0.939483] waynoway kernel: BIOS-e820: [mem 0x0000000009f0f000-0x00000000c4b7dfff]  System RAM
+[    0.939491] waynoway kernel: BIOS-e820: [mem 0x00000000c4b7e000-0x00000000cad7dfff]  device reserved
+[    0.939499] waynoway kernel: BIOS-e820: [mem 0x00000000cad7e000-0x00000000cbd7dfff]  ACPI NVS
+[    0.939507] waynoway kernel: BIOS-e820: [mem 0x00000000cbd7e000-0x00000000cbdfdfff]  ACPI data
+[    0.939515] waynoway kernel: BIOS-e820: [mem 0x00000000cbdfe000-0x00000000cdffffff]  System RAM
+[    0.939525] waynoway kernel: BIOS-e820: [mem 0x00000000ce000000-0x00000000cfffffff]  device reserved
+[    0.939533] waynoway kernel: BIOS-e820: [gap 0x00000000d0000000-0x00000000f7ffffff]
+[    0.939541] waynoway kernel: BIOS-e820: [mem 0x00000000f8000000-0x00000000fbffffff]  device reserved
+[    0.939547] waynoway kernel: BIOS-e820: [gap 0x00000000fc000000-0x00000000fdbfffff]
+[    0.939555] waynoway kernel: BIOS-e820: [mem 0x00000000fdc00000-0x00000000fdcfffff]  device reserved
+[    0.939563] waynoway kernel: BIOS-e820: [gap 0x00000000fdd00000-0x00000000fed7ffff]
+[    0.939570] waynoway kernel: BIOS-e820: [mem 0x00000000fed80000-0x00000000fed80fff]  device reserved
+[    0.939578] waynoway kernel: BIOS-e820: [gap 0x00000000fed81000-0x00000000ffffffff]
+[    0.939586] waynoway kernel: BIOS-e820: [mem 0x0000000100000000-0x000000072e2fffff]  System RAM
+[    0.939592] waynoway kernel: BIOS-e820: [mem 0x000000072e300000-0x000000082fffffff]  device reserved
+[    0.939600] waynoway kernel: NX (Execute Disable) protection: active
+[    0.939608] waynoway kernel: APIC: Static calls initialized
+[    0.939616] waynoway kernel: efi: EFI v2.7 by Lenovo
+[    0.939632] waynoway kernel: efi: ACPI=0xcbdfd000 ACPI 2.0=0xcbdfd014 SMBIOS=0xc7c66000 SMBIOS 3.0=0xc7c59000 TPMFinalLog=0xcbc1d000 MEMATTR=0xc0dc8018 ESRT=0xc17bbb18 MOKvar=0xc7c96000 INITRD=0x99aa6698 RNG=0xcbdfc018 TPMEventLog=0xcbdeb018 
+[    0.939640] waynoway kernel: random: crng init done
+[    0.939648] waynoway kernel: efi: Remove mem64: MMIO range=[0xfdc00000-0xfdcfffff] (1MB) from e820 map
+[    0.939659] waynoway kernel: e820: remove [mem 0xfdc00000-0xfdcfffff] device reserved
+[    0.939669] waynoway kernel: efi: Not removing mem65: MMIO range=[0xfed80000-0xfed80fff] (4KB) from e820 map
+[    0.939679] waynoway kernel: SMBIOS 3.3.0 present.
+[    0.939686] waynoway kernel: DMI: LENOVO 21A0003QUS/21A0003QUS, BIOS R1MET64W (1.34 ) 04/16/2026
+[    0.939694] waynoway kernel: DMI: Memory slots populated: 2/2
+[    0.939702] waynoway kernel: secureboot: Secure boot disabled
+[    0.939710] waynoway kernel: tsc: Fast TSC calibration using PIT
+[    0.939720] waynoway kernel: tsc: Detected 1896.413 MHz processor
+[    0.939730] waynoway kernel: e820: update [mem 0x00000000-0x00000fff] System RAM ==> device reserved
+[    0.939743] waynoway kernel: e820: remove [mem 0x000a0000-0x000fffff] System RAM
+[    0.939754] waynoway kernel: last_pfn = 0x72e300 max_arch_pfn = 0x400000000
+[    0.939765] waynoway kernel: MTRR map: 6 entries (3 fixed + 3 variable; max 20), built from 9 variable MTRRs
+[    0.939777] waynoway kernel: x86/PAT: Configuration [0-7]: WB  WC  UC- UC  WB  WP  UC- WT  
+[    0.939791] waynoway kernel: last_pfn = 0xce000 max_arch_pfn = 0x400000000
+[    0.939802] waynoway kernel: esrt: Reserving ESRT space from 0x00000000c17bbb18 to 0x00000000c17bbc18.
+[    0.939815] waynoway kernel: e820: update [mem 0xc17bb000-0xc17bbfff] System RAM ==> device reserved
+[    0.939827] waynoway kernel: Using GB pages for direct mapping
+[    0.939835] waynoway kernel: secureboot: Secure boot disabled
+[    0.939846] waynoway kernel: RAMDISK: [mem 0x8e0a3000-0x908d6fff]
+[    0.939859] waynoway kernel: ACPI: Early table checksum verification disabled
+[    0.939870] waynoway kernel: ACPI: RSDP 0x00000000CBDFD014 000024 (v02 LENOVO)
+[    0.939883] waynoway kernel: ACPI: XSDT 0x00000000CBDFB188 00012C (v01 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.939894] waynoway kernel: ACPI: FACP 0x00000000C5994000 000114 (v06 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.939904] waynoway kernel: ACPI: DSDT 0x00000000C597C000 012C2C (v01 LENOVO TP-R1M   00001310 INTL 20180313)
+[    0.939915] waynoway kernel: ACPI: FACS 0x00000000CBC18000 000040
+[    0.939928] waynoway kernel: ACPI: SSDT 0x00000000C7C9C000 0000A2 (v01 LENOVO PID0Ssdt 00000001 INTL 20180313)
+[    0.939941] waynoway kernel: ACPI: SSDT 0x00000000C7C9A000 001189 (v01 LENOVO UsbCTabl 00000001 INTL 20180313)
+[    0.939952] waynoway kernel: ACPI: SSDT 0x00000000C7C8C000 0072B0 (v02 LENOVO TP-R1M   00000002 MSFT 04000000)
+[    0.939966] waynoway kernel: ACPI: SSDT 0x00000000C7C39000 000A42 (v01 LENOVO WmiTable 00000001 INTL 20180313)
+[    0.939977] waynoway kernel: ACPI: SSDT 0x00000000C7BB4000 000632 (v02 LENOVO Tpm2Tabl 00001000 INTL 20180313)
+[    0.939990] waynoway kernel: ACPI: TPM2 0x00000000C7BB3000 000034 (v03 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.940005] waynoway kernel: ACPI: MSDM 0x00000000C7BB0000 000055 (v03 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.940018] waynoway kernel: ACPI: BATB 0x00000000C7B9B000 00004A (v02 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.940029] waynoway kernel: ACPI: HPET 0x00000000C5993000 000038 (v01 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.940043] waynoway kernel: ACPI: APIC 0x00000000C5992000 000138 (v02 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.940054] waynoway kernel: ACPI: MCFG 0x00000000C5991000 00003C (v01 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.940067] waynoway kernel: ACPI: SBST 0x00000000C5990000 000030 (v01 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.940078] waynoway kernel: ACPI: WSMT 0x00000000C598F000 000028 (v01 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.940091] waynoway kernel: ACPI: VFCT 0x00000000C596E000 00D884 (v01 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.940104] waynoway kernel: ACPI: SSDT 0x00000000C5968000 005354 (v02 LENOVO TP-R1M   00000001 AMD  00000001)
+[    0.940115] waynoway kernel: ACPI: CRAT 0x00000000C5967000 000EC0 (v01 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.940121] waynoway kernel: ACPI: CDIT 0x00000000C5966000 000029 (v01 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.940132] waynoway kernel: ACPI: FPDT 0x00000000C7B9C000 000034 (v01 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.940146] waynoway kernel: ACPI: SSDT 0x00000000C5965000 000149 (v01 LENOVO TP-R1M   00000001 INTL 20180313)
+[    0.940154] waynoway kernel: ACPI: SSDT 0x00000000C5964000 000AB7 (v01 LENOVO TP-R1M   00000001 INTL 20180313)
+[    0.940165] waynoway kernel: ACPI: SSDT 0x00000000C5962000 0015A8 (v01 LENOVO TP-R1M   00000001 INTL 20180313)
+[    0.940178] waynoway kernel: ACPI: SSDT 0x00000000C595E000 003B0E (v01 LENOVO TP-R1M   00000001 INTL 20180313)
+[    0.940185] waynoway kernel: ACPI: BGRT 0x00000000C595D000 000038 (v01 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.940203] waynoway kernel: ACPI: SSDT 0x00000000C595C000 000058 (v01 LENOVO TP-R1M   00000001 INTL 20180313)
+[    0.940212] waynoway kernel: ACPI: SSDT 0x00000000C595B000 00024D (v01 LENOVO TP-R1M   00000001 INTL 20180313)
+[    0.940221] waynoway kernel: ACPI: SSDT 0x00000000C5959000 001446 (v01 LENOVO TP-R1M   00000001 INTL 20180313)
+[    0.940233] waynoway kernel: ACPI: SSDT 0x00000000C5958000 000BE6 (v01 LENOVO TP-R1M   00000001 INTL 20180313)
+[    0.940245] waynoway kernel: ACPI: UEFI 0x00000000CBC17000 0000DA (v01 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.940256] waynoway kernel: ACPI: SSDT 0x00000000C5957000 000052 (v01 LENOVO DRTM     00000001 INTL 20180313)
+[    0.940265] waynoway kernel: ACPI: IVRS 0x00000000C5956000 0001A4 (v02 LENOVO TP-R1M   00001310 PTEC 00000002)
+[    0.940274] waynoway kernel: ACPI: SSDT 0x00000000C7C98000 000090 (v01 LENOVO TP-R1M   00000001 INTL 20180313)
+[    0.940290] waynoway kernel: ACPI: SSDT 0x00000000C7C97000 00096A (v01 LENOVO TP-R1M   00000001 INTL 20180313)
+[    0.940302] waynoway kernel: ACPI: Reserving FACP table memory at [mem 0xc5994000-0xc5994113]
+[    0.940310] waynoway kernel: ACPI: Reserving DSDT table memory at [mem 0xc597c000-0xc598ec2b]
+[    0.940321] waynoway kernel: ACPI: Reserving FACS table memory at [mem 0xcbc18000-0xcbc1803f]
+[    0.940328] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc7c9c000-0xc7c9c0a1]
+[    0.940334] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc7c9a000-0xc7c9b188]
+[    0.940345] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc7c8c000-0xc7c932af]
+[    0.940353] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc7c39000-0xc7c39a41]
+[    0.940367] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc7bb4000-0xc7bb4631]
+[    0.940380] waynoway kernel: ACPI: Reserving TPM2 table memory at [mem 0xc7bb3000-0xc7bb3033]
+[    0.940390] waynoway kernel: ACPI: Reserving MSDM table memory at [mem 0xc7bb0000-0xc7bb0054]
+[    0.940404] waynoway kernel: ACPI: Reserving BATB table memory at [mem 0xc7b9b000-0xc7b9b049]
+[    0.940412] waynoway kernel: ACPI: Reserving HPET table memory at [mem 0xc5993000-0xc5993037]
+[    0.940423] waynoway kernel: ACPI: Reserving APIC table memory at [mem 0xc5992000-0xc5992137]
+[    0.940432] waynoway kernel: ACPI: Reserving MCFG table memory at [mem 0xc5991000-0xc599103b]
+[    0.940443] waynoway kernel: ACPI: Reserving SBST table memory at [mem 0xc5990000-0xc599002f]
+[    0.940454] waynoway kernel: ACPI: Reserving WSMT table memory at [mem 0xc598f000-0xc598f027]
+[    0.940462] waynoway kernel: ACPI: Reserving VFCT table memory at [mem 0xc596e000-0xc597b883]
+[    0.940473] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc5968000-0xc596d353]
+[    0.940483] waynoway kernel: ACPI: Reserving CRAT table memory at [mem 0xc5967000-0xc5967ebf]
+[    0.940497] waynoway kernel: ACPI: Reserving CDIT table memory at [mem 0xc5966000-0xc5966028]
+[    0.940508] waynoway kernel: ACPI: Reserving FPDT table memory at [mem 0xc7b9c000-0xc7b9c033]
+[    0.940514] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc5965000-0xc5965148]
+[    0.940520] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc5964000-0xc5964ab6]
+[    0.940538] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc5962000-0xc59635a7]
+[    0.940551] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc595e000-0xc5961b0d]
+[    0.940562] waynoway kernel: ACPI: Reserving BGRT table memory at [mem 0xc595d000-0xc595d037]
+[    0.940568] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc595c000-0xc595c057]
+[    0.940577] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc595b000-0xc595b24c]
+[    0.940589] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc5959000-0xc595a445]
+[    0.940603] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc5958000-0xc5958be5]
+[    0.940614] waynoway kernel: ACPI: Reserving UEFI table memory at [mem 0xcbc17000-0xcbc170d9]
+[    0.940632] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc5957000-0xc5957051]
+[    0.940643] waynoway kernel: ACPI: Reserving IVRS table memory at [mem 0xc5956000-0xc59561a3]
+[    0.940653] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc7c98000-0xc7c9808f]
+[    0.940662] waynoway kernel: ACPI: Reserving SSDT table memory at [mem 0xc7c97000-0xc7c97969]
+[    0.940673] waynoway kernel: No NUMA configuration found
+[    0.940685] waynoway kernel: Faking a node at [mem 0x0000000000000000-0x000000072e2fffff]
+[    0.940693] waynoway kernel: NODE_DATA(0) allocated [mem 0x72e2d5280-0x72e2fffff]
+[    0.940699] waynoway kernel: crashkernel reserved: 0x000000009f000000 - 0x00000000bf000000 (512 MB)
+[    0.940708] waynoway kernel: ACPI: PM-Timer IO Port: 0x408
+[    0.940717] waynoway kernel: ACPI: LAPIC_NMI (acpi_id[0x00] high edge lint[0x1])
+[    0.940723] waynoway kernel: ACPI: LAPIC_NMI (acpi_id[0x01] high edge lint[0x1])
+[    0.940735] waynoway kernel: ACPI: LAPIC_NMI (acpi_id[0x02] high edge lint[0x1])
+[    0.940741] waynoway kernel: ACPI: LAPIC_NMI (acpi_id[0x03] high edge lint[0x1])
+[    0.940750] waynoway kernel: ACPI: LAPIC_NMI (acpi_id[0x04] high edge lint[0x1])
+[    0.940759] waynoway kernel: ACPI: LAPIC_NMI (acpi_id[0x05] high edge lint[0x1])
+[    0.940771] waynoway kernel: ACPI: LAPIC_NMI (acpi_id[0x06] high edge lint[0x1])
+[    0.940779] waynoway kernel: ACPI: LAPIC_NMI (acpi_id[0x07] high edge lint[0x1])
+[    0.940787] waynoway kernel: ACPI: LAPIC_NMI (acpi_id[0x08] high edge lint[0x1])
+[    0.940793] waynoway kernel: ACPI: LAPIC_NMI (acpi_id[0x09] high edge lint[0x1])
+[    0.940802] waynoway kernel: ACPI: LAPIC_NMI (acpi_id[0x0a] high edge lint[0x1])
+[    0.940808] waynoway kernel: ACPI: LAPIC_NMI (acpi_id[0x0b] high edge lint[0x1])
+[    0.940819] waynoway kernel: ACPI: LAPIC_NMI (acpi_id[0x0c] high edge lint[0x1])
+[    0.940825] waynoway kernel: ACPI: LAPIC_NMI (acpi_id[0x0d] high edge lint[0x1])
+[    0.940834] waynoway kernel: ACPI: LAPIC_NMI (acpi_id[0x0e] high edge lint[0x1])
+[    0.940845] waynoway kernel: ACPI: LAPIC_NMI (acpi_id[0x0f] high edge lint[0x1])
+[    0.940853] waynoway kernel: IOAPIC[0]: apic_id 32, version 33, address 0xfec00000, GSI 0-23
+[    0.940864] waynoway kernel: IOAPIC[1]: apic_id 33, version 33, address 0xfec01000, GSI 24-55
+[    0.940873] waynoway kernel: ACPI: INT_SRC_OVR (bus 0 bus_irq 0 global_irq 2 dfl dfl)
+[    0.940883] waynoway kernel: ACPI: INT_SRC_OVR (bus 0 bus_irq 9 global_irq 9 low level)
+[    0.940891] waynoway kernel: ACPI: Using ACPI (MADT) for SMP configuration information
+[    0.940898] waynoway kernel: ACPI: HPET id: 0x43538210 base: 0xfed00000
+[    0.940906] waynoway kernel: e820: update [mem 0xc0604000-0xc0694fff] System RAM ==> device reserved
+[    0.940918] waynoway kernel: CPU topo: Max. logical packages:   1
+[    0.940924] waynoway kernel: CPU topo: Max. logical nodes:      1
+[    0.940935] waynoway kernel: CPU topo: Num. nodes per package:  1
+[    0.940950] waynoway kernel: CPU topo: Max. logical dies:       1
+[    0.940961] waynoway kernel: CPU topo: Max. dies per package:   1
+[    0.940967] waynoway kernel: CPU topo: Max. threads per core:   2
+[    0.940978] waynoway kernel: CPU topo: Num. cores per package:     8
+[    0.940989] waynoway kernel: CPU topo: Num. threads per package:  16
+[    0.940995] waynoway kernel: CPU topo: Allowing 16 present CPUs plus 0 hotplug CPUs
+[    0.941010] waynoway kernel: PM: hibernation: Registered nosave memory: [mem 0x00000000-0x00000fff]
+[    0.941023] waynoway kernel: PM: hibernation: Registered nosave memory: [mem 0x0009f000-0x000fffff]
+[    0.941032] waynoway kernel: PM: hibernation: Registered nosave memory: [mem 0x09c00000-0x09da0fff]
+[    0.941041] waynoway kernel: PM: hibernation: Registered nosave memory: [mem 0x09f00000-0x09f0efff]
+[    0.941056] waynoway kernel: PM: hibernation: Registered nosave memory: [mem 0xc0604000-0xc0694fff]
+[    0.941068] waynoway kernel: PM: hibernation: Registered nosave memory: [mem 0xc17bb000-0xc17bbfff]
+[    0.941077] waynoway kernel: PM: hibernation: Registered nosave memory: [mem 0xc4b7e000-0xcbdfdfff]
+[    0.941088] waynoway kernel: PM: hibernation: Registered nosave memory: [mem 0xce000000-0xffffffff]
+[    0.941102] waynoway kernel: [gap 0xd0000000-0xf7ffffff] available for PCI devices
+[    0.941108] waynoway kernel: Booting paravirtualized kernel on bare hardware
+[    0.941117] waynoway kernel: clocksource: refined-jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 1910969940391419 ns
+[    0.941126] waynoway kernel: Zone ranges:
+[    0.941137] waynoway kernel:   DMA      [mem 0x0000000000001000-0x0000000000ffffff]
+[    0.941145] waynoway kernel:   DMA32    [mem 0x0000000001000000-0x00000000ffffffff]
+[    0.941154] waynoway kernel:   Normal   [mem 0x0000000100000000-0x000000072e2fffff]
+[    0.941163] waynoway kernel:   Device   empty
+[    0.941169] waynoway kernel: Movable zone start for each node
+[    0.941178] waynoway kernel: Early memory node ranges
+[    0.941189] waynoway kernel:   node   0: [mem 0x0000000000001000-0x000000000009efff]
+[    0.941197] waynoway kernel:   node   0: [mem 0x0000000000100000-0x0000000009bfffff]
+[    0.941206] waynoway kernel:   node   0: [mem 0x0000000009da1000-0x0000000009efffff]
+[    0.941219] waynoway kernel:   node   0: [mem 0x0000000009f0f000-0x00000000c4b7dfff]
+[    0.941233] waynoway kernel:   node   0: [mem 0x00000000cbdfe000-0x00000000cdffffff]
+[    0.941243] waynoway kernel:   node   0: [mem 0x0000000100000000-0x000000072e2fffff]
+[    0.941251] waynoway kernel: Initmem setup node 0 [mem 0x0000000000001000-0x000000072e2fffff]
+[    0.941260] waynoway kernel: On node 0, zone DMA: 1 pages in unavailable ranges
+[    0.941270] waynoway kernel: On node 0, zone DMA: 97 pages in unavailable ranges
+[    0.941281] waynoway kernel: On node 0, zone DMA32: 417 pages in unavailable ranges
+[    0.941290] waynoway kernel: On node 0, zone DMA32: 15 pages in unavailable ranges
+[    0.941301] waynoway kernel: On node 0, zone DMA32: 29312 pages in unavailable ranges
+[    0.941309] waynoway kernel: On node 0, zone Normal: 8192 pages in unavailable ranges
+[    0.941320] waynoway kernel: On node 0, zone Normal: 7424 pages in unavailable ranges
+[    0.941326] waynoway kernel: setup_percpu: NR_CPUS:8192 nr_cpumask_bits:16 nr_cpu_ids:16 nr_node_ids:1
+[    0.941337] waynoway kernel: percpu: Embedded 85 pages/cpu s225280 r8192 d114688 u524288
+[    0.941343] waynoway kernel: pcpu-alloc: s225280 r8192 d114688 u524288 alloc=1*2097152
+[    0.941354] waynoway kernel: pcpu-alloc: [0] 00 01 02 03 [0] 04 05 06 07 
+[    0.941364] waynoway kernel: pcpu-alloc: [0] 08 09 10 11 [0] 12 13 14 15 
+[    0.941375] waynoway kernel: Kernel command line: BOOT_IMAGE=/vmlinuz-7.0.0-38-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro quiet splash crashkernel=2G-4G:320M,4G-32G:512M,32G-64G:1024M,64G-128G:2048M,128G-:4096M
+[    0.941384] waynoway kernel: Unknown kernel command line parameters "splash", will be passed to user space.
+[    0.941390] waynoway kernel: printk: log buffer data + meta data: 262144 + 1114112 = 1376256 bytes
+[    0.941402] waynoway kernel: Dentry cache hash table entries: 4194304 (order: 13, 33554432 bytes, linear)
+[    0.941413] waynoway kernel: Inode-cache hash table entries: 2097152 (order: 12, 16777216 bytes, linear)
+[    0.941422] waynoway kernel: software IO TLB: area num 16.
+[    0.941433] waynoway kernel: Fallback order for Node 0: 0 
+[    0.941442] waynoway kernel: Built 1 zonelists, mobility grouping on.  Total pages: 7294574
+[    0.941452] waynoway kernel: Policy zone: Normal
+[    0.941461] waynoway kernel: mem auto-init: stack:all(zero), heap alloc:on, heap free:off
+[    0.941472] waynoway kernel: SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=16, Nodes=1
+[    0.941481] waynoway kernel: ftrace: allocating 63997 entries in 252 pages
+[    0.941494] waynoway kernel: ftrace: allocated 252 pages with 6 groups
+[    0.941504] waynoway kernel: Dynamic Preempt: lazy
+[    0.941513] waynoway kernel: rcu: Preemptible hierarchical RCU implementation.
+[    0.941522] waynoway kernel: rcu:         RCU restricting CPUs from NR_CPUS=8192 to nr_cpu_ids=16.
+[    0.941529] waynoway kernel:         Trampoline variant of Tasks RCU enabled.
+[    0.941535] waynoway kernel:         Rude variant of Tasks RCU enabled.
+[    0.941543] waynoway kernel:         Tracing variant of Tasks RCU enabled.
+[    0.941552] waynoway kernel: rcu: RCU calculated value of scheduler-enlistment delay is 100 jiffies.
+[    0.941563] waynoway kernel: rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=16
+[    0.941577] waynoway kernel: RCU Tasks: Setting shift to 4 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=16.
+[    0.941585] waynoway kernel: RCU Tasks Rude: Setting shift to 4 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=16.
+[    0.941594] waynoway kernel: NR_IRQS: 524544, nr_irqs: 1096, preallocated irqs: 16
+[    0.941600] waynoway kernel: rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[    0.941609] waynoway kernel: clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 1911260446275000 ns
+[    0.941615] waynoway kernel: Console: colour dummy device 80x25
+[    0.941621] waynoway kernel: printk: legacy console [tty0] enabled
+[    0.941629] waynoway kernel: ACPI: Core revision 20251212
+[    0.941641] waynoway kernel: clocksource: hpet: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 133484873504 ns
+[    0.941648] waynoway kernel: APIC: Switch to symmetric I/O mode setup
+[    0.941655] waynoway kernel: AMD-Vi: ivrs, add hid:AMDI0020, uid:\_SB.FUR0, rdevid:0xa0
+[    0.941661] waynoway kernel: AMD-Vi: ivrs, add hid:AMDI0020, uid:\_SB.FUR1, rdevid:0xa0
+[    0.941672] waynoway kernel: AMD-Vi: ivrs, add hid:AMDI0020, uid:\_SB.FUR2, rdevid:0xa0
+[    0.941681] waynoway kernel: AMD-Vi: ivrs, add hid:AMDI0020, uid:\_SB.FUR3, rdevid:0xa0
+[    0.941692] waynoway kernel: AMD-Vi: Using global IVHD EFR:0x206d73ef22254ade, EFR2:0x0
+[    0.941701] waynoway kernel: ..TIMER: vector=0x30 apic1=0 pin1=2 apic2=-1 pin2=-1
+[    0.941709] waynoway kernel: clocksource: tsc-early: mask: 0xffffffffffffffff max_cycles: 0x36abdf153da, max_idle_ns: 881590759319 ns
+[    0.941720] waynoway kernel: Calibrating delay loop (skipped), value calculated using timer frequency.. 3792.82 BogoMIPS (lpj=1896413)
+[    0.941729] waynoway kernel: x86/cpu: User Mode Instruction Prevention (UMIP) activated
+[    0.941740] waynoway kernel: LVT offset 1 assigned for vector 0xf9
+[    0.941748] waynoway kernel: LVT offset 2 assigned for vector 0xf4
+[    0.941759] waynoway kernel: Last level iTLB entries: 4KB 512, 2MB 512, 4MB 256
+[    0.941770] waynoway kernel: Last level dTLB entries: 4KB 2048, 2MB 2048, 4MB 1024, 1GB 0
+[    0.941777] waynoway kernel: process: using mwait in idle threads
+[    0.941786] waynoway kernel: mitigations: Enabled attack vectors: user_kernel, user_user, guest_host, guest_guest, SMT mitigations: auto
+[    0.941796] waynoway kernel: Speculative Store Bypass: Mitigation: Speculative Store Bypass disabled via prctl
+[    0.941802] waynoway kernel: Transient Scheduler Attacks: Mitigation: Clear CPU buffers
+[    0.941810] waynoway kernel: Spectre V2 : Mitigation: Retpolines
+[    0.941819] waynoway kernel: Spectre V2 : User space: Mitigation: STIBP always-on protection
+[    0.941828] waynoway kernel: Speculative Return Stack Overflow: Mitigation: Safe RET
+[    0.941839] waynoway kernel: VMSCAPE: Mitigation: IBPB before exit to userspace
+[    0.941845] waynoway kernel: Spectre V1 : Mitigation: usercopy/swapgs barriers and __user pointer sanitization
+[    0.941850] waynoway kernel: Spectre V2 : Spectre v2 / SpectreRSB: Filling RSB on context switch and VMEXIT
+[    0.941856] waynoway kernel: Spectre V2 : Enabling Restricted Speculation for firmware calls
+[    0.941864] waynoway kernel: Spectre V2 : mitigation: Enabling conditional Indirect Branch Prediction Barrier
+[    0.941875] waynoway kernel: active return thunk: srso_alias_return_thunk
+[    0.941884] waynoway kernel: x86/fpu: Supporting XSAVE feature 0x001: 'x87 floating point registers'
+[    0.941892] waynoway kernel: x86/fpu: Supporting XSAVE feature 0x002: 'SSE registers'
+[    0.941899] waynoway kernel: x86/fpu: Supporting XSAVE feature 0x004: 'AVX registers'
+[    0.941905] waynoway kernel: x86/fpu: Supporting XSAVE feature 0x200: 'Protection Keys User registers'
+[    0.941913] waynoway kernel: x86/fpu: Supporting XSAVE feature 0x800: 'Control-flow User registers'
+[    0.941919] waynoway kernel: x86/fpu: Supporting XSAVE feature 0x1000: 'Control-flow Kernel registers (KVM only)'
+[    0.941925] waynoway kernel: x86/fpu: xstate_offset[2]:  576, xstate_sizes[2]:  256
+[    0.941937] waynoway kernel: x86/fpu: xstate_offset[9]:  832, xstate_sizes[9]:    8
+[    0.941946] waynoway kernel: x86/fpu: xstate_offset[11]:  840, xstate_sizes[11]:   16
+[    0.941954] waynoway kernel: x86/fpu: xstate_offset[12]:  856, xstate_sizes[12]:   24
+[    0.941963] waynoway kernel: x86/fpu: Enabled xstate features 0x1a07, context size is 880 bytes, using 'compacted' format.
+[    0.941971] waynoway kernel: Freeing SMP alternatives memory: 56K
+[    0.941977] waynoway kernel: pid_max: default: 32768 minimum: 301
+[    0.941988] waynoway kernel: landlock: Up and running.
+[    0.941997] waynoway kernel: Yama: becoming mindful.
+[    0.942003] waynoway kernel: AppArmor: AppArmor initialized
+[    0.942010] waynoway kernel: AppArmor: AppArmor secmark mediation reserved: ready to be enabled
+[    0.942019] waynoway kernel: Mount-cache hash table entries: 65536 (order: 7, 524288 bytes, linear)
+[    0.942025] waynoway kernel: Mountpoint-cache hash table entries: 65536 (order: 7, 524288 bytes, linear)
+[    0.942034] waynoway kernel: VFS: Finished mounting rootfs on nullfs
+[    0.942042] waynoway kernel: smpboot: CPU0: AMD Ryzen 7 PRO 5850U with Radeon Graphics (family: 0x19, model: 0x50, stepping: 0x0)
+[    0.942051] waynoway kernel: Performance Events: Fam17h+ core perfctr, AMD PMU driver.
+[    0.942062] waynoway kernel: ... version:                   0
+[    0.942070] waynoway kernel: ... bit width:                 48
+[    0.942076] waynoway kernel: ... generic counters:          6
+[    0.942083] waynoway kernel: ... generic bitmap:            000000000000003f
+[    0.942089] waynoway kernel: ... fixed-purpose counters:    0
+[    0.942095] waynoway kernel: ... fixed-purpose bitmap:      0000000000000000
+[    0.942100] waynoway kernel: ... value mask:                0000ffffffffffff
+[    0.942106] waynoway kernel: ... max period:                00007fffffffffff
+[    0.942111] waynoway kernel: ... global_ctrl mask:          000000000000003f
+[    0.942118] waynoway kernel: signal: max sigframe size: 3376
+[    0.942123] waynoway kernel: rcu: Hierarchical SRCU implementation.
+[    0.942133] waynoway kernel: rcu:         Max phase no-delay instances is 400.
+[    0.942138] waynoway kernel: Timer migration: 2 hierarchy levels; 8 children per group; 2 crossnode level
+[    0.942144] waynoway kernel: NMI watchdog: Enabled. Permanently consumes one hw-PMU counter.
+[    0.942150] waynoway kernel: smp: Bringing up secondary CPUs ...
+[    0.942156] waynoway kernel: smpboot: x86: Booting SMP configuration:
+[    0.942169] waynoway kernel: .... node  #0, CPUs:        #2  #4  #6  #8 #10 #12 #14  #1  #3  #5  #7  #9 #11 #13 #15
+[    0.942178] waynoway kernel: Spectre V2 : Update user space SMT mitigation: STIBP always-on
+[    0.942184] waynoway kernel: smp: Brought up 1 node, 16 CPUs
+[    0.942195] waynoway kernel: smpboot: Total of 16 processors activated (60685.21 BogoMIPS)
+[    0.942201] waynoway kernel: Memory: 24296596K/29178296K available (23836K kernel code, 4957K rwdata, 16776K rodata, 5304K init, 5840K bss, 4854712K reserved, 0K cma-reserved)
+[    0.942210] waynoway kernel: devtmpfs: initialized
+[    0.942219] waynoway kernel: x86/mm: Memory block size: 128MB
+[    0.942225] waynoway kernel: ACPI: PM: Registering ACPI NVS region [mem 0x09f00000-0x09f0efff] (61440 bytes)
+[    0.942231] waynoway kernel: ACPI: PM: Registering ACPI NVS region [mem 0xcad7e000-0xcbd7dfff] (16777216 bytes)
+[    0.942239] waynoway kernel: posixtimers hash table entries: 8192 (order: 5, 131072 bytes, linear)
+[    0.942245] waynoway kernel: futex hash table entries: 4096 (262144 bytes on 1 NUMA nodes, total 256 KiB, linear).
+[    0.942251] waynoway kernel: PM: RTC time: 19:01:52, date: 2026-10-23
+[    0.942256] waynoway kernel: NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    0.942265] waynoway kernel: DMA: preallocated 4096 KiB GFP_KERNEL pool for atomic allocations
+[    0.942271] waynoway kernel: DMA: preallocated 4096 KiB GFP_KERNEL|GFP_DMA pool for atomic allocations
+[    0.942283] waynoway kernel: DMA: preallocated 4096 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocations
+[    0.942299] waynoway kernel: audit: initializing netlink subsys (disabled)
+[    0.942309] waynoway kernel: audit: type=2000 audit(1792782112.182:1): state=initialized audit_enabled=0 res=1
+[    0.942316] waynoway kernel: thermal_sys: Registered thermal governor 'fair_share'
+[    0.942325] waynoway kernel: thermal_sys: Registered thermal governor 'bang_bang'
+[    0.942334] waynoway kernel: thermal_sys: Registered thermal governor 'step_wise'
+[    0.942342] waynoway kernel: thermal_sys: Registered thermal governor 'user_space'
+[    0.942355] waynoway kernel: thermal_sys: Registered thermal governor 'power_allocator'
+[    0.942361] waynoway kernel: cpuidle: using governor ladder
+[    0.942367] waynoway kernel: cpuidle: using governor menu
+[    0.942373] waynoway kernel: efi: Freeing EFI boot services memory: 105500K
+[    0.942381] waynoway kernel: ACPI FADT declares the system doesn't support PCIe ASPM, so disable it
+[    0.942394] waynoway kernel: acpiphp: ACPI Hot Plug PCI Controller Driver version: 0.5
+[    0.942401] waynoway kernel: PCI: ECAM [mem 0xf8000000-0xfbffffff] (base 0xf8000000) for domain 0000 [bus 00-3f]
+[    0.942407] waynoway kernel: PCI: Using configuration type 1 for base access
+[    0.942413] waynoway kernel: kprobes: kprobe jump-optimization is enabled. All kprobes are optimized if possible.
+[    0.942419] waynoway kernel: HugeTLB: registered 1.00 GiB page size, pre-allocated 0 pages
+[    0.942425] waynoway kernel: HugeTLB: 16380 KiB vmemmap can be freed for a 1.00 GiB page
+[    0.942431] waynoway kernel: HugeTLB: registered 2.00 MiB page size, pre-allocated 0 pages
+[    0.942437] waynoway kernel: HugeTLB: 28 KiB vmemmap can be freed for a 2.00 MiB page
+[    0.942442] waynoway kernel: ACPI: Added _OSI(Module Device)
+[    0.942448] waynoway kernel: ACPI: Added _OSI(Processor Device)
+[    0.942456] waynoway kernel: ACPI: Added _OSI(Processor Aggregator Device)
+[    0.942471] waynoway kernel: ACPI: 18 ACPI AML tables successfully acquired and loaded
+[    0.942477] waynoway kernel: ACPI: [Firmware Bug]: BIOS _OSI(Linux) query ignored
+[    0.942483] waynoway kernel: ACPI: \_SB_: platform _OSC: OS support mask [006e7eff]
+[    0.942490] waynoway kernel: ACPI: \_SB_: platform _OSC: OS control mask [00000004]
+[    0.942495] waynoway kernel: ACPI: EC: EC started
+[    0.942502] waynoway kernel: ACPI: EC: interrupt blocked
+[    0.942513] waynoway kernel: ACPI: EC: EC_CMD/EC_SC=0x66, EC_DATA=0x62
+[    0.942522] waynoway kernel: ACPI: \_SB_.PCI0.LPC0.EC0_: Boot DSDT EC used to handle transactions
+[    0.942530] waynoway kernel: ACPI: Interpreter enabled
+[    0.942538] waynoway kernel: ACPI: PM: (supports S0 S4 S5)
+[    0.942544] waynoway kernel: ACPI: Using IOAPIC for interrupt routing
+[    0.942553] waynoway kernel: PCI: Using host bridge windows from ACPI; if necessary, use "pci=nocrs" and report a bug
+[    0.942559] waynoway kernel: PCI: Ignoring E820 reservations for host bridge windows
+[    0.942568] waynoway kernel: ACPI: \_SB_.PCI0.GPP4.RTL8.P0U1: New power resource
+[    0.942575] waynoway kernel: ACPI: \_SB_.PCI0.GPP4.RTL8.P3U1: New power resource
+[    0.942591] waynoway kernel: ACPI: \_SB_.PCI0.GPP7.PXSX.WRST: New power resource
+[    0.942602] waynoway kernel: ACPI: \_SB_.PCI0.GPP8.P0NV: New power resource
+[    0.942608] waynoway kernel: ACPI: \_SB_.PCI0.GP17.XHC0.P0U0: New power resource
+[    0.942614] waynoway kernel: ACPI: \_SB_.PCI0.GP17.XHC0.P3U0: New power resource
+[    0.942620] waynoway kernel: ACPI: \_SB_.PCI0.GP17.XHC1.P0U1: New power resource
+[    0.942655] waynoway kernel: ACPI: \_SB_.PCI0.GP17.XHC1.P3U1: New power resource
+[    0.942666] waynoway kernel: ACPI: PCI Root Bridge [PCI0] (domain 0000 [bus 00-ff])
+[    0.942978] waynoway kernel: acpi PNP0A08:00: _OSC: OS supports [ExtendedConfig ASPM ClockPM Segments MSI EDR HPX-Type3]
+[    0.943217] waynoway kernel: acpi PNP0A08:00: _OSC: platform does not support [SHPCHotplug LTR DPC]
+[    0.943455] waynoway kernel: acpi PNP0A08:00: _OSC: OS now controls [PCIeHotplug PME AER PCIeCapability]
+[    0.943682] waynoway kernel: acpi PNP0A08:00: FADT indicates ASPM is unsupported, using BIOS configuration
+[    0.943890] waynoway kernel: acpi PNP0A08:00: [Firmware Info]: ECAM [mem 0xf8000000-0xfbffffff] for domain 0000 [bus 00-3f] only partially covers this bridge
+[    0.943899] waynoway kernel: PCI host bridge to bus 0000:00
+[    0.944118] waynoway kernel: pci_bus 0000:00: root bus resource [mem 0x000a0000-0x000effff window]
+[    0.944317] waynoway kernel: pci_bus 0000:00: root bus resource [mem 0xd0000000-0xf7ffffff window]
+[    0.944516] waynoway kernel: pci_bus 0000:00: root bus resource [mem 0xfc000000-0xfdffffff window]
+[    0.944736] waynoway kernel: pci_bus 0000:00: root bus resource [mem 0x830000000-0xffffffffff window]
+[    0.944932] waynoway kernel: pci_bus 0000:00: root bus resource [io  0x0000-0x0cf7 window]
+[    0.945125] waynoway kernel: pci_bus 0000:00: root bus resource [io  0x0d00-0xffff window]
+[    0.945318] waynoway kernel: pci_bus 0000:00: root bus resource [bus 00-ff]
+[    0.945549] waynoway kernel: pci 0000:00:00.0: [1022:1630] type 00 class 0x060000 conventional PCI endpoint
+[    0.945778] waynoway kernel: pci 0000:00:00.2: [1022:1631] type 00 class 0x080600 conventional PCI endpoint
+[    0.946012] waynoway kernel: pci 0000:00:01.0: [1022:1632] type 00 class 0x060000 conventional PCI endpoint
+[    0.946223] waynoway kernel: pci 0000:00:02.0: [1022:1632] type 00 class 0x060000 conventional PCI endpoint
+[    0.946488] waynoway kernel: pci 0000:00:02.1: [1022:1634] type 01 class 0x060400 PCIe Root Port
+[    0.946727] waynoway kernel: pci 0000:00:02.1: PCI bridge to [bus 01]
+[    0.946934] waynoway kernel: pci 0000:00:02.1:   bridge window [mem 0xfd900000-0xfd9fffff]
+[    0.947135] waynoway kernel: pci 0000:00:02.1: PME# supported from D0 D3hot D3cold
+[    0.947374] waynoway kernel: pci 0000:00:02.2: [1022:1634] type 01 class 0x060400 PCIe Root Port
+[    0.947585] waynoway kernel: pci 0000:00:02.2: PCI bridge to [bus 02]
+[    0.947796] waynoway kernel: pci 0000:00:02.2:   bridge window [io  0x3000-0x3fff]
+[    0.948004] waynoway kernel: pci 0000:00:02.2:   bridge window [mem 0xfd800000-0xfd8fffff]
+[    0.948203] waynoway kernel: pci 0000:00:02.2: removing 2.5GT/s downstream link speed restriction
+[    0.948409] waynoway kernel: pci 0000:00:02.2: PME# supported from D0 D3hot D3cold
+[    0.948638] waynoway kernel: pci 0000:00:02.3: [1022:1634] type 01 class 0x060400 PCIe Root Port
+[    0.948861] waynoway kernel: pci 0000:00:02.3: PCI bridge to [bus 03]
+[    0.949061] waynoway kernel: pci 0000:00:02.3:   bridge window [mem 0xfd700000-0xfd7fffff]
+[    0.949268] waynoway kernel: pci 0000:00:02.3: removing 2.5GT/s downstream link speed restriction
+[    0.949486] waynoway kernel: pci 0000:00:02.3: PME# supported from D0 D3hot D3cold
+[    0.949725] waynoway kernel: pci 0000:00:02.4: [1022:1634] type 01 class 0x060400 PCIe Root Port
+[    0.949952] waynoway kernel: pci 0000:00:02.4: PCI bridge to [bus 04]
+[    0.950180] waynoway kernel: pci 0000:00:02.4:   bridge window [mem 0xfd600000-0xfd6fffff]
+[    0.950404] waynoway kernel: pci 0000:00:02.4: removing 2.5GT/s downstream link speed restriction
+[    0.950643] waynoway kernel: pci 0000:00:02.4: PME# supported from D0 D3hot D3cold
+[    0.950875] waynoway kernel: pci 0000:00:02.6: [1022:1634] type 01 class 0x060400 PCIe Root Port
+[    0.951085] waynoway kernel: pci 0000:00:02.6: PCI bridge to [bus 05]
+[    0.951318] waynoway kernel: pci 0000:00:02.6:   bridge window [io  0x2000-0x2fff]
+[    0.951542] waynoway kernel: pci 0000:00:02.6:   bridge window [mem 0xfd500000-0xfd5fffff]
+[    0.951813] waynoway kernel: pci 0000:00:02.6: removing 2.5GT/s downstream link speed restriction
+[    0.952027] waynoway kernel: pci 0000:00:02.6: PME# supported from D0 D3hot D3cold
+[    0.952251] waynoway kernel: pci 0000:00:02.7: [1022:1634] type 01 class 0x060400 PCIe Root Port
+[    0.952472] waynoway kernel: pci 0000:00:02.7: PCI bridge to [bus 06]
+[    0.952672] waynoway kernel: pci 0000:00:02.7:   bridge window [mem 0xfd400000-0xfd4fffff]
+[    0.952873] waynoway kernel: pci 0000:00:02.7: PME# supported from D0 D3hot D3cold
+[    0.953101] waynoway kernel: pci 0000:00:08.0: [1022:1632] type 00 class 0x060000 conventional PCI endpoint
+[    0.953315] waynoway kernel: pci 0000:00:08.1: [1022:1635] type 01 class 0x060400 PCIe Root Port
+[    0.953518] waynoway kernel: pci 0000:00:08.1: PCI bridge to [bus 07]
+[    0.953724] waynoway kernel: pci 0000:00:08.1:   bridge window [io  0x1000-0x1fff]
+[    0.953915] waynoway kernel: pci 0000:00:08.1:   bridge window [mem 0xfd000000-0xfd3fffff]
+[    0.954111] waynoway kernel: pci 0000:00:08.1:   bridge window [mem 0x860000000-0x8701fffff 64bit pref]
+[    0.954316] waynoway kernel: pci 0000:00:08.1: enabling Extended Tags
+[    0.954506] waynoway kernel: pci 0000:00:08.1: PME# supported from D0 D3hot D3cold
+[    0.954716] waynoway kernel: pci 0000:00:14.0: [1022:790b] type 00 class 0x0c0500 conventional PCI endpoint
+[    0.954922] waynoway kernel: pci 0000:00:14.3: [1022:790e] type 00 class 0x060100 conventional PCI endpoint
+[    0.955140] waynoway kernel: pci 0000:00:18.0: [1022:166a] type 00 class 0x060000 conventional PCI endpoint
+[    0.955372] waynoway kernel: pci 0000:00:18.1: [1022:166b] type 00 class 0x060000 conventional PCI endpoint
+[    0.955591] waynoway kernel: pci 0000:00:18.2: [1022:166c] type 00 class 0x060000 conventional PCI endpoint
+[    0.955818] waynoway kernel: pci 0000:00:18.3: [1022:166d] type 00 class 0x060000 conventional PCI endpoint
+[    0.956024] waynoway kernel: pci 0000:00:18.4: [1022:166e] type 00 class 0x060000 conventional PCI endpoint
+[    0.956229] waynoway kernel: pci 0000:00:18.5: [1022:166f] type 00 class 0x060000 conventional PCI endpoint
+[    0.956443] waynoway kernel: pci 0000:00:18.6: [1022:1670] type 00 class 0x060000 conventional PCI endpoint
+[    0.956653] waynoway kernel: pci 0000:00:18.7: [1022:1671] type 00 class 0x060000 conventional PCI endpoint
+[    0.956865] waynoway kernel: pci 0000:01:00.0: [1344:5405] type 00 class 0x010802 PCIe Endpoint
+[    0.957071] waynoway kernel: pci 0000:01:00.0: BAR 0 [mem 0xfd900000-0xfd903fff 64bit]
+[    0.957272] waynoway kernel: pci 0000:00:02.1: PCI bridge to [bus 01]
+[    0.957495] waynoway kernel: pci 0000:02:00.0: [10ec:8168] type 00 class 0x020000 PCIe Endpoint
+[    0.957727] waynoway kernel: pci 0000:02:00.0: BAR 0 [io  0x3000-0x30ff]
+[    0.957928] waynoway kernel: pci 0000:02:00.0: BAR 2 [mem 0xfd804000-0xfd804fff 64bit]
+[    0.958129] waynoway kernel: pci 0000:02:00.0: BAR 4 [mem 0xfd800000-0xfd803fff 64bit]
+[    0.958341] waynoway kernel: pci 0000:02:00.0: supports D1 D2
+[    0.958555] waynoway kernel: pci 0000:02:00.0: PME# supported from D0 D1 D2 D3hot D3cold
+[    0.958768] waynoway kernel: pci 0000:00:02.2: PCI bridge to [bus 02]
+[    0.958982] waynoway kernel: pci 0000:03:00.0: [8086:24fd] type 00 class 0x028000 PCIe Endpoint
+[    0.959188] waynoway kernel: pci 0000:03:00.0: BAR 0 [mem 0xfd700000-0xfd701fff 64bit]
+[    0.959422] waynoway kernel: pci 0000:03:00.0: PME# supported from D0 D3hot D3cold
+[    0.959630] waynoway kernel: pci 0000:00:02.3: PCI bridge to [bus 03]
+[    0.959846] waynoway kernel: pci 0000:04:00.0: [10ec:522a] type 00 class 0xff0000 PCIe Endpoint
+[    0.960060] waynoway kernel: pci 0000:04:00.0: BAR 0 [mem 0xfd600000-0xfd600fff]
+[    0.960261] waynoway kernel: pci 0000:04:00.0: supports D1 D2
+[    0.960478] waynoway kernel: pci 0000:04:00.0: PME# supported from D1 D2 D3hot D3cold
+[    0.960680] waynoway kernel: pci 0000:00:02.4: PCI bridge to [bus 04]
+[    0.960895] waynoway kernel: pci 0000:05:00.0: [10ec:8168] type 00 class 0x020000 PCIe Endpoint
+[    0.961095] waynoway kernel: pci 0000:05:00.0: BAR 0 [io  0x2000-0x20ff]
+[    0.961309] waynoway kernel: pci 0000:05:00.0: BAR 2 [mem 0xfd504000-0xfd504fff 64bit]
+[    0.961507] waynoway kernel: pci 0000:05:00.0: BAR 4 [mem 0xfd500000-0xfd503fff 64bit]
+[    0.961704] waynoway kernel: pci 0000:05:00.0: supports D1 D2
+[    0.961912] waynoway kernel: pci 0000:05:00.0: PME# supported from D0 D1 D2 D3hot D3cold
+[    0.962100] waynoway kernel: pci 0000:00:02.6: PCI bridge to [bus 05]
+[    0.962319] waynoway kernel: pci 0000:06:00.0: [1912:0015] type 00 class 0x0c0330 PCIe Endpoint
+[    0.962537] waynoway kernel: pci 0000:06:00.0: BAR 0 [mem 0xfd400000-0xfd401fff 64bit]
+[    0.962766] waynoway kernel: pci 0000:06:00.0: PME# supported from D0 D3hot D3cold
+[    0.962968] waynoway kernel: pci 0000:00:02.7: PCI bridge to [bus 06]
+[    0.963189] waynoway kernel: pci 0000:07:00.0: [1002:1638] type 00 class 0x030000 PCIe Legacy Endpoint
+[    0.963409] waynoway kernel: pci 0000:07:00.0: BAR 0 [mem 0x860000000-0x86fffffff 64bit pref]
+[    0.963634] waynoway kernel: pci 0000:07:00.0: BAR 2 [mem 0x870000000-0x8701fffff 64bit pref]
+[    0.963834] waynoway kernel: pci 0000:07:00.0: BAR 4 [io  0x1000-0x10ff]
+[    0.964041] waynoway kernel: pci 0000:07:00.0: BAR 5 [mem 0xfd300000-0xfd37ffff]
+[    0.964260] waynoway kernel: pci 0000:07:00.0: enabling Extended Tags
+[    0.964466] waynoway kernel: pci 0000:07:00.0: PME# supported from D1 D2 D3hot D3cold
+[    0.964690] waynoway kernel: pci 0000:07:00.1: [1002:1637] type 00 class 0x040300 PCIe Legacy Endpoint
+[    0.964897] waynoway kernel: pci 0000:07:00.1: BAR 0 [mem 0xfd3c8000-0xfd3cbfff]
+[    0.965117] waynoway kernel: pci 0000:07:00.1: enabling Extended Tags
+[    0.965318] waynoway kernel: pci 0000:07:00.1: PME# supported from D1 D2 D3hot D3cold
+[    0.965532] waynoway kernel: pci 0000:07:00.2: [1022:15df] type 00 class 0x108000 PCIe Endpoint
+[    0.965739] waynoway kernel: pci 0000:07:00.2: BAR 2 [mem 0xfd200000-0xfd2fffff]
+[    0.965933] waynoway kernel: pci 0000:07:00.2: BAR 5 [mem 0xfd3cc000-0xfd3cdfff]
+[    0.966124] waynoway kernel: pci 0000:07:00.2: enabling Extended Tags
+[    0.966368] waynoway kernel: pci 0000:07:00.3: [1022:1639] type 00 class 0x0c0330 PCIe Endpoint
+[    0.966584] waynoway kernel: pci 0000:07:00.3: BAR 0 [mem 0xfd000000-0xfd0fffff 64bit]
+[    0.966796] waynoway kernel: pci 0000:07:00.3: enabling Extended Tags
+[    0.967004] waynoway kernel: pci 0000:07:00.3: PME# supported from D0 D3hot D3cold
+[    0.967227] waynoway kernel: pci 0000:07:00.4: [1022:1639] type 00 class 0x0c0330 PCIe Endpoint
+[    0.967450] waynoway kernel: pci 0000:07:00.4: BAR 0 [mem 0xfd100000-0xfd1fffff 64bit]
+[    0.967657] waynoway kernel: pci 0000:07:00.4: enabling Extended Tags
+[    0.967851] waynoway kernel: pci 0000:07:00.4: PME# supported from D0 D3hot D3cold
+[    0.968062] waynoway kernel: pci 0000:07:00.5: [1022:15e2] type 00 class 0x048000 PCIe Endpoint
+[    0.968258] waynoway kernel: pci 0000:07:00.5: BAR 0 [mem 0xfd380000-0xfd3bffff]
+[    0.968465] waynoway kernel: pci 0000:07:00.5: enabling Extended Tags
+[    0.968674] waynoway kernel: pci 0000:07:00.5: PME# supported from D0 D3hot D3cold
+[    0.968891] waynoway kernel: pci 0000:07:00.6: [1022:15e3] type 00 class 0x040300 PCIe Endpoint
+[    0.969089] waynoway kernel: pci 0000:07:00.6: BAR 0 [mem 0xfd3c0000-0xfd3c7fff]
+[    0.969295] waynoway kernel: pci 0000:07:00.6: enabling Extended Tags
+[    0.969502] waynoway kernel: pci 0000:07:00.6: PME# supported from D0 D3hot D3cold
+[    0.969696] waynoway kernel: pci 0000:00:08.1: PCI bridge to [bus 07]
+[    0.969705] waynoway kernel: ACPI: PCI: Interrupt link LNKA configured for IRQ 0
+[    0.969711] waynoway kernel: ACPI: PCI: Interrupt link LNKB configured for IRQ 0
+[    0.969723] waynoway kernel: ACPI: PCI: Interrupt link LNKC configured for IRQ 0
+[    0.969731] waynoway kernel: ACPI: PCI: Interrupt link LNKD configured for IRQ 0
+[    0.969737] waynoway kernel: ACPI: PCI: Interrupt link LNKE configured for IRQ 0
+[    0.969743] waynoway kernel: ACPI: PCI: Interrupt link LNKF configured for IRQ 0
+[    0.969749] waynoway kernel: ACPI: PCI: Interrupt link LNKG configured for IRQ 0
+[    0.969755] waynoway kernel: ACPI: PCI: Interrupt link LNKH configured for IRQ 0
+[    0.969761] waynoway kernel: Low-power S0 idle used by default for system suspend
+[    0.969767] waynoway kernel: ACPI: EC: interrupt unblocked
+[    0.969773] waynoway kernel: ACPI: EC: event unblocked
+[    0.969779] waynoway kernel: ACPI: EC: EC_CMD/EC_SC=0x66, EC_DATA=0x62
+[    0.969789] waynoway kernel: ACPI: EC: GPE=0x3
+[    0.969796] waynoway kernel: ACPI: \_SB_.PCI0.LPC0.EC0_: Boot DSDT EC initialization complete
+[    0.969802] waynoway kernel: ACPI: \_SB_.PCI0.LPC0.EC0_: EC: Used to handle transactions and events
+[    0.969808] waynoway kernel: iommu: Default domain type: Translated
+[    0.969814] waynoway kernel: iommu: DMA domain TLB invalidation policy: lazy mode
+[    0.969820] waynoway kernel: SCSI subsystem initialized
+[    0.969826] waynoway kernel: libata version 3.00 loaded.
+[    0.969834] waynoway kernel: ACPI: bus type USB registered
+[    0.969840] waynoway kernel: usbcore: registered new interface driver usbfs
+[    0.969846] waynoway kernel: usbcore: registered new interface driver hub
+[    0.969851] waynoway kernel: usbcore: registered new device driver usb
+[    0.969859] waynoway kernel: pps_core: LinuxPPS API ver. 1 registered
+[    0.969865] waynoway kernel: pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.969871] waynoway kernel: PTP clock support registered
+[    0.969877] waynoway kernel: EDAC MC: Ver: 3.0.0
+[    0.969883] waynoway kernel: efivars: Registered efivars operations
+[    0.969889] waynoway kernel: NetLabel: Initializing
+[    0.969895] waynoway kernel: NetLabel:  domain hash size = 128
+[    0.969901] waynoway kernel: NetLabel:  protocols = UNLABELED CIPSOv4 CALIPSO
+[    0.969907] waynoway kernel: NetLabel:  unlabeled traffic allowed by default
+[    0.969915] waynoway kernel: mctp: management component transport protocol core
+[    0.969923] waynoway kernel: NET: Registered PF_MCTP protocol family
+[    0.969929] waynoway kernel: PCI: Using ACPI for IRQ routing
+[    0.969934] waynoway kernel: PCI: pci_cache_line_size set to 64 bytes
+[    0.969940] waynoway kernel: e820: register RAM buffer resource [mem 0x0009f000-0x0009ffff]
+[    0.969946] waynoway kernel: e820: register RAM buffer resource [mem 0x09c00000-0x0bffffff]
+[    0.969952] waynoway kernel: e820: register RAM buffer resource [mem 0x09f00000-0x0bffffff]
+[    0.969958] waynoway kernel: e820: register RAM buffer resource [mem 0xc0604000-0xc3ffffff]
+[    0.969966] waynoway kernel: e820: register RAM buffer resource [mem 0xc17bb000-0xc3ffffff]
+[    0.969973] waynoway kernel: e820: register RAM buffer resource [mem 0xc4b7e000-0xc7ffffff]
+[    0.969983] waynoway kernel: e820: register RAM buffer resource [mem 0xce000000-0xcfffffff]
+[    0.969989] waynoway kernel: e820: register RAM buffer resource [mem 0x72e300000-0x72fffffff]
+[    0.970197] waynoway kernel: pci 0000:07:00.0: vgaarb: setting as boot VGA device
+[    0.970405] waynoway kernel: pci 0000:07:00.0: vgaarb: bridge control possible
+[    0.970603] waynoway kernel: pci 0000:07:00.0: vgaarb: VGA device added: decodes=io+mem,owns=none,locks=none
+[    0.970611] waynoway kernel: vgaarb: loaded
+[    0.970616] waynoway kernel: hpet0: at MMIO 0xfed00000, IRQs 2, 8, 0
+[    0.970621] waynoway kernel: hpet0: 3 comparators, 32-bit 14.318180 MHz counter
+[    0.970630] waynoway kernel: clocksource: Switched to clocksource tsc-early
+[    0.970636] waynoway kernel: VFS: Disk quotas dquot_6.6.0
+[    0.970648] waynoway kernel: VFS: Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+[    0.970653] waynoway kernel: AppArmor: AppArmor Filesystem Enabled
+[    0.970894] waynoway kernel: acpi PNP0C02:00: Could not reserve [mem 0xfec00000-0xfec01fff]
+[    0.971097] waynoway kernel: acpi PNP0C02:00: Reserved [mem 0xfee00000-0xfee00fff]
+[    0.971314] waynoway kernel: acpi PNP0C02:00: Reserved [mem 0xf8000000-0xfbffffff]
+[    0.971552] waynoway kernel: acpi PNP0C02:01: Skipped [io  0x0022-0x0023]
+[    0.971777] waynoway kernel: acpi PNP0C02:01: Skipped [io  0x0072-0x0073]
+[    0.972009] waynoway kernel: acpi PNP0C02:01: Skipped [io  0x0080]
+[    0.972223] waynoway kernel: acpi PNP0C02:01: Skipped [io  0x0092]
+[    0.972434] waynoway kernel: acpi PNP0C02:01: Skipped [io  0x00b0-0x00b1]
+[    0.972644] waynoway kernel: acpi PNP0C02:01: Reserved [io  0x0400-0x04cf]
+[    0.972864] waynoway kernel: acpi PNP0C02:01: Reserved [io  0x04d0-0x04d1]
+[    0.973080] waynoway kernel: acpi PNP0C02:01: Reserved [io  0x04d6]
+[    0.973300] waynoway kernel: acpi PNP0C02:01: Reserved [io  0x0c00-0x0c01]
+[    0.973520] waynoway kernel: acpi PNP0C02:01: Reserved [io  0x0c14]
+[    0.973738] waynoway kernel: acpi PNP0C02:01: Reserved [io  0x0c50-0x0c52]
+[    0.973960] waynoway kernel: acpi PNP0C02:01: Reserved [io  0x0c6c]
+[    0.974180] waynoway kernel: acpi PNP0C02:01: Reserved [io  0x0c6f]
+[    0.974396] waynoway kernel: acpi PNP0C02:01: Reserved [io  0x0cd0-0x0cdb]
+[    0.974622] waynoway kernel: acpi PNP0C01:00: Could not reserve [mem 0x000e0000-0x000fffff]
+[    0.974856] waynoway kernel: acpi PNP0C01:00: Could not reserve [mem 0x00000000-0x01ffffff]
+[    0.975076] waynoway kernel: acpi PNP0C01:00: Reserved [mem 0xfec10000-0xfec1001f]
+[    0.975286] waynoway kernel: acpi PNP0C01:00: Reserved [mem 0xfed00000-0xfed003ff]
+[    0.975534] waynoway kernel: acpi PNP0C01:00: Reserved [mem 0xfed61000-0xfed613ff]
+[    0.975748] waynoway kernel: acpi PNP0C01:00: Reserved [mem 0xfed80000-0xfed80fff]
+[    0.975759] waynoway kernel: pnp: PnP ACPI init
+[    0.975768] waynoway kernel: pnp: PnP ACPI: found 3 devices
+[    0.975774] waynoway kernel: clocksource: acpi_pm: mask: 0xffffff max_cycles: 0xffffff, max_idle_ns: 2085701024 ns
+[    0.975780] waynoway kernel: NET: Registered PF_INET protocol family
+[    0.975788] waynoway kernel: IP idents hash table entries: 262144 (order: 9, 2097152 bytes, linear)
+[    0.975794] waynoway kernel: tcp_listen_portaddr_hash hash table entries: 16384 (order: 6, 262144 bytes, linear)
+[    0.975808] waynoway kernel: Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.975815] waynoway kernel: TCP established hash table entries: 262144 (order: 9, 2097152 bytes, linear)
+[    0.975821] waynoway kernel: TCP bind hash table entries: 65536 (order: 9, 2097152 bytes, linear)
+[    0.975827] waynoway kernel: TCP: Hash tables configured (established 262144 bind 65536)
+[    0.975835] waynoway kernel: MPTCP token hash table entries: 32768 (order: 8, 786432 bytes, linear)
+[    0.975841] waynoway kernel: UDP hash table entries: 16384 (order: 8, 1048576 bytes, linear)
+[    0.975847] waynoway kernel: UDP-Lite hash table entries: 16384 (order: 8, 1048576 bytes, linear)
+[    0.975853] waynoway kernel: NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    0.975859] waynoway kernel: NET: Registered PF_XDP protocol family
+[    0.976059] waynoway kernel: pci 0000:00:02.3: bridge window [io  0x1000-0x0fff] to [bus 03] add_size 1000
+[    0.976253] waynoway kernel: pci 0000:00:02.3: bridge window [mem 0x00100000-0x000fffff 64bit pref] to [bus 03] add_size 200000 add_align 100000
+[    0.976451] waynoway kernel: pci 0000:00:02.3: bridge window [mem 0x830000000-0x8301fffff 64bit pref]: assigned
+[    0.976665] waynoway kernel: pci 0000:00:02.3: bridge window [io  0x4000-0x4fff]: assigned
+[    0.976878] waynoway kernel: pci 0000:00:02.1: PCI bridge to [bus 01]
+[    0.977073] waynoway kernel: pci 0000:00:02.1:   bridge window [mem 0xfd900000-0xfd9fffff]
+[    0.977275] waynoway kernel: pci 0000:00:02.2: PCI bridge to [bus 02]
+[    0.977476] waynoway kernel: pci 0000:00:02.2:   bridge window [io  0x3000-0x3fff]
+[    0.977775] waynoway kernel: pci 0000:00:02.2:   bridge window [mem 0xfd800000-0xfd8fffff]
+[    0.978078] waynoway kernel: pci 0000:00:02.3: PCI bridge to [bus 03]
+[    0.978400] waynoway kernel: pci 0000:00:02.3:   bridge window [io  0x4000-0x4fff]
+[    0.978752] waynoway kernel: pci 0000:00:02.3:   bridge window [mem 0xfd700000-0xfd7fffff]
+[    0.979089] waynoway kernel: pci 0000:00:02.3:   bridge window [mem 0x830000000-0x8301fffff 64bit pref]
+[    0.979439] waynoway kernel: pci 0000:00:02.4: PCI bridge to [bus 04]
+[    0.979797] waynoway kernel: pci 0000:00:02.4:   bridge window [mem 0xfd600000-0xfd6fffff]
+[    0.980141] waynoway kernel: pci 0000:00:02.6: PCI bridge to [bus 05]
+[    0.980505] waynoway kernel: pci 0000:00:02.6:   bridge window [io  0x2000-0x2fff]
+[    0.980878] waynoway kernel: pci 0000:00:02.6:   bridge window [mem 0xfd500000-0xfd5fffff]
+[    0.981241] waynoway kernel: pci 0000:00:02.7: PCI bridge to [bus 06]
+[    0.981611] waynoway kernel: pci 0000:00:02.7:   bridge window [mem 0xfd400000-0xfd4fffff]
+[    0.981971] waynoway kernel: pci 0000:00:08.1: PCI bridge to [bus 07]
+[    0.982332] waynoway kernel: pci 0000:00:08.1:   bridge window [io  0x1000-0x1fff]
+[    0.982726] waynoway kernel: pci 0000:00:08.1:   bridge window [mem 0xfd000000-0xfd3fffff]
+[    0.983088] waynoway kernel: pci 0000:00:08.1:   bridge window [mem 0x860000000-0x8701fffff 64bit pref]
+[    0.983454] waynoway kernel: pci_bus 0000:00: resource 4 [mem 0x000a0000-0x000effff window]
+[    0.983805] waynoway kernel: pci_bus 0000:00: resource 5 [mem 0xd0000000-0xf7ffffff window]
+[    0.984151] waynoway kernel: pci_bus 0000:00: resource 6 [mem 0xfc000000-0xfdffffff window]
+[    0.984500] waynoway kernel: pci_bus 0000:00: resource 7 [mem 0x830000000-0xffffffffff window]
+[    0.984847] waynoway kernel: pci_bus 0000:00: resource 8 [io  0x0000-0x0cf7 window]
+[    0.985184] waynoway kernel: pci_bus 0000:00: resource 9 [io  0x0d00-0xffff window]
+[    0.985573] waynoway kernel: pci_bus 0000:01: resource 1 [mem 0xfd900000-0xfd9fffff]
+[    0.985959] waynoway kernel: pci_bus 0000:02: resource 0 [io  0x3000-0x3fff]
+[    0.986184] waynoway kernel: pci_bus 0000:02: resource 1 [mem 0xfd800000-0xfd8fffff]
+[    0.986445] waynoway kernel: pci_bus 0000:03: resource 0 [io  0x4000-0x4fff]
+[    0.986701] waynoway kernel: pci_bus 0000:03: resource 1 [mem 0xfd700000-0xfd7fffff]
+[    0.986935] waynoway kernel: pci_bus 0000:03: resource 2 [mem 0x830000000-0x8301fffff 64bit pref]
+[    0.987173] waynoway kernel: pci_bus 0000:04: resource 1 [mem 0xfd600000-0xfd6fffff]
+[    0.987435] waynoway kernel: pci_bus 0000:05: resource 0 [io  0x2000-0x2fff]
+[    0.987684] waynoway kernel: pci_bus 0000:05: resource 1 [mem 0xfd500000-0xfd5fffff]
+[    0.987920] waynoway kernel: pci_bus 0000:06: resource 1 [mem 0xfd400000-0xfd4fffff]
+[    0.988160] waynoway kernel: pci_bus 0000:07: resource 0 [io  0x1000-0x1fff]
+[    0.988368] waynoway kernel: pci_bus 0000:07: resource 1 [mem 0xfd000000-0xfd3fffff]
+[    0.988573] waynoway kernel: pci_bus 0000:07: resource 2 [mem 0x860000000-0x8701fffff 64bit pref]
+[    0.988806] waynoway kernel: pci 0000:07:00.1: D0 power state depends on 0000:07:00.0
+[    0.989026] waynoway kernel: pci 0000:07:00.3: extending delay after power-on from D3hot to 20 msec
+[    0.989228] waynoway kernel: pci 0000:07:00.4: extending delay after power-on from D3hot to 20 msec
+[    0.989244] waynoway kernel: PCI: CLS 32 bytes, default 64
+[    0.989458] waynoway kernel: pci 0000:00:00.2: AMD-Vi: IOMMU performance counters supported
+[    0.989490] waynoway kernel: Trying to unpack rootfs image as initramfs...
+[    0.989723] waynoway kernel: pci 0000:00:01.0: Adding to iommu group 0
+[    0.989918] waynoway kernel: pci 0000:00:02.0: Adding to iommu group 1
+[    0.990109] waynoway kernel: pci 0000:00:02.1: Adding to iommu group 2
+[    0.990302] waynoway kernel: pci 0000:00:02.2: Adding to iommu group 3
+[    0.990502] waynoway kernel: pci 0000:00:02.3: Adding to iommu group 4
+[    0.990697] waynoway kernel: pci 0000:00:02.4: Adding to iommu group 5
+[    0.990888] waynoway kernel: pci 0000:00:02.6: Adding to iommu group 6
+[    0.991083] waynoway kernel: pci 0000:00:02.7: Adding to iommu group 7
+[    0.991298] waynoway kernel: pci 0000:00:08.0: Adding to iommu group 8
+[    0.991499] waynoway kernel: pci 0000:00:08.1: Adding to iommu group 9
+[    0.991709] waynoway kernel: pci 0000:00:14.0: Adding to iommu group 10
+[    0.991946] waynoway kernel: pci 0000:00:14.3: Adding to iommu group 10
+[    0.992165] waynoway kernel: pci 0000:00:18.0: Adding to iommu group 11
+[    0.992399] waynoway kernel: pci 0000:00:18.1: Adding to iommu group 11
+[    0.992617] waynoway kernel: pci 0000:00:18.2: Adding to iommu group 11
+[    0.992868] waynoway kernel: pci 0000:00:18.3: Adding to iommu group 11
+[    0.993077] waynoway kernel: pci 0000:00:18.4: Adding to iommu group 11
+[    0.993294] waynoway kernel: pci 0000:00:18.5: Adding to iommu group 11
+[    0.993499] waynoway kernel: pci 0000:00:18.6: Adding to iommu group 11
+[    0.993695] waynoway kernel: pci 0000:00:18.7: Adding to iommu group 11
+[    0.993904] waynoway kernel: pci 0000:01:00.0: Adding to iommu group 12
+[    0.994100] waynoway kernel: pci 0000:02:00.0: Adding to iommu group 13
+[    0.994330] waynoway kernel: pci 0000:03:00.0: Adding to iommu group 14
+[    0.994586] waynoway kernel: pci 0000:04:00.0: Adding to iommu group 15
+[    0.994830] waynoway kernel: pci 0000:05:00.0: Adding to iommu group 16
+[    0.995083] waynoway kernel: pci 0000:06:00.0: Adding to iommu group 17
+[    0.995334] waynoway kernel: pci 0000:07:00.0: Adding to iommu group 18
+[    0.995562] waynoway kernel: pci 0000:07:00.1: Adding to iommu group 19
+[    0.995841] waynoway kernel: pci 0000:07:00.2: Adding to iommu group 20
+[    0.996058] waynoway kernel: pci 0000:07:00.3: Adding to iommu group 21
+[    0.996270] waynoway kernel: pci 0000:07:00.4: Adding to iommu group 22
+[    0.996520] waynoway kernel: pci 0000:07:00.5: Adding to iommu group 23
+[    0.996771] waynoway kernel: pci 0000:07:00.6: Adding to iommu group 24
+[    0.996782] waynoway kernel: AMD-Vi: Extended features (0x206d73ef22254ade, 0x0): PPR X2APIC NX GT IA GA PC GA_vAPIC
+[    0.996789] waynoway kernel: AMD-Vi: Interrupt remapping enabled
+[    0.996796] waynoway kernel: AMD-Vi: X2APIC enabled
+[    0.996803] waynoway kernel: AMD-Vi: Virtual APIC enabled
+[    0.996810] waynoway kernel: PCI-DMA: Using software bounce buffering for IO (SWIOTLB)
+[    0.996817] waynoway kernel: software IO TLB: mapped [mem 0x000000009b000000-0x000000009f000000] (64MB)
+[    0.996828] waynoway kernel: LVT offset 0 assigned for vector 0x400
+[    0.996834] waynoway kernel: perf: AMD IBS detected (0x000003ff)
+[    0.996841] waynoway kernel: perf/amd_iommu: Detected AMD IOMMU #0 (2 banks, 4 counters/bank).
+[    0.996848] waynoway kernel: Initialise system trusted keyrings
+[    0.996857] waynoway kernel: Key type blacklist registered
+[    0.996865] waynoway kernel: workingset: timestamp_bits=36 max_order=23 bucket_order=0
+[    0.996872] waynoway kernel: squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.996879] waynoway kernel: fuse: init (API version 7.45)
+[    0.996886] waynoway kernel: integrity: Platform Keyring initialized
+[    0.996895] waynoway kernel: integrity: Machine keyring initialized
+[    0.996903] waynoway kernel: Key type asymmetric registered
+[    0.996911] waynoway kernel: Asymmetric key parser 'x509' registered
+[    0.996918] waynoway kernel: Block layer SCSI generic (bsg) driver version 0.4 loaded (major 242)
+[    0.996925] waynoway kernel: io scheduler mq-deadline registered
+[    0.996932] waynoway kernel: ledtrig-cpu: registered to indicate activity on CPUs
+[    0.997144] waynoway kernel: pcieport 0000:00:02.1: PME: Signaling with IRQ 40
+[    0.997357] waynoway kernel: pcieport 0000:00:02.2: PME: Signaling with IRQ 41
+[    0.997558] waynoway kernel: pcieport 0000:00:02.3: PME: Signaling with IRQ 42
+[    0.997772] waynoway kernel: pcieport 0000:00:02.3: pciehp: Slot #0 AttnBtn- PwrCtrl- MRL- AttnInd- PwrInd- HotPlug+ Surprise+ Interlock- NoCompl+ IbPresDis- LLActRep+
+[    0.997968] waynoway kernel: pcieport 0000:00:02.4: PME: Signaling with IRQ 43
+[    0.998171] waynoway kernel: pcieport 0000:00:02.6: PME: Signaling with IRQ 44
+[    0.998371] waynoway kernel: pcieport 0000:00:02.7: PME: Signaling with IRQ 45
+[    0.998576] waynoway kernel: pcieport 0000:00:08.1: PME: Signaling with IRQ 46
+[    0.998585] waynoway kernel: ACPI: AC: AC Adapter [AC] (off-line)
+[    0.998591] waynoway kernel: input: Power Button as /devices/platform/PNP0C0C:00/input/input0
+[    0.998600] waynoway kernel: ACPI: button: Power Button [PWRB]
+[    0.998606] waynoway kernel: input: Lid Switch as /devices/platform/PNP0C0D:00/input/input1
+[    0.998612] waynoway kernel: ACPI: button: Lid Switch [LID]
+[    0.998618] waynoway kernel: input: Sleep Button as /devices/platform/PNP0C0E:00/input/input2
+[    0.998624] waynoway kernel: ACPI: button: Sleep Button [SLPB]
+[    0.998633] waynoway kernel: input: Power Button as /devices/platform/LNXPWRBN:00/input/input3
+[    0.998639] waynoway kernel: ACPI: button: Power Button [PWRF]
+[    0.998645] waynoway kernel: Monitor-Mwait will be used to enter C-1 state
+[    0.998652] waynoway kernel: Estimated ratio of average max frequency by base frequency (times 1024): 1726
+[    0.998882] waynoway kernel: acpi LNXTHERM:00: registered as thermal_zone0
+[    0.998892] waynoway kernel: ACPI: thermal: Thermal Zone [TZ01] (76 C)
+[    0.998899] waynoway kernel: Serial: 8250/16550 driver, 32 ports, IRQ sharing enabled
+[    0.998905] waynoway kernel: ACPI: battery: Slot [BAT0] (battery present)
+[    0.998913] waynoway kernel: Linux agpgart interface v0.103
+[    0.999116] waynoway kernel: tpm_tis STM0125:00: 2.0 TPM (device-id 0x0, rev-id 78)
+[    0.999129] waynoway kernel: loop: module loaded
+[    0.999136] waynoway kernel: ACPI: bus type drm_connector registered
+[    0.999144] waynoway kernel: tun: Universal TUN/TAP device driver, 1.6
+[    0.999150] waynoway kernel: PPP generic driver version 2.4.2
+[    0.999362] waynoway kernel: xhci_hcd 0000:07:00.3: xHCI Host Controller
+[    0.999566] waynoway kernel: xhci_hcd 0000:07:00.3: new USB bus registered, assigned bus number 1
+[    0.999769] waynoway kernel: xhci_hcd 0000:07:00.3: hcc params 0x0268ffe5 hci version 0x110 quirks 0x0000020000000010
+[    0.999962] waynoway kernel: xhci_hcd 0000:07:00.3: xHCI Host Controller
+[    1.000151] waynoway kernel: xhci_hcd 0000:07:00.3: new USB bus registered, assigned bus number 2
+[    1.000360] waynoway kernel: xhci_hcd 0000:07:00.3: Host supports USB 3.1 Enhanced SuperSpeed
+[    1.000572] waynoway kernel: usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 7.00
+[    1.000751] waynoway kernel: usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.000910] waynoway kernel: usb usb1: Product: xHCI Host Controller
+[    1.001067] waynoway kernel: usb usb1: Manufacturer: Linux 7.0.0-38-generic xhci-hcd
+[    1.001225] waynoway kernel: usb usb1: SerialNumber: 0000:07:00.3
+[    1.001539] waynoway kernel: hub 1-0:1.0: USB hub found
+[    1.001927] waynoway kernel: hub 1-0:1.0: 4 ports detected
+[    1.002331] waynoway kernel: usb usb2: We don't know the algorithms for LPM for this host, disabling LPM.
+[    1.002550] waynoway kernel: usb usb2: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 7.00
+[    1.002744] waynoway kernel: usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.002977] waynoway kernel: usb usb2: Product: xHCI Host Controller
+[    1.003265] waynoway kernel: usb usb2: Manufacturer: Linux 7.0.0-38-generic xhci-hcd
+[    1.003554] waynoway kernel: usb usb2: SerialNumber: 0000:07:00.3
+[    1.003975] waynoway kernel: hub 2-0:1.0: USB hub found
+[    1.004361] waynoway kernel: hub 2-0:1.0: 2 ports detected
+[    1.004700] waynoway kernel: xhci_hcd 0000:07:00.4: xHCI Host Controller
+[    1.005080] waynoway kernel: xhci_hcd 0000:07:00.4: new USB bus registered, assigned bus number 3
+[    1.005460] waynoway kernel: xhci_hcd 0000:07:00.4: hcc params 0x0268ffe5 hci version 0x110 quirks 0x0000020000000010
+[    1.005845] waynoway kernel: xhci_hcd 0000:07:00.4: xHCI Host Controller
+[    1.006242] waynoway kernel: xhci_hcd 0000:07:00.4: new USB bus registered, assigned bus number 4
+[    1.006599] waynoway kernel: xhci_hcd 0000:07:00.4: Host supports USB 3.1 Enhanced SuperSpeed
+[    1.006909] waynoway kernel: usb usb3: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 7.00
+[    1.007213] waynoway kernel: usb usb3: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.007528] waynoway kernel: usb usb3: Product: xHCI Host Controller
+[    1.007844] waynoway kernel: usb usb3: Manufacturer: Linux 7.0.0-38-generic xhci-hcd
+[    1.008147] waynoway kernel: usb usb3: SerialNumber: 0000:07:00.4
+[    1.008600] waynoway kernel: hub 3-0:1.0: USB hub found
+[    1.008942] waynoway kernel: hub 3-0:1.0: 4 ports detected
+[    1.009215] waynoway kernel: usb usb4: We don't know the algorithms for LPM for this host, disabling LPM.
+[    1.009425] waynoway kernel: usb usb4: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 7.00
+[    1.009615] waynoway kernel: usb usb4: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.009832] waynoway kernel: usb usb4: Product: xHCI Host Controller
+[    1.010018] waynoway kernel: usb usb4: Manufacturer: Linux 7.0.0-38-generic xhci-hcd
+[    1.010228] waynoway kernel: usb usb4: SerialNumber: 0000:07:00.4
+[    1.010505] waynoway kernel: hub 4-0:1.0: USB hub found
+[    1.010738] waynoway kernel: hub 4-0:1.0: 2 ports detected
+[    1.010751] waynoway kernel: i8042: PNP: PS/2 Controller [PNP0303:KBD,PNP0f13:MOU] at 0x60,0x64 irq 1,12
+[    1.010757] waynoway kernel: serio: i8042 KBD port at 0x60,0x64 irq 1
+[    1.010763] waynoway kernel: serio: i8042 AUX port at 0x60,0x64 irq 12
+[    1.010769] waynoway kernel: mousedev: PS/2 mouse device common for all mice
+[    1.010991] waynoway kernel: rtc_cmos 00:00: RTC can wake from S4
+[    1.011181] waynoway kernel: rtc_cmos 00:00: registered as rtc0
+[    1.011379] waynoway kernel: rtc_cmos 00:00: setting system clock to 2026-10-23T19:01:53 UTC (1792782113)
+[    1.011561] waynoway kernel: rtc_cmos 00:00: alarms up to one month, y3k, 114 bytes nvram
+[    1.011576] waynoway kernel: i2c_dev: i2c /dev entries driver
+[    1.011583] waynoway kernel: device-mapper: core: CONFIG_IMA_DISABLE_HTABLE is disabled. Duplicate IMA measurements will not be recorded in the IMA log.
+[    1.011589] waynoway kernel: device-mapper: uevent: version 1.0.3
+[    1.011595] waynoway kernel: device-mapper: ioctl: 4.50.0-ioctl (2025-04-28) initialised: dm-devel@lists.linux.dev
+[    1.011826] waynoway kernel: simple-framebuffer simple-framebuffer.0: [drm] Registered 1 planes with drm panic
+[    1.011836] waynoway kernel: [drm] Initialized simpledrm 1.0.0 for simple-framebuffer.0 on minor 0
+[    1.011843] waynoway kernel: fbcon: Deferring console take-over
+[    1.012049] waynoway kernel: simple-framebuffer simple-framebuffer.0: [drm] fb0: simpledrmdrmfb frame buffer device
+[    1.012062] waynoway kernel: drop_monitor: Initializing network drop monitor service
+[    1.012068] waynoway kernel: NET: Registered PF_INET6 protocol family
+[    1.012075] waynoway kernel: input: AT Translated Set 2 keyboard as /devices/platform/i8042/serio0/input/input4
+[    1.012081] waynoway kernel: Segment Routing with IPv6
+[    1.012087] waynoway kernel: In-situ OAM (IOAM) with IPv6
+[    1.012093] waynoway kernel: NET: Registered PF_PACKET protocol family
+[    1.012099] waynoway kernel: Key type dns_resolver registered
+[    1.012106] waynoway kernel: x86/amd: Previous system reset reason [0x00200800]: ACPI power state transition occurred
+[    1.012114] waynoway kernel: microcode: Current revision: 0x0a500014
+[    1.012120] waynoway kernel: resctrl: L3 allocation detected
+[    1.012127] waynoway kernel: resctrl: MB allocation detected
+[    1.012134] waynoway kernel: resctrl: L3 monitoring detected
+[    1.012140] waynoway kernel: IPI shorthand broadcast: enabled
+[    1.012146] waynoway kernel: sched_clock: Marking stable (574594392, 336002)->(592755450, -17825056)
+[    1.012152] waynoway kernel: registered taskstats version 1
+[    1.012158] waynoway kernel: Loading compiled-in X.509 certificates
+[    1.012164] waynoway kernel: Loaded X.509 cert 'Build time autogenerated kernel key: 6b2b0d62fc3a1216c49fda2b061b13d4dbf474bd'
+[    1.012172] waynoway kernel: Loaded X.509 cert 'Canonical Ltd. Live Patch Signing 2025 Kmod: d541cef61dc7e793b7eb7e899970a2eef0b5dc8c'
+[    1.012178] waynoway kernel: Loaded X.509 cert 'Canonical Ltd. Live Patch Signing: 14df34d1a87cf37625abec039ef2bf521249b969'
+[    1.012184] waynoway kernel: Loaded X.509 cert 'Canonical Ltd. Kernel Module Signing 2025 Kmod: 4627603d2357a2a3f81006370894c221175893e9'
+[    1.012191] waynoway kernel: Loaded X.509 cert 'Canonical Ltd. Kernel Module Signing: 88f752e560a1e0737e31163a466ad7b70a850c19'
+[    1.012197] waynoway kernel: blacklist: Loading compiled-in revocation X.509 certificates
+[    1.012203] waynoway kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing: 61482aa2830d0ab2ad5af10b7250da9033ddcef0'
+[    1.012209] waynoway kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2017): 242ade75ac4a15e50d50c84b0d45ff3eae707a03'
+[    1.012215] waynoway kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (ESM 2018): 365188c1d374d6b07c3c8f240f8ef722433d6a8b'
+[    1.012223] waynoway kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2019): c0746fd6c5da3ae827864651ad66ae47fe24b3e8'
+[    1.012229] waynoway kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2021 v1): a8d54bbb3825cfb94fa13c9f8a594a195c107b8d'
+[    1.012236] waynoway kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2021 v2): 4cf046892d6fd3c9a5b03f98d845f90851dc6a8c'
+[    1.012242] waynoway kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2021 v3): 100437bb6de6e469b581e61cd66bce3ef4ed53af'
+[    1.012248] waynoway kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (Ubuntu Core 2019): c1d57b8f6b743f23ee41f4f7ee292f06eecadfb9'
+[    1.012254] waynoway kernel: Demotion targets for Node 0: null
+[    1.012260] waynoway kernel: Key type .fscrypt registered
+[    1.012266] waynoway kernel: Key type fscrypt-provisioning registered
+[    1.012274] waynoway kernel: Key type big_key registered
+[    1.012281] waynoway kernel: Key type trusted registered
+[    1.012291] waynoway kernel: Freeing initrd memory: 41168K
+[    1.012300] waynoway kernel: Key type encrypted registered
+[    1.012306] waynoway kernel: AppArmor: AppArmor sha256 policy hashing enabled
+[    1.012312] waynoway kernel: Loading compiled-in module X.509 certificates
+[    1.012318] waynoway kernel: Loaded X.509 cert 'Build time autogenerated kernel key: 6b2b0d62fc3a1216c49fda2b061b13d4dbf474bd'
+[    1.012324] waynoway kernel: ima: Allocated hash algorithm: sha256
+[    1.012330] waynoway kernel: ima: No architecture policies found
+[    1.012339] waynoway kernel: evm: Initialising EVM extended attributes:
+[    1.012345] waynoway kernel: evm: security.selinux
+[    1.012352] waynoway kernel: evm: security.SMACK64
+[    1.012358] waynoway kernel: evm: security.SMACK64EXEC
+[    1.012364] waynoway kernel: evm: security.SMACK64TRANSMUTE
+[    1.012370] waynoway kernel: evm: security.SMACK64MMAP
+[    1.012376] waynoway kernel: evm: security.apparmor
+[    1.012383] waynoway kernel: evm: security.ima
+[    1.012389] waynoway kernel: evm: security.capability
+[    1.012396] waynoway kernel: evm: HMAC attrs: 0x1
+[    1.012402] waynoway kernel: integrity: Loading X.509 certificate: UEFI:db
+[    1.012408] waynoway kernel: integrity: Loaded X.509 cert 'Lenovo Ltd.: ThinkPad Product CA 2012: 838b1f54c1550463f45f98700640f11069265949'
+[    1.012414] waynoway kernel: integrity: Loading X.509 certificate: UEFI:db
+[    1.012419] waynoway kernel: integrity: Loaded X.509 cert 'Lenovo(Beijing)Ltd: swqagent: 24b0bd0836b2f545edea93e058bd3a3c5a8f6a49'
+[    1.012425] waynoway kernel: integrity: Loading X.509 certificate: UEFI:db
+[    1.012430] waynoway kernel: integrity: Loaded X.509 cert 'Lenovo UEFI CA 2014: 4b91a68732eaefdd2c8ffffc6b027ec3449e9c8f'
+[    1.012436] waynoway kernel: integrity: Loading X.509 certificate: UEFI:db
+[    1.012442] waynoway kernel: integrity: Loaded X.509 cert 'Microsoft Corporation UEFI CA 2011: 13adbf4309bd82709c8cd54f316ed522988a1bd4'
+[    1.012450] waynoway kernel: integrity: Loading X.509 certificate: UEFI:db
+[    1.012455] waynoway kernel: integrity: Loaded X.509 cert 'Microsoft Windows Production PCA 2011: a92902398e16c49778cd90f99e4f9ae17c55af53'
+[    1.012461] waynoway kernel: integrity: Loading X.509 certificate: UEFI:db
+[    1.012466] waynoway kernel: integrity: Loaded X.509 cert 'Microsoft UEFI CA 2023: 81aa6b3244c935bce0d6628af39827421e32497d'
+[    1.012472] waynoway kernel: integrity: Loading X.509 certificate: UEFI:db
+[    1.012478] waynoway kernel: integrity: Loaded X.509 cert 'Microsoft Option ROM UEFI CA 2023: 514fbf937fa46fb57bf07af8bed84b3b864b1711'
+[    1.012484] waynoway kernel: integrity: Revoking X.509 certificate: UEFI:dbx
+[    1.012490] waynoway kernel: blacklist: Revoked X.509 cert 'Canonical Ltd. Secure Boot Signing: 61482aa2830d0ab2ad5af10b7250da9033ddcef0'
+[    1.012496] waynoway kernel: integrity: Revoking X.509 certificate: UEFI:dbx
+[    1.012504] waynoway kernel: blacklist: Revoked X.509 cert 'Debian Secure Boot Signer: 00a7468def'
+[    1.012511] waynoway kernel: blacklist: Duplicate blacklisted hash bin:80b4d96931bf0d02fd91a61e19d14f1da452e66db2408ca8604d411f92659f0a
+[    1.012517] waynoway kernel: blacklist: Duplicate blacklisted hash bin:f52f83a3fa9cfbd6920f722824dbe4034534d25b8507246b3b957dac6e1bce7a
+[    1.012526] waynoway kernel: blacklist: Duplicate blacklisted hash bin:c5d9d8a186e2c82d09afaa2a6f7f2e73870d3e64f72c4e08ef67796a840f0fbd
+[    1.012532] waynoway kernel: blacklist: Duplicate blacklisted hash bin:1aec84b84b6c65a51220a9be7181965230210d62d6d33c48999c6b295a2b0a06
+[    1.012538] waynoway kernel: blacklist: Duplicate blacklisted hash bin:c3a99a460da464a057c3586d83cef5f4ae08b7103979ed8932742df0ed530c66
+[    1.012544] waynoway kernel: blacklist: Duplicate blacklisted hash bin:58fb941aef95a25943b3fb5f2510a0df3fe44c58c95e0ab80487297568ab9771
+[    1.012551] waynoway kernel: blacklist: Duplicate blacklisted hash bin:5391c3a2fb112102a6aa1edc25ae77e19f5d6f09cd09eeb2509922bfcd5992ea
+[    1.012557] waynoway kernel: blacklist: Duplicate blacklisted hash bin:d626157e1d6a718bc124ab8da27cbb65072ca03a7b6b257dbdcbbd60f65ef3d1
+[    1.012563] waynoway kernel: blacklist: Duplicate blacklisted hash bin:d063ec28f67eba53f1642dbf7dff33c6a32add869f6013fe162e2c32f1cbe56d
+[    1.012569] waynoway kernel: blacklist: Duplicate blacklisted hash bin:29c6eb52b43c3aa18b2cd8ed6ea8607cef3cfae1bafe1165755cf2e614844a44
+[    1.012575] waynoway kernel: blacklist: Duplicate blacklisted hash bin:90fbe70e69d633408d3e170c6832dbb2d209e0272527dfb63d49d29572a6f44c
+[    1.012581] waynoway kernel: blacklist: Duplicate blacklisted hash bin:106faceacfecfd4e303b74f480a08098e2d0802b936f8ec774ce21f31686689c
+[    1.012588] waynoway kernel: blacklist: Duplicate blacklisted hash bin:174e3a0b5b43c6a607bbd3404f05341e3dcf396267ce94f8b50e2e23a9da920c
+[    1.012594] waynoway kernel: blacklist: Duplicate blacklisted hash bin:2b99cf26422e92fe365fbf4bc30d27086c9ee14b7a6fff44fb2f6b9001699939
+[    1.012602] waynoway kernel: blacklist: Duplicate blacklisted hash bin:2e70916786a6f773511fa7181fab0f1d70b557c6322ea923b2a8d3b92b51af7d
+[    1.012607] waynoway kernel: blacklist: Duplicate blacklisted hash bin:3fce9b9fdf3ef09d5452b0f95ee481c2b7f06d743a737971558e70136ace3e73
+[    1.012614] waynoway kernel: blacklist: Duplicate blacklisted hash bin:47cc086127e2069a86e03a6bef2cd410f8c55a6d6bdb362168c31b2ce32a5adf
+[    1.012620] waynoway kernel: blacklist: Duplicate blacklisted hash bin:71f2906fd222497e54a34662ab2497fcc81020770ff51368e9e3d9bfcbfd6375
+[    1.012625] waynoway kernel: blacklist: Duplicate blacklisted hash bin:82db3bceb4f60843ce9d97c3d187cd9b5941cd3de8100e586f2bda5637575f67
+[    1.012637] waynoway kernel: blacklist: Duplicate blacklisted hash bin:8ad64859f195b5f58dafaa940b6a6167acd67a886e8f469364177221c55945b9
+[    1.012642] waynoway kernel: blacklist: Duplicate blacklisted hash bin:8d8ea289cfe70a1c07ab7365cb28ee51edd33cf2506de888fbadd60ebf80481c
+[    1.012648] waynoway kernel: blacklist: Duplicate blacklisted hash bin:aeebae3151271273ed95aa2e671139ed31a98567303a332298f83709a9d55aa1
+[    1.012656] waynoway kernel: blacklist: Duplicate blacklisted hash bin:c409bdac4775add8db92aa22b5b718fb8c94a1462c1fe9a416b95d8a3388c2fc
+[    1.012664] waynoway kernel: blacklist: Duplicate blacklisted hash bin:c617c1a8b1ee2a811c28b5a81b4c83d7c98b5b0c27281d610207ebe692c2967f
+[    1.012670] waynoway kernel: blacklist: Duplicate blacklisted hash bin:c90f336617b8e7f983975413c997f10b73eb267fd8a10cb9e3bdbfc667abdb8b
+[    1.012676] waynoway kernel: blacklist: Duplicate blacklisted hash bin:64575bd912789a2e14ad56f6341f52af6bf80cf94400785975e9f04e2d64d745
+[    1.012681] waynoway kernel: blacklist: Duplicate blacklisted hash bin:45c7c8ae750acfbb48fc37527d6412dd644daed8913ccd8a24c94d856967df8e
+[    1.012687] waynoway kernel: blacklist: Duplicate blacklisted hash bin:47ff1b63b140b6fc04ed79131331e651da5b2e2f170f5daef4153dc2fbc532b1
+[    1.012693] waynoway kernel: blacklist: Duplicate blacklisted hash bin:5391c3a2fb112102a6aa1edc25ae77e19f5d6f09cd09eeb2509922bfcd5992ea
+[    1.012698] waynoway kernel: blacklist: Duplicate blacklisted hash bin:80b4d96931bf0d02fd91a61e19d14f1da452e66db2408ca8604d411f92659f0a
+[    1.012706] waynoway kernel: blacklist: Duplicate blacklisted hash bin:992d359aa7a5f789d268b94c11b9485a6b1ce64362b0edb4441ccc187c39647b
+[    1.012712] waynoway kernel: blacklist: Duplicate blacklisted hash bin:c452ab846073df5ace25cca64d6b7a09d906308a1a65eb5240e3c4ebcaa9cc0c
+[    1.012717] waynoway kernel: blacklist: Duplicate blacklisted hash bin:e051b788ecbaeda53046c70e6af6058f95222c046157b8c4c1b9c2cfc65f46e5
+[    1.012723] waynoway kernel: PM:   Magic number: 14:730:41
+[    1.012918] waynoway kernel: bdi 7:6: hash matches
+[    1.013146] waynoway kernel: memory memory77: hash matches
+[    1.013155] waynoway kernel: RAS: Correctable Errors collector initialized.
+[    1.013163] waynoway kernel: clk: Disabling unused clocks
+[    1.013169] waynoway kernel: PM: genpd: Disabling unused power domains
+[    1.013175] waynoway kernel: Freeing unused decrypted memory: 2028K
+[    1.013181] waynoway kernel: Freeing unused kernel image (initmem) memory: 5304K
+[    1.013186] waynoway kernel: Write protecting the kernel read-only data: 43008k
+[    1.013192] waynoway kernel: Freeing unused kernel image (text/rodata gap) memory: 736K
+[    1.013198] waynoway kernel: Freeing unused kernel image (rodata/data gap) memory: 1656K
+[    1.013204] waynoway kernel: x86/mm: Checked W+X mappings: passed, no W+X pages found.
+[    1.013210] waynoway kernel: Run /init as init process
+[    1.013218] waynoway kernel:   with arguments:
+[    1.013224] waynoway kernel:     /init
+[    1.013231] waynoway kernel:     splash
+[    1.013237] waynoway kernel:   with environment:
+[    1.013242] waynoway kernel:     HOME=/
+[    1.013248] waynoway kernel:     TERM=linux
+[    1.013257] waynoway systemd[1]: Inserted module 'autofs4'
+[    1.013267] waynoway systemd[1]: Successfully made /usr/ read-only.
+[    1.013277] waynoway systemd[1]: systemd 259.5-0ubuntu3.4 running in system mode (+PAM +AUDIT +SELINUX +APPARMOR +IMA +IPE +SMACK +SECCOMP +GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +KMOD +LIBCRYPTSETUP +LIBCRYPTSETUP_PLUGINS +LIBFDISK +PCRE2 +PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD +BPF_FRAMEWORK +BTF -XKBCOMMON -UTMP +SYSVINIT +LIBARCHIVE)
+[    1.013287] waynoway systemd[1]: Detected architecture x86-64.
+[    1.013294] waynoway systemd[1]: Running in initrd.
+[    1.013300] waynoway systemd[1]: Hostname set to <waynoway>.
+[    1.013545] waynoway kernel: usb 3-3: new full-speed USB device number 2 using xhci_hcd
+[    1.013555] waynoway systemd[1]: bpf-restrict-fs: BPF LSM hook not enabled in the kernel, BPF LSM not supported.
+[    1.013562] waynoway systemd[1]: Queued start job for default target initrd.target.
+[    1.013574] waynoway systemd[1]: Created slice system-systemd\x2dcryptsetup.slice - Slice /system/systemd-cryptsetup.
+[    1.013582] waynoway systemd[1]: Expecting device dev-disk-by\x2duuid-4EF3\x2d903F.device - /dev/disk/by-uuid/4EF3-903F...
+[    1.013589] waynoway systemd[1]: Expecting device dev-disk-by\x2duuid-591ed685\x2d0357\x2d449d\x2d8f2c\x2d5b91425fb9db.device - /dev/disk/by-uuid/591ed685-0357-449d-8f2c-5b91425fb9db...
+[    1.013596] waynoway systemd[1]: Expecting device dev-disk-by\x2duuid-8e93bdbe\x2db2fe\x2d408c\x2da7de\x2d719b7369cbd2.device - /dev/disk/by-uuid/8e93bdbe-b2fe-408c-a7de-719b7369cbd2...
+[    1.013603] waynoway systemd[1]: Expecting device dev-mapper-ubuntu\x2d\x2dvg\x2dubuntu\x2d\x2dlv.device - /dev/mapper/ubuntu--vg-ubuntu--lv...
+[    1.013610] waynoway systemd[1]: Reached target initrd-usr-fs.target - Initrd /usr File System.
+[    1.013617] waynoway systemd[1]: Reached target slices.target - Slice Units.
+[    1.013626] waynoway systemd[1]: Reached target swap.target - Swaps.
+[    1.013637] waynoway systemd[1]: Reached target timers.target - Timer Units.
+[    1.013643] waynoway systemd[1]: Listening on systemd-journald-dev-log.socket - Journal Socket (/dev/log).
+[    1.013650] waynoway systemd[1]: Listening on systemd-journald.socket - Journal Sockets.
+[    1.013657] waynoway systemd[1]: Listening on systemd-udevd-control.socket - udev Control Socket.
+[    1.013663] waynoway systemd[1]: Listening on systemd-udevd-kernel.socket - udev Kernel Socket.
+[    1.013670] waynoway systemd[1]: Reached target sockets.target - Socket Units.
+[    1.013676] waynoway systemd[1]: Starting dracut-cmdline-ask.service - dracut ask for additional cmdline parameters...
+[    1.013683] waynoway systemd[1]: Starting kmod-static-nodes.service - Create List of Static Device Nodes...
+[    1.013691] waynoway systemd[1]: Starting systemd-journald.service - Journal Service...
+[    1.013698] waynoway systemd[1]: Starting systemd-modules-load.service - Load Kernel Modules...
+[    1.013705] waynoway systemd[1]: systemd-pcrphase-initrd.service - TPM PCR Barrier (initrd) skipped, unmet condition check ConditionSecurity=measured-uki
+[    1.013711] waynoway systemd[1]: Finished kmod-static-nodes.service - Create List of Static Device Nodes.
+[    1.013718] waynoway systemd[1]: Starting systemd-tmpfiles-setup-dev-early.service - Create Static Device Nodes in /dev gracefully...
+[    1.013725] waynoway systemd[1]: Finished dracut-cmdline-ask.service - dracut ask for additional cmdline parameters.
+[    1.013731] waynoway systemd[1]: Starting dracut-cmdline.service - dracut cmdline hook...
+[    1.013738] waynoway kernel: ppdev: user-space parallel port driver
+[    1.013746] waynoway kernel: lp: driver loaded but no devices found
+[    1.013781] waynoway systemd-journald[252]: Collecting audit messages is disabled.
+[    1.013799] waynoway systemd[1]: Finished systemd-tmpfiles-setup-dev-early.service - Create Static Device Nodes in /dev gracefully.
+[    1.013806] waynoway systemd[1]: Starting systemd-tmpfiles-setup-dev.service - Create Static Device Nodes in /dev...
+[    1.013982] waynoway kernel: usb 3-3: New USB device found, idVendor=06cb, idProduct=00bd, bcdDevice= 0.00
+[    1.014148] waynoway kernel: usb 3-3: New USB device strings: Mfr=0, Product=0, SerialNumber=1
+[    1.014318] waynoway kernel: usb 3-3: SerialNumber: 8cbac6fd7de3
+[    1.014327] waynoway systemd[1]: Finished systemd-tmpfiles-setup-dev.service - Create Static Device Nodes in /dev.
+[    1.014334] waynoway systemd[1]: Reached target local-fs-pre.target - Preparation for Local File Systems.
+[    1.014341] waynoway systemd[1]: Reached target local-fs.target - Local File Systems.
+[    1.014543] waynoway kernel: ccp 0000:07:00.2: enabling device (0000 -> 0002)
+[    1.014742] waynoway kernel: ccp 0000:07:00.2: ccp: unable to access the device: you might be running a broken BIOS.
+[    1.014943] waynoway kernel: ccp 0000:07:00.2: tee enabled
+[    1.015133] waynoway kernel: ccp 0000:07:00.2: psp enabled
+[    1.015141] waynoway kernel: kvm_amd: TSC scaling supported
+[    1.015147] waynoway kernel: kvm_amd: Nested Virtualization enabled
+[    1.015154] waynoway kernel: kvm_amd: Nested Paging enabled
+[    1.015160] waynoway kernel: kvm_amd: LBR virtualization supported
+[    1.015167] waynoway kernel: kvm_amd: Virtual VMLOAD VMSAVE supported
+[    1.015172] waynoway kernel: kvm_amd: Virtual GIF supported
+[    1.015179] waynoway systemd[1]: Finished dracut-cmdline.service - dracut cmdline hook.
+[    1.015188] waynoway systemd[1]: Finished systemd-modules-load.service - Load Kernel Modules.
+[    1.015194] waynoway systemd[1]: Starting dracut-pre-udev.service - dracut pre-udev hook...
+[    1.015201] waynoway systemd[1]: Starting systemd-sysctl.service - Apply Kernel Variables...
+[    1.021911] waynoway systemd[1]: Started systemd-journald.service - Journal Service.
+[    1.062788] waynoway kernel: usb 3-4: new full-speed USB device number 3 using xhci_hcd
+[    1.206033] waynoway kernel: usb 3-4: New USB device found, idVendor=8087, idProduct=0a2b, bcdDevice= 0.10
+[    1.206330] waynoway kernel: usb 3-4: New USB device strings: Mfr=0, Product=0, SerialNumber=0
+[    1.485047] waynoway kernel: xhci-pci-renesas 0000:06:00.0: failed to load firmware renesas_usb_fw.mem, fallback to ROM
+[    1.489788] waynoway kernel: xhci-pci-renesas 0000:06:00.0: xHCI Host Controller
+[    1.495076] waynoway kernel: xhci-pci-renesas 0000:06:00.0: new USB bus registered, assigned bus number 5
+[    1.498642] waynoway kernel: xhci-pci-renesas 0000:06:00.0: Zeroing 64bit base registers, expecting fault
+[    1.503856] waynoway kernel: rtsx_pci 0000:04:00.0: enabling device (0000 -> 0002)
+[    1.507678] waynoway kernel: Key type psk registered
+[    1.512013] waynoway kernel: hid: raw HID events driver (C) Jiri Kosina
+[    1.519018] waynoway kernel: ACPI: bus type thunderbolt registered
+[    1.522013] waynoway kernel: ACPI: video: Video Device [VGA] (multi-head: yes  rom: no  post: no)
+[    1.523011] waynoway kernel: nvme 0000:01:00.0: platform quirk: setting simple suspend
+[    1.523376] waynoway kernel: input: Video Bus as /devices/pci0000:00/0000:00:08.1/acpi.video_bus.0/input/input6
+[    1.523388] waynoway kernel: nvme nvme0: pci function 0000:01:00.0
+[    1.571026] waynoway kernel: tsc: Refined TSC clocksource calibration: 1896.440 MHz
+[    1.571132] waynoway kernel: clocksource: tsc: mask: 0xffffffffffffffff max_cycles: 0x36ac122a1f7, max_idle_ns: 881590787568 ns
+[    1.571153] waynoway kernel: clocksource: Switched to clocksource tsc
+[    1.583045] waynoway kernel: nvme nvme0: 16/0/0 default/read/poll queues
+[    1.585030] waynoway kernel: xhci-pci-renesas 0000:06:00.0: hcc params 0x014051cf hci version 0x100 quirks 0x0000000100000090
+[    1.585400] waynoway kernel: xhci-pci-renesas 0000:06:00.0: xHCI Host Controller
+[    1.585749] waynoway kernel: xhci-pci-renesas 0000:06:00.0: new USB bus registered, assigned bus number 6
+[    1.586041] waynoway kernel: xhci-pci-renesas 0000:06:00.0: Host supports USB 3.0 SuperSpeed
+[    1.588021] waynoway kernel:  nvme0n1: p1 p2 p3
+[    1.589012] waynoway kernel: usb usb5: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 7.00
+[    1.589445] waynoway kernel: usb usb5: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.589649] waynoway kernel: usb usb5: Product: xHCI Host Controller
+[    1.589830] waynoway kernel: usb usb5: Manufacturer: Linux 7.0.0-38-generic xhci-hcd
+[    1.590062] waynoway kernel: usb usb5: SerialNumber: 0000:06:00.0
+[    1.590303] waynoway kernel: hub 5-0:1.0: USB hub found
+[    1.590573] waynoway kernel: hub 5-0:1.0: 2 ports detected
+[    1.590805] waynoway kernel: usb usb6: We don't know the algorithms for LPM for this host, disabling LPM.
+[    1.591080] waynoway kernel: usb usb6: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 7.00
+[    1.591260] waynoway kernel: usb usb6: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.591427] waynoway kernel: usb usb6: Product: xHCI Host Controller
+[    1.591577] waynoway kernel: usb usb6: Manufacturer: Linux 7.0.0-38-generic xhci-hcd
+[    1.591728] waynoway kernel: usb usb6: SerialNumber: 0000:06:00.0
+[    1.591879] waynoway kernel: hub 6-0:1.0: USB hub found
+[    1.592110] waynoway kernel: hub 6-0:1.0: 2 ports detected
+[    1.671027] waynoway kernel: input: RAYD0001:00 2386:4B4E Touchscreen as /devices/platform/AMDI0010:01/i2c-1/i2c-RAYD0001:00/0018:2386:4B4E.0001/input/input8
+[    1.671084] waynoway kernel: hid-generic 0018:2386:4B4E.0001: input,hidraw0: I2C HID v1.00 Device [RAYD0001:00 2386:4B4E] on i2c-RAYD0001:00
+[    1.713012] waynoway kernel: input: RAYD0001:00 2386:4B4E as /devices/platform/AMDI0010:01/i2c-1/i2c-RAYD0001:00/0018:2386:4B4E.0001/input/input10
+[    1.713040] waynoway kernel: hid-multitouch 0018:2386:4B4E.0001: input,hidraw0: I2C HID v1.00 Device [RAYD0001:00 2386:4B4E] on i2c-RAYD0001:00
+[    1.834092] waynoway kernel: usb 5-2: new high-speed USB device number 2 using xhci-pci-renesas
+[    1.975055] waynoway kernel: usb 5-2: New USB device found, idVendor=04f2, idProduct=b724, bcdDevice=27.38
+[    1.975697] waynoway kernel: usb 5-2: New USB device strings: Mfr=3, Product=1, SerialNumber=2
+[    1.976285] waynoway kernel: usb 5-2: Product: Integrated Camera
+[    1.976639] waynoway kernel: usb 5-2: Manufacturer: Chicony Electronics Co.,Ltd.
+[    1.976805] waynoway kernel: usb 5-2: SerialNumber: 0001
+[    2.548197] waynoway kernel: psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
+[    2.585102] waynoway kernel: psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
+[    2.585962] waynoway kernel: psmouse serio1: synaptics: Trying to set up SMBus access
+[    2.588025] waynoway kernel: psmouse serio1: synaptics: SMbus companion is not ready yet
+[    2.656087] waynoway kernel: psmouse serio1: synaptics: Touchpad model: 1, fw: 10.32, id: 0x1e2a1, caps: 0xf01ea3/0x940300/0x12e800/0x500000, board id: 3471, fw id: 3942087
+[    2.656945] waynoway kernel: psmouse serio1: synaptics: serio: Synaptics pass-through port at isa0060/serio1/input0
+[    2.702170] waynoway kernel: input: SynPS/2 Synaptics TouchPad as /devices/platform/i8042/serio1/input/input7
+[    3.210394] waynoway kernel: psmouse serio2: trackpoint: Elan TrackPoint firmware: 0x12, buttons: 3/3
+[    3.444054] waynoway kernel: input: TPPS/2 Elan TrackPoint as /devices/platform/i8042/serio1/serio2/input/input12
+[   42.864406] waynoway kernel: EXT4-fs (dm-1): orphan cleanup on readonly fs
+[   42.864497] waynoway kernel: EXT4-fs (dm-1): mounted filesystem 5edce020-b9e7-449e-9b11-db3f1b40429a ro with ordered data mode. Quota mode: none.
+[   44.308993] waynoway systemd-journald[252]: Received SIGTERM from PID 1 (systemd).
+[   44.309172] waynoway systemd[1]: systemd 259.5-0ubuntu3.4 running in system mode (+PAM +AUDIT +SELINUX +APPARMOR +IMA +IPE +SMACK +SECCOMP +GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +KMOD +LIBCRYPTSETUP +LIBCRYPTSETUP_PLUGINS +LIBFDISK +PCRE2 +PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD +BPF_FRAMEWORK +BTF -XKBCOMMON -UTMP +SYSVINIT +LIBARCHIVE)
+[   44.309213] waynoway systemd[1]: Detected architecture x86-64.
+[   44.309235] waynoway systemd[1]: bpf-restrict-fs: BPF LSM hook not enabled in the kernel, BPF LSM not supported.
+[   44.309256] waynoway systemd[1]: systemd-ask-password-plymouth.service: Deactivated successfully.
+[   44.309269] waynoway systemd[1]: initrd-switch-root.service: Deactivated successfully.
+[   44.309286] waynoway systemd[1]: Stopped initrd-switch-root.service - Switch Root.
+[   44.309303] waynoway systemd[1]: systemd-journald.service: Scheduled restart job, restart counter is at 1.
+[   44.309325] waynoway systemd[1]: Created slice system-cups.slice - CUPS Slice.
+[   44.309348] waynoway systemd[1]: Created slice system-postgresql.slice - Slice /system/postgresql.
+[   44.309365] waynoway systemd[1]: Created slice system-systemd\x2dfsck.slice - Slice /system/systemd-fsck.
+[   44.309382] waynoway systemd[1]: Created slice user.slice - User and Session Slice.
+[   44.309405] waynoway systemd[1]: systemd-ask-password-console.path - Dispatch Password Requests to Console Directory Watch skipped, unmet condition check ConditionPathExists=!/run/plymouth/pid
+[   44.309417] waynoway systemd[1]: Started systemd-ask-password-wall.path - Forward Password Requests to Wall Directory Watch.
+[   44.309429] waynoway systemd[1]: Set up automount proc-sys-fs-binfmt_misc.automount - Arbitrary Executable File Formats File System Automount Point.
+[   44.309441] waynoway systemd[1]: Expecting device dev-disk-by\x2duuid-4EF3\x2d903F.device - /dev/disk/by-uuid/4EF3-903F...
+[   44.309454] waynoway systemd[1]: Expecting device dev-disk-by\x2duuid-8e93bdbe\x2db2fe\x2d408c\x2da7de\x2d719b7369cbd2.device - /dev/disk/by-uuid/8e93bdbe-b2fe-408c-a7de-719b7369cbd2...
+[   44.309467] waynoway systemd[1]: Reached target blockdev@dev-mapper-dm_crypt\x2d0.target - Block Device Preparation for /dev/mapper/dm_crypt-0.
+[   44.309483] waynoway systemd[1]: Reached target cryptsetup.target - Local Encrypted Volumes.
+[   44.309495] waynoway systemd[1]: Reached target imports.target - Image Downloads.
+[   44.309511] waynoway systemd[1]: Stopped target initrd-switch-root.target - Switch Root.
+[   44.309525] waynoway systemd[1]: Stopped target initrd-fs.target - Initrd File Systems.
+[   44.309537] waynoway systemd[1]: Stopped target initrd-root-fs.target - Initrd Root File System.
+[   44.309548] waynoway systemd[1]: Reached target integritysetup.target - Local Integrity Protected Volumes.
+[   44.309559] waynoway systemd[1]: Reached target remote-fs.target - Remote File Systems.
+[   44.309571] waynoway systemd[1]: Reached target slices.target - Slice Units.
+[   44.309593] waynoway systemd[1]: Reached target snapd.mounts-pre.target - Mounting snaps.
+[   44.309605] waynoway systemd[1]: Reached target time-set.target - System Time Set.
+[   44.309616] waynoway systemd[1]: Reached target veritysetup.target - Local Verity Protected Volumes.
+[   44.309628] waynoway systemd[1]: Listening on dm-event.socket - Device-mapper event daemon FIFOs.
+[   44.309642] waynoway systemd[1]: Listening on lvm2-lvmpolld.socket - LVM2 poll daemon socket.
+[   44.309667] waynoway systemd[1]: Listening on syslog.socket - Syslog Socket.
+[   44.309684] waynoway systemd[1]: Listening on systemd-ask-password.socket - Query the User Interactively for a Password.
+[   44.309695] waynoway systemd[1]: Listening on systemd-creds.socket - Credential Encryption/Decryption.
+[   44.309712] waynoway systemd[1]: Listening on systemd-factory-reset.socket - Factory Reset Management.
+[   44.309723] waynoway systemd[1]: Listening on systemd-mute-console.socket - Console Output Muting Service Socket.
+[   44.309741] waynoway systemd[1]: Listening on systemd-oomd.socket - Userspace Out-Of-Memory (OOM) Killer Socket.
+[   44.309753] waynoway systemd[1]: systemd-pcrextend.socket - TPM PCR Measurements skipped, unmet condition check ConditionSecurity=measured-uki
+[   44.309765] waynoway systemd[1]: systemd-pcrlock.socket - Make TPM PCR Policy skipped, unmet condition check ConditionSecurity=measured-uki
+[   44.309779] waynoway systemd[1]: Listening on systemd-resolved-monitor.socket - Resolve Monitor Varlink Socket.
+[   44.309791] waynoway systemd[1]: Listening on systemd-resolved-varlink.socket - Resolve Service Varlink Socket.
+[   44.309803] waynoway systemd[1]: Listening on systemd-udevd-control.socket - udev Control Socket.
+[   44.309814] waynoway systemd[1]: Listening on systemd-udevd-varlink.socket - udev Varlink Socket.
+[   44.309828] waynoway systemd[1]: Mounting dev-hugepages.mount - Huge Pages File System...
+[   44.309839] waynoway systemd[1]: Mounting dev-mqueue.mount - POSIX Message Queue File System...
+[   44.309851] waynoway systemd[1]: Mounting sys-kernel-debug.mount - Kernel Debug File System...
+[   44.309865] waynoway systemd[1]: Mounting sys-kernel-tracing.mount - Kernel Trace File System...
+[   44.309880] waynoway systemd[1]: Starting systemd-journald.service - Journal Service...
+[   44.309892] waynoway systemd[1]: Starting blk-availability.service - Availability of block devices...
+[   44.309904] waynoway systemd[1]: Starting keyboard-setup.service - Set the console keyboard layout...
+[   44.309915] waynoway systemd[1]: Starting kmod-static-nodes.service - Create List of Static Device Nodes...
+[   44.309927] waynoway systemd[1]: Starting lvm2-monitor.service - Monitoring of LVM2 mirrors, snapshots etc. using dmeventd or progress polling...
+[   44.309939] waynoway systemd[1]: modprobe@configfs.service - Load Kernel Module configfs skipped, unmet condition check ConditionKernelModuleLoaded=!configfs
+[   44.309951] waynoway systemd[1]: modprobe@drm.service - Load Kernel Module drm skipped, unmet condition check ConditionKernelModuleLoaded=!drm
+[   44.309963] waynoway systemd[1]: Starting modprobe@efi_pstore.service - Load Kernel Module efi_pstore...
+[   44.309978] waynoway systemd[1]: modprobe@fuse.service - Load Kernel Module fuse skipped, unmet condition check ConditionKernelModuleLoaded=!fuse
+[   44.309989] waynoway systemd[1]: Mounting sys-fs-fuse-connections.mount - FUSE Control File System...
+[   44.310009] waynoway systemd[1]: plymouth-switch-root.service: Deactivated successfully.
+[   44.310021] waynoway systemd[1]: Stopped plymouth-switch-root.service - Plymouth switch root service.
+[   44.310033] waynoway systemd[1]: systemd-hibernate-clear.service - Clear Stale Hibernate Storage Info skipped, unmet condition check ConditionPathExists=/sys/firmware/efi/efivars/HibernateLocation-8cf2644b-4b0b-428f-9387-6d876050dc67
+[   44.310045] waynoway systemd[1]: Starting systemd-modules-load.service - Load Kernel Modules...
+[   44.310057] waynoway systemd[1]: systemd-pcrmachine.service - TPM PCR Machine ID Measurement skipped, unmet condition check ConditionSecurity=measured-uki
+[   44.310068] waynoway systemd[1]: systemd-pcrproduct.service - TPM NvPCR Product ID Measurement skipped, unmet condition check ConditionSecurity=measured-uki
+[   44.310089] waynoway systemd[1]: Starting systemd-remount-fs.service - Remount Root and Kernel File Systems...
+[   44.310101] waynoway systemd[1]: systemd-tpm2-setup-early.service - Early TPM SRK Setup skipped, unmet condition check ConditionSecurity=measured-uki
+[   44.310113] waynoway systemd[1]: Starting systemd-udev-load-credentials.service - Load udev Rules from Credentials...
+[   44.310125] waynoway systemd[1]: Starting systemd-udev-trigger.service - Coldplug All udev Devices...
+[   44.310136] waynoway systemd[1]: Mounted dev-hugepages.mount - Huge Pages File System.
+[   44.310148] waynoway systemd[1]: Mounted dev-mqueue.mount - POSIX Message Queue File System.
+[   44.310160] waynoway systemd[1]: Mounted sys-kernel-debug.mount - Kernel Debug File System.
+[   44.310175] waynoway systemd[1]: Mounted sys-kernel-tracing.mount - Kernel Trace File System.
+[   44.310187] waynoway systemd[1]: Finished blk-availability.service - Availability of block devices.
+[   44.310201] waynoway systemd[1]: Finished keyboard-setup.service - Set the console keyboard layout.
+[   44.310213] waynoway systemd[1]: Finished kmod-static-nodes.service - Create List of Static Device Nodes.
+[   44.310225] waynoway systemd[1]: Mounted sys-fs-fuse-connections.mount - FUSE Control File System.
+[   44.310237] waynoway systemd[1]: Starting systemd-tmpfiles-setup-dev-early.service - Create Static Device Nodes in /dev gracefully...
+[   44.310273] waynoway systemd-journald[2064]: Collecting audit messages is disabled.
+[   44.312114] waynoway systemd[1]: Started systemd-journald.service - Journal Service.
+[   44.314111] waynoway kernel: EXT4-fs (dm-1): re-mounted 5edce020-b9e7-449e-9b11-db3f1b40429a r/w.
+[   44.318627] waynoway kernel: pstore: Using crash dump compression: deflate
+[   44.363011] waynoway kernel: pstore: Registered efi_pstore as persistent store backend
+[   44.513047] waynoway systemd-journald[2064]: Received client request to flush runtime journal.
+[   44.513647] waynoway kernel: Adding 8388604k swap on /swap.img.  Priority:-1 extents:9 across:53501952k SS
+[   45.068030] waynoway kernel: Using s2idle quirk to avoid P14s Gen2 AMD platform firmware bug
+[   45.087148] waynoway kernel: snd_rn_pci_acp3x 0000:07:00.5: enabling device (0000 -> 0002)
+[   45.094013] waynoway kernel: r8169 0000:02:00.0: can't disable ASPM; OS doesn't have ASPM control
+[   45.144019] waynoway kernel: r8169 0000:02:00.0 eth0: RTL8168ep/8111ep, 6c:24:08:62:c8:31, XID 502, IRQ 100
+[   45.148395] waynoway kernel: r8169 0000:02:00.0 eth0: jumbo features [frames: 9194 bytes, tx checksumming: ko]
+[   45.155195] waynoway kernel: r8169 0000:02:00.0 eth0: DASH disabled
+[   45.161879] waynoway kernel: r8169 0000:05:00.0: enabling device (0000 -> 0003)
+[   45.168165] waynoway kernel: r8169 0000:05:00.0: can't disable ASPM; OS doesn't have ASPM control
+[   45.172083] waynoway kernel: cfg80211: Loading compiled-in X.509 certificates for regulatory database
+[   45.172127] waynoway kernel: Loaded X.509 cert 'sforshee: 00b28ddf47aef9cea7'
+[   45.172154] waynoway kernel: Loaded X.509 cert 'wens: 61c038651aabdcf94bd0ac7ff06c7248db18c600'
+[   45.185023] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Controller at 0xb00, revision 0
+[   45.189541] waynoway kernel: piix4_smbus 0000:00:14.0: Using register 0x02 for SMBus port selection
+[   45.196322] waynoway kernel: r8169 0000:05:00.0 eth1: RTL8168h/8111h, 6c:24:08:62:c8:30, XID 541, IRQ 102
+[   45.202282] waynoway kernel: r8169 0000:05:00.0 eth1: jumbo features [frames: 9194 bytes, tx checksumming: ko]
+[   45.206239] waynoway kernel: i2c i2c-2: Successfully instantiated SPD at 0x50
+[   45.208169] waynoway kernel: iwlwifi 0000:03:00.0: enabling device (0000 -> 0002)
+[   45.209390] waynoway kernel: Non-volatile memory driver v1.3
+[   45.209425] waynoway kernel: iwlwifi 0000:03:00.0: Detected crf-id 0xbadcafe, cnv-id 0x10 wfpm id 0x80000000
+[   45.209811] waynoway kernel: iwlwifi 0000:03:00.0: PCI dev 24fd/1010, rev=0x230, rfid=0xd55555d5
+[   45.210243] waynoway kernel: iwlwifi 0000:03:00.0: Detected Intel(R) Dual Band Wireless-AC 8265
+[   45.210602] waynoway kernel: piix4_smbus 0000:00:14.0: Auxiliary SMBus Host Controller at 0xb20
+[   45.218026] waynoway kernel: iwlwifi 0000:03:00.0: loaded firmware version 36.c8e8e144.0 8265-36.ucode op_mode iwlmvm
+[   45.250033] waynoway kernel: thinkpad_acpi: ThinkPad ACPI Extras v0.26
+[   45.250066] waynoway kernel: thinkpad_acpi: http://ibm-acpi.sf.net/
+[   45.250088] waynoway kernel: thinkpad_acpi: ThinkPad BIOS R1MET64W (1.34 ), EC R1MHT64W
+[   45.250108] waynoway kernel: thinkpad_acpi: Lenovo ThinkPad P14s Gen 2a, model 21A0003QUS
+[   45.272452] waynoway kernel: thinkpad_acpi: radio switch found; radios are enabled
+[   45.272508] waynoway kernel: thinkpad_acpi: This ThinkPad has standard ACPI backlight brightness control, supported by the ACPI video driver
+[   45.272530] waynoway kernel: thinkpad_acpi: Disabling thinkpad-acpi brightness events by default...
+[   45.298573] waynoway kernel: thinkpad_acpi: rfkill switch tpacpi_bluetooth_sw: radio is unblocked
+[   45.325032] waynoway kernel: Bluetooth: Core ver 2.22
+[   45.326019] waynoway kernel: NET: Registered PF_BLUETOOTH protocol family
+[   45.326090] waynoway kernel: Bluetooth: HCI device and connection manager initialized
+[   45.326128] waynoway kernel: Bluetooth: HCI socket layer initialized
+[   45.326242] waynoway kernel: Bluetooth: L2CAP socket layer initialized
+[   45.326279] waynoway kernel: Bluetooth: SCO socket layer initialized
+[   45.347756] waynoway kernel: thinkpad_acpi: Standard ACPI backlight interface available, not loading native one
+[   45.355044] waynoway kernel: mc: Linux media interface: v0.10
+[   45.357046] waynoway kernel: thinkpad_acpi: secondary fan control detected & enabled
+[   45.359016] waynoway kernel: loop0: detected capacity change from 0 to 8
+[   45.369021] waynoway kernel: thinkpad_acpi: battery 1 registered (start 75, stop 80, behaviours: 0xb)
+[   45.371027] waynoway kernel: ACPI: battery: new hook: ThinkPad Battery Extension
+[   45.373161] waynoway kernel: EXT4-fs (nvme0n1p2): mounted filesystem 8e93bdbe-b2fe-408c-a7de-719b7369cbd2 r/w with ordered data mode. Quota mode: none.
+[   45.375019] waynoway kernel: loop1: detected capacity change from 0 to 831720
+[   45.376022] waynoway kernel: snd_hda_intel 0000:07:00.1: enabling device (0000 -> 0002)
+[   45.376603] waynoway kernel: loop2: detected capacity change from 0 to 830664
+[   45.376681] waynoway kernel: snd_hda_intel 0000:07:00.1: Handle vga_switcheroo audio client
+[   45.377215] waynoway kernel: snd_hda_intel 0000:07:00.6: enabling device (0000 -> 0002)
+[   45.379015] waynoway kernel: videodev: Linux video capture interface: v2.00
+[   45.396111] waynoway kernel: loop3: detected capacity change from 0 to 448072
+[   45.401063] waynoway kernel: loop4: detected capacity change from 0 to 174144
+[   45.404022] waynoway kernel: loop5: detected capacity change from 0 to 1053448
+[   45.404192] waynoway kernel: input: ThinkPad Extra Buttons as /devices/platform/thinkpad_acpi/input/input13
+[   45.404262] waynoway kernel: loop6: detected capacity change from 0 to 452608
+[   45.405018] waynoway kernel: loop7: detected capacity change from 0 to 1060104
+[   45.407016] waynoway kernel: loop8: detected capacity change from 0 to 113640
+[   45.414034] waynoway kernel: loop9: detected capacity change from 0 to 113672
+[   45.418016] waynoway kernel: input: HD-Audio Generic HDMI/DP,pcm=3 as /devices/pci0000:00/0000:00:08.1/0000:07:00.1/sound/card0/input14
+[   45.418068] waynoway kernel: input: HD-Audio Generic HDMI/DP,pcm=7 as /devices/pci0000:00/0000:00:08.1/0000:07:00.1/sound/card0/input15
+[   45.418102] waynoway kernel: input: HD-Audio Generic HDMI/DP,pcm=8 as /devices/pci0000:00/0000:00:08.1/0000:07:00.1/sound/card0/input16
+[   45.418140] waynoway kernel: input: HD-Audio Generic HDMI/DP,pcm=9 as /devices/pci0000:00/0000:00:08.1/0000:07:00.1/sound/card0/input17
+[   45.446017] waynoway kernel: uvcvideo 5-2:1.0: Found UVC 1.10 device Integrated Camera (04f2:b724)
+[   45.459022] waynoway kernel: usbcore: registered new interface driver uvcvideo
+[   45.461019] waynoway kernel: snd_hda_codec_alc269 hdaudioC1D0: ALC257: picked fixup  for PCI SSID 17aa:0000
+[   45.461581] waynoway kernel: snd_hda_codec_alc269 hdaudioC1D0: autoconfig for ALC257: line_outs=1 (0x14/0x0/0x0/0x0/0x0) type:speaker
+[   45.462188] waynoway kernel: snd_hda_codec_alc269 hdaudioC1D0:    speaker_outs=0 (0x0/0x0/0x0/0x0/0x0)
+[   45.462816] waynoway kernel: snd_hda_codec_alc269 hdaudioC1D0:    hp_outs=1 (0x21/0x0/0x0/0x0/0x0)
+[   45.463293] waynoway kernel: snd_hda_codec_alc269 hdaudioC1D0:    mono: mono_out=0x0
+[   45.463780] waynoway kernel: snd_hda_codec_alc269 hdaudioC1D0:    inputs:
+[   45.464476] waynoway kernel: snd_hda_codec_alc269 hdaudioC1D0:      Mic=0x19
+[   45.476177] waynoway kernel: iwlwifi 0000:03:00.0: base HW address: 04:d3:b0:8b:e9:80, OTP minor version: 0x4
+[   45.482014] waynoway kernel: usbcore: registered new interface driver btusb
+[   45.484021] waynoway kernel: Bluetooth: hci0: Bootloader revision 0.0 build 26 week 38 2015
+[   45.487023] waynoway kernel: Bluetooth: hci0: Device revision is 16
+[   45.487075] waynoway kernel: Bluetooth: hci0: Secure boot is enabled
+[   45.487109] waynoway kernel: Bluetooth: hci0: OTP lock is enabled
+[   45.487140] waynoway kernel: Bluetooth: hci0: API lock is enabled
+[   45.487169] waynoway kernel: Bluetooth: hci0: Debug lock is disabled
+[   45.487198] waynoway kernel: Bluetooth: hci0: Minimum firmware build 1 week 10 2014
+[   45.492038] waynoway kernel: Bluetooth: hci0: Found device firmware: intel/ibt-12-16.sfi
+[   45.556027] waynoway kernel: input: HD-Audio Generic Mic as /devices/pci0000:00/0000:00:08.1/0000:07:00.6/sound/card1/input18
+[   45.557019] waynoway kernel: input: HD-Audio Generic Headphone as /devices/pci0000:00/0000:00:08.1/0000:07:00.6/sound/card1/input19
+[   45.561115] waynoway kernel: ieee80211 phy0: Selected rate control algorithm 'iwl-mvm-rs'
+[   45.760024] waynoway kernel: r8169 0000:02:00.0 enp2s0f0: renamed from eth0
+[   45.776022] waynoway kernel: r8169 0000:05:00.0 enp5s0: renamed from eth1
+[   46.053026] waynoway kernel: iwlwifi 0000:03:00.0 wlp3s0: renamed from wlan0
+[   46.942118] waynoway kernel: Bluetooth: hci0: Waiting for firmware download to complete
+[   46.942170] waynoway kernel: Bluetooth: hci0: Firmware loaded in 1415998 usecs
+[   46.942193] waynoway kernel: Bluetooth: hci0: Waiting for device to boot
+[   46.956039] waynoway kernel: Bluetooth: hci0: Device booted in 13644 usecs
+[   46.957037] waynoway kernel: Bluetooth: hci0: Found Intel DDC parameters: intel/ibt-12-16.ddc
+[   46.966040] waynoway kernel: Bluetooth: hci0: Applying Intel DDC parameters completed
+[   46.969040] waynoway kernel: Bluetooth: hci0: Firmware revision 0.1 build 19 week 44 2021
+[   46.975042] waynoway kernel: Bluetooth: hci0: Reading supported features failed (-16)
+[   46.975118] waynoway kernel: Bluetooth: hci0: Error reading debug features
+[   46.975151] waynoway kernel: Bluetooth: hci0: HCI LE Coded PHY feature bit is set, but its usage is not supported.
+[   49.264042] waynoway kernel: RAPL PMU: API unit is 2^-32 Joules, 2 fixed counters, 163840 ms ovfl timer
+[   49.264210] waynoway kernel: RAPL PMU: hw unit of domain package 2^-16 Joules
+[   49.264239] waynoway kernel: RAPL PMU: hw unit of domain core 2^-16 Joules
+[   49.266019] waynoway kernel: ee1004 2-0050: 512 byte EE1004-compliant SPD EEPROM, read-only
+[   49.269027] waynoway kernel: MCE: In-kernel MCE decoding enabled.
+[   49.324035] waynoway kernel: amd_atl: AMD Address Translation Library initialized
+[   49.325017] waynoway kernel: intel_rapl_common: Found RAPL domain package
+[   49.325065] waynoway kernel: intel_rapl_common: Found RAPL domain core
+[   49.370028] waynoway kernel: audit: type=1400 audit(1792782162.305:2): apparmor="STATUS" operation="profile_load" profile="unconfined" name="brave" pid=2752 comm="apparmor_parser"
+[   49.370121] waynoway kernel: audit: type=1400 audit(1792782162.305:3): apparmor="STATUS" operation="profile_load" profile="unconfined" name="balena-etcher" pid=2749 comm="apparmor_parser"
+[   49.370149] waynoway kernel: audit: type=1400 audit(1792782162.305:4): apparmor="STATUS" operation="profile_load" profile="unconfined" name="buildah" pid=2753 comm="apparmor_parser"
+[   49.370189] waynoway kernel: audit: type=1400 audit(1792782162.305:5): apparmor="STATUS" operation="profile_load" profile="unconfined" name="Discord" pid=2741 comm="apparmor_parser"
+[   49.370214] waynoway kernel: audit: type=1400 audit(1792782162.305:6): apparmor="STATUS" operation="profile_load" profile="unconfined" name="cam" pid=2755 comm="apparmor_parser"
+[   49.370241] waynoway kernel: audit: type=1400 audit(1792782162.305:7): apparmor="STATUS" operation="profile_load" profile="unconfined" name="ch-run" pid=2757 comm="apparmor_parser"
+[   49.370265] waynoway kernel: audit: type=1400 audit(1792782162.305:8): apparmor="STATUS" operation="profile_load" profile="unconfined" name="QtWebEngineProcess" pid=2743 comm="apparmor_parser"
+[   49.370286] waynoway kernel: audit: type=1400 audit(1792782162.305:9): apparmor="STATUS" operation="profile_load" profile="unconfined" name="1password" pid=2740 comm="apparmor_parser"
+[   49.370329] waynoway kernel: audit: type=1400 audit(1792782162.305:10): apparmor="STATUS" operation="profile_load" profile="unconfined" name=4D6F6E676F444220436F6D70617373 pid=2742 comm="apparmor_parser"
+[   49.370357] waynoway kernel: audit: type=1400 audit(1792782162.305:11): apparmor="STATUS" operation="profile_load" profile="unconfined" name="ch-checkns" pid=2756 comm="apparmor_parser"
+[   49.538036] waynoway kernel: amdgpu: Virtual CRAT table created for CPU
+[   49.538219] waynoway kernel: amdgpu: Topology: Add CPU node
+[   49.538253] waynoway kernel: amdgpu 0000:07:00.0: enabling device (0006 -> 0007)
+[   49.540026] waynoway kernel: amdgpu 0000:07:00.0: initializing kernel modesetting (RENOIR 0x1002:0x1638 0x17AA:0x509B 0xD1).
+[   49.543020] waynoway kernel: amdgpu 0000:07:00.0: register mmio base: 0xFD300000
+[   49.543834] waynoway kernel: amdgpu 0000:07:00.0: register mmio size: 524288
+[   49.552049] waynoway kernel: amdgpu 0000:07:00.0: detected ip block number 0 <common_v2_0_0> (soc15_common)
+[   49.552786] waynoway kernel: amdgpu 0000:07:00.0: detected ip block number 1 <gmc_v9_0_0> (gmc_v9_0)
+[   49.553464] waynoway kernel: amdgpu 0000:07:00.0: detected ip block number 2 <ih_v4_0_0> (vega10_ih)
+[   49.554291] waynoway kernel: amdgpu 0000:07:00.0: detected ip block number 3 <psp_v12_0_0> (psp)
+[   49.554991] waynoway kernel: amdgpu 0000:07:00.0: detected ip block number 4 <smu_v12_0_0> (smu)
+[   49.555683] waynoway kernel: amdgpu 0000:07:00.0: detected ip block number 5 <dce_v1_0_0> (dm)
+[   49.556339] waynoway kernel: amdgpu 0000:07:00.0: detected ip block number 6 <gfx_v9_0_0> (gfx_v9_0)
+[   49.557051] waynoway kernel: amdgpu 0000:07:00.0: detected ip block number 7 <sdma_v4_0_0> (sdma_v4_0)
+[   49.557393] waynoway kernel: amdgpu 0000:07:00.0: detected ip block number 8 <vcn_v2_0_0> (vcn_v2_0)
+[   49.557954] waynoway kernel: amdgpu 0000:07:00.0: detected ip block number 9 <jpeg_v2_0_0> (jpeg_v2_0)
+[   49.558466] waynoway kernel: amdgpu 0000:07:00.0: Fetched VBIOS from VFCT
+[   49.558795] waynoway kernel: amdgpu 0000:07:00.0: [drm] ATOM BIOS: 113-CEZANNE-021
+[   49.598065] waynoway kernel: amdgpu 0000:07:00.0: vgaarb: deactivate vga console
+[   49.598768] waynoway kernel: amdgpu 0000:07:00.0: Trusted Memory Zone (TMZ) feature enabled
+[   49.599234] waynoway kernel: amdgpu 0000:07:00.0: vm size is 262144 GB, 4 levels, block size is 9-bit, fragment size is 9-bit
+[   49.599632] waynoway kernel: amdgpu 0000:07:00.0: VRAM: 4096M 0x000000F400000000 - 0x000000F4FFFFFFFF (4096M used)
+[   49.600045] waynoway kernel: amdgpu 0000:07:00.0: GART: 1024M 0x0000000000000000 - 0x000000003FFFFFFF
+[   49.600407] waynoway kernel: amdgpu 0000:07:00.0: [drm] Detected VRAM RAM=4096M, BAR=4096M
+[   49.600762] waynoway kernel: amdgpu 0000:07:00.0: [drm] RAM width 128bits DDR4
+[   49.601120] waynoway kernel: amdgpu 0000:07:00.0:  4096M of VRAM memory ready
+[   49.601431] waynoway kernel: amdgpu 0000:07:00.0:  13683M of GTT memory ready.
+[   49.601736] waynoway kernel: amdgpu 0000:07:00.0: [drm] GART: num cpu pages 262144, num gpu pages 262144
+[   49.602041] waynoway kernel: amdgpu 0000:07:00.0: [drm] PCIE GART of 1024M enabled.
+[   49.602379] waynoway kernel: amdgpu 0000:07:00.0: [drm] PTB located at 0x000000F4FFC00000
+[   49.602686] waynoway kernel: amdgpu 0000:07:00.0: [drm] Loading DMUB firmware via PSP: version=0x0101002B
+[   49.602989] waynoway kernel: amdgpu 0000:07:00.0: [VCN instance 0] Found VCN firmware Version ENC: 1.24 DEC: 8 VEP: 0 Revision: 9
+[   49.603308] waynoway kernel: amdgpu 0000:07:00.0: reserve 0x400000 from 0xf4ff800000 for PSP TMR
+[   49.714035] waynoway kernel: amdgpu 0000:07:00.0: RAS: optional ras ta ucode is not available
+[   49.729042] waynoway kernel: amdgpu 0000:07:00.0: RAP: optional rap ta ucode is not available
+[   49.729600] waynoway kernel: amdgpu 0000:07:00.0: SECUREDISPLAY: optional securedisplay ta ucode is not available
+[   49.730024] waynoway kernel: amdgpu 0000:07:00.0: SMU is initialized successfully!
+[   49.730406] waynoway kernel: amdgpu 0000:07:00.0: [drm] Display Core v3.2.369 initialized on DCN 2.1
+[   49.730785] waynoway kernel: amdgpu 0000:07:00.0: [drm] DP-HDMI FRL PCON supported
+[   49.731190] waynoway kernel: amdgpu 0000:07:00.0: [drm] DMUB hardware initialized: version=0x0101002B
+[   49.764033] waynoway kernel: snd_hda_intel 0000:07:00.1: bound 0000:07:00.0 (ops amdgpu_dm_audio_component_bind_ops [amdgpu])
+[   49.984021] waynoway kernel: amdgpu 0000:07:00.0: [drm] Using ACPI provided EDID for eDP-1
+[   49.992024] waynoway kernel: amdgpu 0000:07:00.0: kiq ring mec 2 pipe 1 q 0
+[   49.999017] waynoway kernel: kfd kfd: Allocated 3969056 bytes on gart
+[   49.999586] waynoway kernel: kfd kfd: Total number of KFD nodes to be created: 1
+[   49.999969] waynoway kernel: amdgpu: Virtual CRAT table created for GPU
+[   50.001024] waynoway kernel: amdgpu: Topology: Add GPU node [0x1002:0x1638]
+[   50.001071] waynoway kernel: kfd kfd: added device 1002:1638
+[   50.001488] waynoway kernel: amdgpu 0000:07:00.0: SE 1, SH per SE 1, CU per SH 8, active_cu_number 8
+[   50.001946] waynoway kernel: amdgpu 0000:07:00.0: ring gfx uses VM inv eng 0 on hub 0
+[   50.002359] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.0.0 uses VM inv eng 1 on hub 0
+[   50.002763] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.1.0 uses VM inv eng 4 on hub 0
+[   50.003184] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.2.0 uses VM inv eng 5 on hub 0
+[   50.003672] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.3.0 uses VM inv eng 6 on hub 0
+[   50.004097] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.0.1 uses VM inv eng 7 on hub 0
+[   50.004495] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.1.1 uses VM inv eng 8 on hub 0
+[   50.004894] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.2.1 uses VM inv eng 9 on hub 0
+[   50.005304] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.3.1 uses VM inv eng 10 on hub 0
+[   50.005958] waynoway kernel: amdgpu 0000:07:00.0: ring kiq_0.2.1.0 uses VM inv eng 11 on hub 0
+[   50.006585] waynoway kernel: amdgpu 0000:07:00.0: ring sdma0 uses VM inv eng 0 on hub 8
+[   50.007095] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_dec uses VM inv eng 1 on hub 8
+[   50.007520] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_enc0 uses VM inv eng 4 on hub 8
+[   50.007924] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_enc1 uses VM inv eng 5 on hub 8
+[   50.008384] waynoway kernel: amdgpu 0000:07:00.0: ring jpeg_dec uses VM inv eng 6 on hub 8
+[   50.008986] waynoway kernel: amdgpu 0000:07:00.0: Runtime PM not available
+[   50.009544] waynoway kernel: amdgpu 0000:07:00.0: [drm] Using custom brightness curve
+[   50.012030] waynoway kernel: amdgpu 0000:07:00.0: [drm] Registered 4 planes with drm panic
+[   50.018156] waynoway kernel: [drm] Initialized amdgpu 3.64.0 for 0000:07:00.0 on minor 1
+[   50.030051] waynoway kernel: fbcon: amdgpudrmfb (fb0) is primary device
+[   50.030162] waynoway kernel: fbcon: Deferring console take-over
+[   50.030191] waynoway kernel: amdgpu 0000:07:00.0: [drm] fb0: amdgpudrmfb frame buffer device
+[   50.035045] waynoway kernel: nvme nvme0: using unchecked data buffer
+[   50.080046] waynoway kernel: [drm] pre_validate_dsc:1667 MST_DSC dsc precompute is not needed
+[   50.213028] waynoway kernel: Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[   50.213105] waynoway kernel: Bluetooth: BNEP filters: protocol multicast
+[   50.213127] waynoway kernel: Bluetooth: BNEP socket layer initialized
+[   50.217053] waynoway kernel: Bluetooth: MGMT ver 1.23
+[   50.227076] waynoway kernel: NET: Registered PF_ALG protocol family
+[   50.329041] waynoway kernel: amdgpu 0000:07:00.0: [drm] *ERROR* dc_dmub_srv_log_diagnostic_data: DMCUB error - collecting diagnostic data
+[   50.493048] waynoway kernel: Generic FE-GE Realtek PHY r8169-0-200:00: attached PHY driver (mii_bus:phy_addr=r8169-0-200:00, irq=MAC)
+[   50.521053] waynoway kernel: block nvme0n1: No UUID available providing old NGUID
+[   50.538024] waynoway kernel: NET: Registered PF_QIPCRTR protocol family
+[   50.549020] waynoway kernel: amdgpu 0000:07:00.0: [drm] *ERROR* dc_dmub_srv_log_diagnostic_data: DMCUB error - collecting diagnostic data
+[   50.592046] waynoway kernel: r8169 0000:02:00.0 enp2s0f0: Link is Down
+[   50.618042] waynoway kernel: Generic FE-GE Realtek PHY r8169-0-500:00: attached PHY driver (mii_bus:phy_addr=r8169-0-500:00, irq=MAC)
+[   50.775098] waynoway kernel: r8169 0000:05:00.0 enp5s0: Link is Down
+[   51.660083] waynoway kernel: set_capacity_and_notify: 61 callbacks suppressed
+[   51.660153] waynoway kernel: loop71: detected capacity change from 0 to 8
+[   52.889026] waynoway kernel: Bluetooth: RFCOMM TTY layer initialized
+[   52.889088] waynoway kernel: Bluetooth: RFCOMM socket layer initialized
+[   52.889110] waynoway kernel: Bluetooth: RFCOMM ver 1.11
+[   54.422028] waynoway kernel: wlp3s0: authenticate with e8:84:c6:9a:a5:d8 (local address=04:d3:b0:8b:e9:80)
+[   54.424034] waynoway kernel: wlp3s0: send auth to e8:84:c6:9a:a5:d8 (try 1/3)
+[   54.434109] waynoway kernel: wlp3s0: authenticated
+[   54.434140] waynoway kernel: wlp3s0: associate with e8:84:c6:9a:a5:d8 (try 1/3)
+[   54.477040] waynoway kernel: wlp3s0: RX AssocResp from e8:84:c6:9a:a5:d8 (capab=0x1431 status=0 aid=49)
+[   54.502034] waynoway kernel: wlp3s0: associated
+[   55.104024] waynoway kernel: rfkill: input handler disabled
+[   55.681030] waynoway kernel: usb 3-3: reset full-speed USB device number 2 using xhci_hcd
+[   57.386052] waynoway kernel: kauditd_printk_skb: 313 callbacks suppressed
+[   57.386138] waynoway kernel: audit: type=1400 audit(1792782170.321:325): apparmor="STATUS" operation="profile_load" profile="unconfined" name="docker-default" pid=6527 comm="apparmor_parser"
+[   57.728049] waynoway kernel: Initializing XFRM netlink socket
+[   57.756024] waynoway kernel: bridge: filtering via arp/ip/ip6tables is no longer available by default. Update your scripts to load br_netfilter if you need this.
+[   61.675043] waynoway kernel: audit: type=1400 audit(1792782174.610:326): apparmor="DENIED" operation="capable" class="cap" profile="fusermount3" pid=7287 comm="fusermount3" capability=1  capname="dac_override"
+[   61.675124] waynoway kernel: audit: type=1400 audit(1792782174.610:327): apparmor="DENIED" operation="capable" class="cap" profile="fusermount3" pid=7287 comm="fusermount3" capability=7  capname="setuid"
+[   61.675212] waynoway kernel: audit: type=1400 audit(1792782174.610:328): apparmor="DENIED" operation="capable" class="cap" profile="fusermount3" pid=7288 comm="fusermount3" capability=7  capname="setuid"
+[   61.767046] waynoway kernel: rfkill: input handler enabled
+[   62.137040] waynoway kernel: audit: type=1400 audit(1792782175.072:329): apparmor="DENIED" operation="capable" class="cap" profile="fusermount3" pid=7628 comm="fusermount3" capability=1  capname="dac_override"
+[   62.137146] waynoway kernel: audit: type=1400 audit(1792782175.072:330): apparmor="DENIED" operation="capable" class="cap" profile="fusermount3" pid=7628 comm="fusermount3" capability=7  capname="setuid"
+[   62.137183] waynoway kernel: audit: type=1400 audit(1792782175.072:331): apparmor="DENIED" operation="capable" class="cap" profile="fusermount3" pid=7631 comm="fusermount3" capability=7  capname="setuid"
+[   63.996184] waynoway kernel: rfkill: input handler disabled
+[   66.037039] waynoway kernel: audit: type=1400 audit(1792782178.973:332): apparmor="DENIED" operation="mount" class="mount" info="failed mntpnt match" error=-13 profile="fusermount3" name="/" pid=9156 comm="fusermount3" flags="rw, rprivate"
+[   84.133049] waynoway kernel: warning: `ThreadPoolForeg' uses wireless extensions which will stop working for Wi-Fi 7 hardware; use nl80211
+[  123.113045] waynoway kernel: audit: type=1400 audit(1792782236.048:333): apparmor="DENIED" operation="open" class="file" profile="/usr/bin/wsdd" name="/usr/share/coreutils/locales/uucore/en-US.ftl" pid=11087 comm="wsdd" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[  246.807031] waynoway kernel: audit: type=1326 audit(1792782359.742:334): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=12419 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x7906bc9e36eb code=0x50000
+[  268.638078] waynoway kernel: audit: type=1326 audit(1792782381.574:335): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=12419 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x7906bc9e36eb code=0x50000
+[  268.742073] waynoway kernel: audit: type=1107 audit(1792782381.678:336): pid=3153 uid=996 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor="DENIED" operation="dbus_method_call"  bus="system" path="/" interface="org.freedesktop.DBus.Peer" member="Ping" mask="send" name="org.freedesktop.Avahi" pid=12419 label="snap.libreoffice.calc" peer_pid=3146 peer_label="unconfined"
+                                 exe="/usr/bin/dbus-daemon" sauid=996 hostname=? addr=? terminal=?'
+[  268.886052] waynoway kernel: audit: type=1400 audit(1792782381.822:337): apparmor="DENIED" operation="open" class="file" profile="snap.libreoffice.calc" name="/var/tmp/" pid=12419 comm="soffice.bin" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[  270.775083] waynoway kernel: audit: type=1326 audit(1792782383.710:338): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=12419 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x7906bc9e36eb code=0x50000
+[  271.835054] waynoway kernel: audit: type=1326 audit(1792782384.770:339): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=12419 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x7906bc9e36eb code=0x50000
+[  272.895041] waynoway kernel: audit: type=1326 audit(1792782385.831:340): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=12419 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x7906bc9e36eb code=0x50000
+[  273.956071] waynoway kernel: audit: type=1326 audit(1792782386.892:341): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=12419 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x7906bc9e36eb code=0x50000
+[  305.315067] waynoway kernel: audit: type=1400 audit(1792782418.251:342): apparmor="AUDIT" operation="userns_create" class="namespace" info="Userns create - transitioning profile" profile="unconfined" pid=13742 comm="(ubuntu-insigh)" requested="userns_create" target="unprivileged_userns" execpath="/usr/lib/systemd/systemd-executor"
+[  305.316042] waynoway kernel: audit: type=1400 audit(1792782418.252:343): apparmor="DENIED" operation="capable" class="cap" profile="unprivileged_userns" pid=13742 comm="(ubuntu-insigh)" capability=21  capname="sys_admin"
+[  305.418094] waynoway kernel: audit: type=1400 audit(1792782418.354:344): apparmor="DENIED" operation="getattr" class="file" info="Failed name lookup - disconnected path" error=-13 profile="unprivileged_userns" name="" pid=13750 comm="systemd-detect-" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[  369.853036] waynoway kernel: loop71: detected capacity change from 0 to 560152
+[  371.992042] waynoway kernel: audit: type=1400 audit(1792782484.927:345): apparmor="STATUS" operation="profile_replace" info="same as current profile, skipping" profile="unconfined" name="/snap/snapd/28254/usr/lib/snapd/snap-confine" pid=14790 comm="apparmor_parser"
+[  372.282134] waynoway kernel: audit: type=1400 audit(1792782485.217:346): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap.discord.hook.configure" pid=14794 comm="apparmor_parser"
+[  372.447051] waynoway kernel: audit: type=1400 audit(1792782485.382:347): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap-update-ns.discord" pid=14792 comm="apparmor_parser"
+[  372.609064] waynoway kernel: audit: type=1400 audit(1792782485.545:348): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap.discord.discord" pid=14793 comm="apparmor_parser"
+[  375.219061] waynoway kernel: audit: type=1400 audit(1792782488.155:349): apparmor="DENIED" operation="mount" class="mount" info="failed flags match" error=-13 profile="snap-update-ns.discord" name="/boot/" pid=15000 comm="snap-update-ns" srcname="/var/lib/snapd/hostfs/boot/" flags="rw, bind"
+[  485.315083] waynoway kernel: audit: type=1400 audit(1792782598.251:350): apparmor="AUDIT" operation="userns_create" class="namespace" info="Userns create - transitioning profile" profile="unconfined" pid=15585 comm="(ubuntu-insigh)" requested="userns_create" target="unprivileged_userns" execpath="/usr/lib/systemd/systemd-executor"
+[  485.317105] waynoway kernel: audit: type=1400 audit(1792782598.253:351): apparmor="DENIED" operation="capable" class="cap" profile="unprivileged_userns" pid=15585 comm="(ubuntu-insigh)" capability=21  capname="sys_admin"
+[  873.763093] waynoway kernel: audit: type=1326 audit(1792782986.698:352): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=12419 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x7906bc9e36eb code=0x50000
+[ 1473.764086] waynoway kernel: audit: type=1326 audit(1792783586.699:353): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=12419 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x7906bc9e36eb code=0x50000
+[ 2073.766104] waynoway kernel: audit: type=1326 audit(1792784186.702:354): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=12419 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x7906bc9e36eb code=0x50000
+[ 2673.768175] waynoway kernel: audit: type=1326 audit(1792784786.703:355): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=12419 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x7906bc9e36eb code=0x50000
+[ 3273.801335] waynoway kernel: audit: type=1326 audit(1792785386.736:356): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=12419 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x7906bc9e36eb code=0x50000
+[ 3324.753048] waynoway kernel: wlp3s0: deauthenticating from e8:84:c6:9a:a5:d8 by local choice (Reason: 3=DEAUTH_LEAVING)
+[ 3326.398335] waynoway kernel: amdgpu 0000:07:00.0: [drm] *ERROR* dc_dmub_srv_log_diagnostic_data: DMCUB error - collecting diagnostic data
+[ 3329.881089] waynoway kernel: PM: suspend entry (s2idle)
+[ 3329.890056] waynoway kernel: Filesystems sync: 0.008 seconds
+[ 3332.012600] waynoway kernel: Freezing user space processes
+[ 3332.013526] waynoway kernel: Freezing user space processes completed (elapsed 0.003 seconds)
+[ 3332.014860] waynoway kernel: OOM killer disabled.
+[ 3332.015110] waynoway kernel: Freezing remaining freezable tasks
+[ 3332.015467] waynoway kernel: Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
+[ 3332.015658] waynoway kernel: printk: Suspending console(s) (use no_console_suspend to debug)
+[ 3332.015851] waynoway kernel: atkbd serio0: Disabling IRQ1 wakeup source to avoid platform firmware bug
+[ 3332.019864] waynoway kernel: ACPI: EC: interrupt blocked
+[ 3332.020144] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[ 3332.020549] waynoway kernel: 
+[ 3332.020953] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[ 3332.021142] waynoway kernel: 
+[ 3332.021323] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[ 3332.021499] waynoway kernel:   Arg0:   00000000c535438d <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[ 3332.021832] waynoway kernel:   Arg1:   00000000a188b290 <Obj>           Integer 0000000000000000
+[ 3332.022029] waynoway kernel:   Arg2:   00000000ec775dc5 <Obj>           Integer 0000000000000003
+[ 3332.022214] waynoway kernel:   Arg3:   0000000015e93b6e <Obj>           Package 0000000015e93b6e
+[ 3332.022384] waynoway kernel: 
+[ 3332.022561] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[ 3332.022852] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[ 3332.023033] waynoway kernel: 
+[ 3332.023194] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[ 3332.023359] waynoway kernel: 
+[ 3332.023522] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[ 3332.023828] waynoway kernel:   Arg0:   0000000015e93b6e <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[ 3332.024015] waynoway kernel:   Arg1:   00000000ec775dc5 <Obj>           Integer 0000000000000000
+[ 3332.024335] waynoway kernel:   Arg2:   00000000a188b290 <Obj>           Integer 0000000000000007
+[ 3332.024651] waynoway kernel:   Arg3:   00000000c535438d <Obj>           Package 00000000c535438d
+[ 3332.024837] waynoway kernel: 
+[ 3332.025138] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[ 3332.025321] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[ 3332.025489] waynoway kernel: 
+[ 3332.025724] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[ 3332.025971] waynoway kernel: 
+[ 3332.026357] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[ 3332.026537] waynoway kernel:   Arg0:   00000000c535438d <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[ 3332.026773] waynoway kernel:   Arg1:   00000000a188b290 <Obj>           Integer 0000000000000000
+[ 3332.026950] waynoway kernel:   Arg2:   00000000ec775dc5 <Obj>           Integer 0000000000000008
+[ 3332.027132] waynoway kernel:   Arg3:   0000000015e93b6e <Obj>           Package 0000000015e93b6e
+[ 3332.027363] waynoway kernel: 
+[ 3332.027589] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[ 3332.028011] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[ 3332.028185] waynoway kernel: 
+[ 3332.028350] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[ 3332.028572] waynoway kernel: 
+[ 3332.028795] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[ 3332.029033] waynoway kernel:   Arg0:   0000000015e93b6e <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[ 3332.029260] waynoway kernel:   Arg1:   00000000ec775dc5 <Obj>           Integer 0000000000000000
+[ 3332.029482] waynoway kernel:   Arg2:   00000000a188b290 <Obj>           Integer 0000000000000004
+[ 3332.029715] waynoway kernel:   Arg3:   00000000c535438d <Obj>           Package 00000000c535438d
+[ 3332.030728] waynoway kernel: 
+[ 3332.031186] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[ 3332.031632] waynoway kernel: ACPI: EC: interrupt unblocked
+[ 3332.032299] waynoway kernel: usb usb5: root hub lost power or was reset
+[ 3332.037482] waynoway kernel: usb usb6: root hub lost power or was reset
+[ 3332.042587] waynoway kernel: xhci-pci-renesas 0000:06:00.0: Zeroing 64bit base registers, expecting fault
+[ 3332.047917] waynoway kernel: amdgpu 0000:07:00.0: [drm] PCIE GART of 1024M enabled.
+[ 3332.071106] waynoway kernel: amdgpu 0000:07:00.0: [drm] PTB located at 0x000000F4FFC00000
+[ 3332.083333] waynoway kernel: amdgpu 0000:07:00.0: SMU is resuming...
+[ 3332.088024] waynoway kernel: amdgpu 0000:07:00.0: dpm has been disabled
+[ 3332.093918] waynoway kernel: amdgpu 0000:07:00.0: SMU is resumed successfully!
+[ 3332.101174] waynoway kernel: amdgpu 0000:07:00.0: ring gfx uses VM inv eng 0 on hub 0
+[ 3332.106139] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.0.0 uses VM inv eng 1 on hub 0
+[ 3332.110984] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.1.0 uses VM inv eng 4 on hub 0
+[ 3332.115321] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.2.0 uses VM inv eng 5 on hub 0
+[ 3332.115960] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.3.0 uses VM inv eng 6 on hub 0
+[ 3332.116629] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.0.1 uses VM inv eng 7 on hub 0
+[ 3332.117321] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.1.1 uses VM inv eng 8 on hub 0
+[ 3332.117948] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.2.1 uses VM inv eng 9 on hub 0
+[ 3332.118588] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.3.1 uses VM inv eng 10 on hub 0
+[ 3332.119837] waynoway kernel: amdgpu 0000:07:00.0: ring kiq_0.2.1.0 uses VM inv eng 11 on hub 0
+[ 3332.120550] waynoway kernel: amdgpu 0000:07:00.0: ring sdma0 uses VM inv eng 0 on hub 8
+[ 3332.121200] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_dec uses VM inv eng 1 on hub 8
+[ 3332.121819] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_enc0 uses VM inv eng 4 on hub 8
+[ 3332.122708] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_enc1 uses VM inv eng 5 on hub 8
+[ 3332.123419] waynoway kernel: amdgpu 0000:07:00.0: ring jpeg_dec uses VM inv eng 6 on hub 8
+[ 3332.125382] waynoway kernel: nvme nvme0: 16/0/0 default/read/poll queues
+[ 3332.125932] waynoway kernel: usb 5-2: reset high-speed USB device number 2 using xhci-pci-renesas
+[ 3332.126601] waynoway kernel: OOM killer enabled.
+[ 3332.126642] waynoway kernel: Restarting tasks: Starting
+[ 3332.126674] waynoway kernel: Restarting tasks: Done
+[ 3332.126711] waynoway kernel: efivarfs: resyncing variable state
+[ 3332.126748] waynoway kernel: efivarfs: finished resyncing variable state
+[ 3332.126791] waynoway kernel: random: crng reseeded on system resumption
+[ 3332.126838] waynoway kernel: PM: suspend exit
+[ 3332.239056] waynoway kernel: Generic FE-GE Realtek PHY r8169-0-200:00: attached PHY driver (mii_bus:phy_addr=r8169-0-200:00, irq=MAC)
+[ 3332.339066] waynoway kernel: r8169 0000:02:00.0 enp2s0f0: Link is Down
+[ 3332.365079] waynoway kernel: Generic FE-GE Realtek PHY r8169-0-500:00: attached PHY driver (mii_bus:phy_addr=r8169-0-500:00, irq=MAC)
+[ 3332.460213] waynoway kernel: psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
+[ 3332.495173] waynoway kernel: psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
+[ 3332.521069] waynoway kernel: r8169 0000:05:00.0 enp5s0: Link is Down
+[ 3333.284094] waynoway kernel: usb 3-3: reset full-speed USB device number 2 using xhci_hcd
+[ 3334.167224] waynoway kernel: audit: type=1400 audit(1792801880.266:357): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=19863 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[ 3336.274067] waynoway kernel: wlp3s0: authenticate with e8:84:c6:9a:a5:d8 (local address=04:d3:b0:8b:e9:80)
+[ 3336.276103] waynoway kernel: wlp3s0: send auth to e8:84:c6:9a:a5:d8 (try 1/3)
+[ 3336.287085] waynoway kernel: wlp3s0: authenticated
+[ 3336.287187] waynoway kernel: wlp3s0: associate with e8:84:c6:9a:a5:d8 (try 1/3)
+[ 3336.323089] waynoway kernel: wlp3s0: RX AssocResp from e8:84:c6:9a:a5:d8 (capab=0x1431 status=0 aid=16)
+[ 3336.346082] waynoway kernel: wlp3s0: associated
+[ 3363.141068] waynoway kernel: amdgpu 0000:07:00.0: [drm] *ERROR* dc_dmub_srv_log_diagnostic_data: DMCUB error - collecting diagnostic data
+[ 3873.804093] waynoway kernel: audit: type=1326 audit(1792802419.904:358): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=12419 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x7906bc9e36eb code=0x50000
+[ 4297.334083] waynoway kernel: audit: type=1326 audit(1792802843.434:359): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.whatsapp-linux-desktop.whatsapp-linux-desktop pid=24902 comm="whatsapp-linux-" exe="/snap/whatsapp-linux-desktop/3/whatsapp-linux-desktop" sig=0 arch=c000003e syscall=330 compat=0 ip=0x7853fe7ba27b code=0x50000
+[ 4297.343072] waynoway kernel: audit: type=1326 audit(1792802843.443:360): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.whatsapp-linux-desktop.whatsapp-linux-desktop pid=24901 comm="whatsapp-linux-" exe="/snap/whatsapp-linux-desktop/3/whatsapp-linux-desktop" sig=0 arch=c000003e syscall=330 compat=0 ip=0x7c48b53a527b code=0x50000
+[ 4300.514066] waynoway kernel: audit: type=1107 audit(1792802846.614:361): pid=3153 uid=996 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor="DENIED" operation="dbus_method_call"  bus="system" path="/" interface="org.freedesktop.DBus.ObjectManager" member="GetManagedObjects" mask="send" name="org.bluez" pid=24755 label="snap.whatsapp-linux-desktop.whatsapp-linux-desktop" peer_pid=3148 peer_label="unconfined"
+                                 exe="/usr/bin/dbus-daemon" sauid=996 hostname=? addr=? terminal=?'
+[ 4301.659042] waynoway kernel: audit: type=1400 audit(1792802847.759:362): apparmor="DENIED" operation="open" class="file" profile="snap.whatsapp-linux-desktop.whatsapp-linux-desktop" name="/etc/vulkan/implicit_layer.d/" pid=24967 comm="whatsapp-linux-" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[ 4301.659197] waynoway kernel: audit: type=1400 audit(1792802847.759:363): apparmor="DENIED" operation="open" class="file" profile="snap.whatsapp-linux-desktop.whatsapp-linux-desktop" name="/etc/vulkan/implicit_layer.d/" pid=24967 comm="whatsapp-linux-" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[ 4301.659279] waynoway kernel: audit: type=1400 audit(1792802847.759:364): apparmor="DENIED" operation="open" class="file" profile="snap.whatsapp-linux-desktop.whatsapp-linux-desktop" name="/etc/vulkan/icd.d/" pid=24967 comm="whatsapp-linux-" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[ 4301.659321] waynoway kernel: audit: type=1400 audit(1792802847.759:365): apparmor="DENIED" operation="open" class="file" profile="snap.whatsapp-linux-desktop.whatsapp-linux-desktop" name="/etc/vulkan/icd.d/" pid=24967 comm="whatsapp-linux-" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[ 4301.659371] waynoway kernel: audit: type=1400 audit(1792802847.759:366): apparmor="DENIED" operation="open" class="file" profile="snap.whatsapp-linux-desktop.whatsapp-linux-desktop" name="/etc/vulkan/implicit_layer.d/" pid=24967 comm="whatsapp-linux-" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[ 4301.659418] waynoway kernel: audit: type=1400 audit(1792802847.760:367): apparmor="DENIED" operation="open" class="file" profile="snap.whatsapp-linux-desktop.whatsapp-linux-desktop" name="/etc/vulkan/implicit_layer.d/" pid=24967 comm="whatsapp-linux-" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[ 4301.659458] waynoway kernel: audit: type=1400 audit(1792802847.760:368): apparmor="DENIED" operation="open" class="file" profile="snap.whatsapp-linux-desktop.whatsapp-linux-desktop" name="/etc/vulkan/icd.d/" pid=24967 comm="whatsapp-linux-" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[ 4302.857051] waynoway kernel: kauditd_printk_skb: 31 callbacks suppressed
+[ 4302.857218] waynoway kernel: audit: type=1326 audit(1792802848.957:400): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.whatsapp-linux-desktop.whatsapp-linux-desktop pid=25028 comm="whatsapp-linux-" exe="/snap/whatsapp-linux-desktop/3/whatsapp-linux-desktop" sig=0 arch=c000003e syscall=330 compat=0 ip=0x73ffbe7d527b code=0x50000
+[ 4305.443104] waynoway kernel: audit: type=1326 audit(1792802851.543:401): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.whatsapp-linux-desktop.whatsapp-linux-desktop pid=25056 comm="whatsapp-linux-" exe="/snap/whatsapp-linux-desktop/3/whatsapp-linux-desktop" sig=0 arch=c000003e syscall=330 compat=0 ip=0x70b0153ff27b code=0x50000
+[ 4315.264078] waynoway kernel: audit: type=1326 audit(1792802861.364:402): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=12419 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x7906bc9e36eb code=0x50000
+[ 4337.891067] waynoway kernel: audit: type=1326 audit(1792802883.991:403): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.whatsapp-linux-desktop.whatsapp-linux-desktop pid=25154 comm="whatsapp-linux-" exe="/snap/whatsapp-linux-desktop/3/whatsapp-linux-desktop" sig=0 arch=c000003e syscall=330 compat=0 ip=0x77a65f7af27b code=0x50000
+[ 4338.432055] waynoway kernel: audit: type=1326 audit(1792802884.532:404): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.whatsapp-linux-desktop.whatsapp-linux-desktop pid=25163 comm="whatsapp-linux-" exe="/snap/whatsapp-linux-desktop/3/whatsapp-linux-desktop" sig=0 arch=c000003e syscall=330 compat=0 ip=0x73cb3824c27b code=0x50000
+[ 4593.038369] waynoway kernel: workqueue: acpi_ec_event_processor hogged CPU for >13333us 4 times, consider switching to WQ_UNBOUND
+[ 4849.914066] waynoway kernel: workqueue: acpi_ec_event_processor hogged CPU for >13333us 5 times, consider switching to WQ_UNBOUND
+[ 5059.677118] waynoway kernel: audit: type=1400 audit(1792803605.777:405): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=26270 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[ 5391.946133] waynoway kernel: workqueue: acpi_ec_event_processor hogged CPU for >13333us 7 times, consider switching to WQ_UNBOUND
+[ 6049.875018] waynoway kernel: i2c_piix4: loading out-of-tree module taints kernel.
+[ 6049.875089] waynoway kernel: i2c_piix4: module verification failed: signature and/or required key missing - tainting kernel
+[ 6049.876015] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Controller at 0xb00, revision 0
+[ 6049.876297] waynoway kernel: piix4_smbus 0000:00:14.0: Using register 0x02 for SMBus port selection
+[ 6049.879014] waynoway kernel: ee1004 2-0050: 512 byte EE1004-compliant SPD EEPROM, read-only
+[ 6049.879303] waynoway kernel: i2c i2c-2: Successfully instantiated SPD at 0x50
+[ 6049.879576] waynoway kernel: piix4_smbus 0000:00:14.0: Auxiliary SMBus Host Controller at 0xb20
+[ 6049.879834] waynoway kernel: piix4_smbus 0000:00:14.0: ASF SMBus slave (SMB0001) at 0x0b20, GSI IRQ 7 (level/low)
+[ 6049.880103] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Notify enabled via ASF (IRQ 7)
+[ 6050.830227] waynoway kernel: psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
+[ 6050.869050] waynoway kernel: psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
+[ 6050.869654] waynoway kernel: psmouse serio1: synaptics: Trying to set up SMBus access
+[ 6050.870163] waynoway kernel: psmouse serio1: synaptics: intertouch pdata: nosleep=0 doze_interval=6
+[ 6050.905069] waynoway kernel: rmi4_smbus 4-002c: registering SMbus-connected sensor
+[ 6051.042019] waynoway kernel: rmi4_f01 rmi4-00.fn01: found RMI device, manufacturer: Synaptics, product: TM3471-030, fw id: 3942087
+[ 6051.136075] waynoway kernel: input: Synaptics TM3471-030 as /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/input/input22
+[ 6051.151035] waynoway kernel: serio: RMI4 PS/2 pass-through port at rmi4-00.fn03
+[ 6051.275038] waynoway kernel: psmouse serio3: trackpoint: Elan TrackPoint firmware: 0x12, buttons: 3/3
+[ 6051.313017] waynoway kernel: input: TPPS/2 Elan TrackPoint as /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/rmi4-00.fn03/serio3/input/input23
+[ 6101.795019] waynoway kernel: rmi4_physical rmi4-00: rmi_driver_clear_irq_bits: Failed to change enabled interrupts!
+[ 6102.089076] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Controller at 0xb00, revision 0
+[ 6102.089454] waynoway kernel: piix4_smbus 0000:00:14.0: Using register 0x02 for SMBus port selection
+[ 6102.093012] waynoway kernel: ee1004 2-0050: 512 byte EE1004-compliant SPD EEPROM, read-only
+[ 6102.093342] waynoway kernel: i2c i2c-2: Successfully instantiated SPD at 0x50
+[ 6102.093616] waynoway kernel: piix4_smbus 0000:00:14.0: Auxiliary SMBus Host Controller at 0xb20
+[ 6103.081055] waynoway kernel: psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
+[ 6103.129030] waynoway kernel: psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
+[ 6103.129430] waynoway kernel: psmouse serio1: synaptics: Trying to set up SMBus access
+[ 6103.132044] waynoway kernel: psmouse serio1: synaptics: SMbus companion is not ready yet
+[ 6103.203044] waynoway kernel: psmouse serio1: synaptics: Touchpad model: 1, fw: 10.32, id: 0x1e2a1, caps: 0xf01ea3/0x940300/0x12e800/0x500000, board id: 3471, fw id: 3942087
+[ 6103.203473] waynoway kernel: psmouse serio1: synaptics: serio: Synaptics pass-through port at isa0060/serio1/input0
+[ 6103.244041] waynoway kernel: input: SynPS/2 Synaptics TouchPad as /devices/platform/i8042/serio1/input/input25
+[ 6103.825035] waynoway kernel: psmouse serio4: trackpoint: Elan TrackPoint firmware: 0x12, buttons: 3/3
+[ 6104.072030] waynoway kernel: input: TPPS/2 Elan TrackPoint as /devices/platform/i8042/serio1/serio4/input/input26

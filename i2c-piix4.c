@@ -1,0 +1,2191 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
+/*
+    Copyright (c) 1998 - 2002 Frodo Looijaard <frodol@dds.nl> and
+    Philip Edelbrock <phil@netroedge.com>
+
+*/
+
+/*
+   Supports:
+	Intel PIIX4, 440MX
+	Serverworks OSB4, CSB5, CSB6, HT-1000, HT-1100
+	ATI IXP200, IXP300, IXP400, SB600, SB700/SP5100, SB800
+	AMD Hudson-2, ML, CZ
+	Hygon CZ
+	SMSC Victory66
+
+   Note: we assume there can only be one device, with one or more
+   SMBus interfaces.
+   The device can register multiple i2c_adapters (up to PIIX4_MAX_ADAPTERS).
+   For devices supporting multiple ports the i2c_adapter should provide
+   an i2c_algorithm to access them.
+*/
+
+#include <linux/bitops.h>
+#include <linux/interrupt.h>
+#include <linux/module.h>
+#include <linux/moduleparam.h>
+#include <linux/mutex.h>
+#include <linux/pci.h>
+#include <linux/kernel.h>
+#include <linux/delay.h>
+#include <linux/stddef.h>
+#include <linux/ioport.h>
+#include <linux/i2c.h>
+#include <linux/i2c-smbus.h>
+#include <linux/slab.h>
+#include <linux/dmi.h>
+#include <linux/acpi.h>
+#include <linux/io.h>
+#include <linux/platform_data/x86/amd-fch.h>
+
+#include "i2c-piix4.h"
+
+/* count for request_region */
+#define SMBIOSIZE	9
+
+/* PCI Address Constants */
+#define SMBBA		0x090
+#define SMBHSTCFG	0x0D2
+#define SMBSLVC		0x0D3
+#define SMBSHDW1	0x0D4
+#define SMBSHDW2	0x0D5
+#define SMBREV		0x0D6
+
+/* Other settings */
+#define MAX_TIMEOUT	500
+#define  ENABLE_INT9	0
+
+/* PIIX4 constants */
+#define PIIX4_QUICK		0x00
+#define PIIX4_BYTE		0x04
+#define PIIX4_BYTE_DATA		0x08
+#define PIIX4_WORD_DATA		0x0C
+
+/* Multi-port constants */
+#define PIIX4_MAX_ADAPTERS	4
+#define HUDSON2_MAIN_PORTS	2 /* HUDSON2, KERNCZ reserves ports 3, 4 */
+
+/* SB800 constants */
+#define SB800_PIIX4_SMB_IDX		0xcd6
+#define SB800_PIIX4_SMB_MAP_SIZE	2
+
+#define KERNCZ_IMC_IDX			0x3e
+#define KERNCZ_IMC_DATA			0x3f
+
+/*
+ * SB800 port is selected by bits 2:1 of the smb_en register (0x2c)
+ * or the smb_sel register (0x2e), depending on bit 0 of register 0x2f.
+ * Hudson-2/Bolton port is always selected by bits 2:1 of register 0x2f.
+ */
+#define SB800_PIIX4_PORT_IDX		0x2c
+#define SB800_PIIX4_PORT_IDX_ALT	0x2e
+#define SB800_PIIX4_PORT_IDX_SEL	0x2f
+#define SB800_PIIX4_PORT_IDX_MASK	0x06
+#define SB800_PIIX4_PORT_IDX_SHIFT	1
+
+/* SmBus0Sel is at bit 20:19 of PMx00 DecodeEn */
+#define SB800_PIIX4_PORT_IDX_KERNCZ		(FCH_PM_DECODEEN + 0x02)
+#define SB800_PIIX4_PORT_IDX_MASK_KERNCZ	(FCH_PM_DECODEEN_SMBUS0SEL >> 16)
+#define SB800_PIIX4_PORT_IDX_SHIFT_KERNCZ	3
+
+#define SB800_PIIX4_FCH_PM_SIZE			8
+#define SB800_ASF_ACPI_PATH			"\\_SB.ASFC"
+
+/* insmod parameters */
+
+/* If force is set to anything different from 0, we forcibly enable the
+   PIIX4. DANGEROUS! */
+static int force;
+module_param (force, int, 0);
+MODULE_PARM_DESC(force, "Forcibly enable the PIIX4. DANGEROUS!");
+
+/* If force_addr is set to anything different from 0, we forcibly enable
+   the PIIX4 at the given address. VERY DANGEROUS! */
+static int force_addr;
+module_param_hw(force_addr, int, ioport, 0);
+MODULE_PARM_DESC(force_addr,
+		 "Forcibly enable the PIIX4 at the given address. "
+		 "EXTREMELY DANGEROUS!");
+
+static bool asf_host_notify = true;
+module_param(asf_host_notify, bool, 0);
+MODULE_PARM_DESC(asf_host_notify,
+		 "Enable SMBus Host Notify via the ASF controller when the firmware describes one (default 1)");
+
+/*
+ * ASF (Alert Standard Format) SMBus slave / Host Notify support
+ *
+ * On AMD FCH chipsets the auxiliary SMBus controller is the ASF
+ * controller, which can also receive SMBus messages as a slave --
+ * including SMBus Host Notify, which Synaptics RMI4 touchpads need
+ * before rmi_smbus/psmouse will drive them over SMBus (InterTouch).
+ * Firmware on these platforms describes the block as an ACPI SMB0001
+ * device whose _CRS carries the IO window and the IRQ; the Windows
+ * Synaptics stack ("SynAMDSmbDrv", ACPI\SMB0001) binds that same
+ * device and drives the touchpad this way.
+ *
+ * Register layout and programming sequences follow i2c-amd-asf-plat.c,
+ * which drives the same IP on platforms whose firmware declares an
+ * AMDI001A node instead (and which is therefore excluded here).
+ */
+
+/* ASFSLVEN / ASFLISADDR / SMBHSTCNT bits */
+#define ASF_SLV_LISTN	0	/* ASFLISADDR: listen enable */
+#define ASF_SLV_INTR	1	/* ASFSLVEN: slave interrupt enable */
+#define ASF_SLV_RST	4	/* ASFSLVEN: slave reset */
+#define ASF_HST_PEC_SP	5	/* SMBHSTCNT: PEC append */
+#define ASF_HST_DATA_EN	7	/* SMBHSTCNT: PEC/data enable */
+/* SMBHSTSTS bits */
+#define ASF_HST_INTR	1	/* host transaction done, write 1 to ack */
+/* FCH PM DecodeEn bits */
+#define ASF_MSTR_EN	16
+#define ASF_CLK_EN	17
+/* ASFSTA bits */
+#define ASF_STA_SLV_INT	6	/* slave interrupt pending, write 1 to ack */
+/* ASFDATABNKSEL bits */
+#define ASF_BNK_FULL	GENMASK(3, 2)	/* bank 0/1 holds a message (W1C) */
+#define ASF_BNK_SEL	4	/* select bank 1 for reading */
+#define ASF_BNK_DATA_EN	7	/* route port 0x07 to the host FIFO */
+
+/* ASF address offsets */
+#define ASFINDEX	(0x07 + piix4_smba)
+#define ASFLISADDR	(0x09 + piix4_smba)
+#define ASFSTA		(0x0A + piix4_smba)
+#define ASFSLVSTA	(0x0D + piix4_smba)
+#define ASFDATARWPTR	(0x11 + piix4_smba)
+#define ASFSETDATARDPTR	(0x12 + piix4_smba)
+#define ASFDATABNKSEL	(0x13 + piix4_smba)
+#define ASFSLVEN	(0x15 + piix4_smba)
+
+#define ASF_BLOCK_MAX_BYTES	72
+#define ASF_ERROR_STATUS	GENMASK(3, 1)
+#define ASF_HOST_ADDR		0x08	/* SMBus Host address, Host Notify target */
+#define ASF_HOST_NOTIFY_LEN	3	/* device address byte + 2 status bytes */
+#define ASF_IOSIZE		0x20	/* IO window declared by SMB0001 _CRS */
+#define ASF_DRAIN_MAX		8	/* bank reads per drain before declaring a wedge */
+#define ASF_NOTIFY_MAX		(2 * ASF_DRAIN_MAX)	/* two drains per call at most */
+#define ASF_XFER_RETRIES	3	/* master retries after losing the bus */
+#define ASF_YIELD_US		1000	/* listen window before such a retry */
+
+/*
+ * Only one PIIX4-class device is supported per system (see the
+ * piix4_main_adapters / piix4_aux_adapter singletons), so the ASF
+ * state is kept alongside them.
+ */
+#ifdef CONFIG_ACPI
+struct piix4_asf {
+	unsigned short smba;	/* aux base matched from SMB0001 _CRS */
+	unsigned int iolen;	/* IO window size from SMB0001 _CRS */
+	u32 gsi;
+	u8 triggering;
+	u8 polarity;
+	bool has_irq;
+	bool shareable;
+	bool gsi_registered;
+	int irq;		/* Linux IRQ number, -1 = none */
+	bool active;		/* hardware claimed, master wrapper in effect */
+	bool irq_requested;
+	bool want_listen;	/* Host Notify should be armed when possible */
+	bool resume_listen;	/* want_listen to restore after resume */
+	bool listening;		/* slave armed; Host Notify is being delivered */
+	struct device *dev;	/* PCI device, for region requests */
+	/* Firmware state, restored on teardown */
+	u32 boot_ctl;		/* MSTR_EN/CLK_EN */
+	u8 boot_lisaddr;
+	u8 boot_slven;
+	u8 boot_bnksel;
+	atomic_t pending;	/* notify acked but bank not yet read */
+	struct sb800_mmio_cfg mmio_cfg;
+	char irq_cookie;	/* dev_id for the shared IRQ */
+};
+
+static struct piix4_asf piix4_asf = { .irq = -1 };
+/* Serializes master transfers against slave data-bank processing */
+static DEFINE_MUTEX(piix4_asf_mutex);
+/*
+ * Fences Host Notify delivery (done outside piix4_asf_mutex) against
+ * adapter removal, which destroys the adapter's host-notify domain.
+ */
+static DEFINE_MUTEX(piix4_asf_notify_mutex);
+static bool piix4_asf_deliver_ok;
+#endif
+
+static int srvrworks_csb5_delay;
+static struct pci_driver piix4_driver;
+
+static const struct dmi_system_id piix4_dmi_blacklist[] = {
+	{
+		.ident = "Sapphire AM2RD790",
+		.matches = {
+			DMI_MATCH(DMI_BOARD_VENDOR, "SAPPHIRE Inc."),
+			DMI_MATCH(DMI_BOARD_NAME, "PC-AM2RD790"),
+		},
+	},
+	{
+		.ident = "DFI Lanparty UT 790FX",
+		.matches = {
+			DMI_MATCH(DMI_BOARD_VENDOR, "DFI Inc."),
+			DMI_MATCH(DMI_BOARD_NAME, "LP UT 790FX"),
+		},
+	},
+	{ }
+};
+
+/* The IBM entry is in a separate table because we only check it
+   on Intel-based systems */
+static const struct dmi_system_id piix4_dmi_ibm[] = {
+	{
+		.ident = "IBM",
+		.matches = { DMI_MATCH(DMI_SYS_VENDOR, "IBM"), },
+	},
+	{ }
+};
+
+/*
+ * SB800 globals
+ */
+static u8 piix4_port_sel_sb800;
+static u8 piix4_port_mask_sb800;
+static u8 piix4_port_shift_sb800;
+static const char *piix4_main_port_names_sb800[PIIX4_MAX_ADAPTERS] = {
+	" port 0", " port 2", " port 3", " port 4"
+};
+static const char *piix4_aux_port_name_sb800 = " port 1";
+
+struct i2c_piix4_adapdata {
+	unsigned short smba;
+
+	/* SB800 */
+	bool sb800_main;
+	bool notify_imc;
+	u8 port;		/* Port number, shifted */
+	struct sb800_mmio_cfg mmio_cfg;
+};
+
+int piix4_sb800_region_request(struct device *dev, struct sb800_mmio_cfg *mmio_cfg)
+{
+	if (mmio_cfg->use_mmio) {
+		void __iomem *addr;
+
+		if (!request_mem_region_muxed(FCH_PM_BASE,
+					      SB800_PIIX4_FCH_PM_SIZE,
+					      "sb800_piix4_smb")) {
+			dev_err(dev,
+				"SMBus base address memory region 0x%x already in use.\n",
+				FCH_PM_BASE);
+			return -EBUSY;
+		}
+
+		addr = ioremap(FCH_PM_BASE,
+			       SB800_PIIX4_FCH_PM_SIZE);
+		if (!addr) {
+			release_mem_region(FCH_PM_BASE,
+					   SB800_PIIX4_FCH_PM_SIZE);
+			dev_err(dev, "SMBus base address mapping failed.\n");
+			return -ENOMEM;
+		}
+
+		mmio_cfg->addr = addr;
+
+		return 0;
+	}
+
+	if (!request_muxed_region(SB800_PIIX4_SMB_IDX, SB800_PIIX4_SMB_MAP_SIZE,
+				  "sb800_piix4_smb")) {
+		dev_err(dev,
+			"SMBus base address index region 0x%x already in use.\n",
+			SB800_PIIX4_SMB_IDX);
+		return -EBUSY;
+	}
+
+	return 0;
+}
+EXPORT_SYMBOL_NS_GPL(piix4_sb800_region_request, "PIIX4_SMBUS");
+
+void piix4_sb800_region_release(struct device *dev, struct sb800_mmio_cfg *mmio_cfg)
+{
+	if (mmio_cfg->use_mmio) {
+		iounmap(mmio_cfg->addr);
+		release_mem_region(FCH_PM_BASE,
+				   SB800_PIIX4_FCH_PM_SIZE);
+		return;
+	}
+
+	release_region(SB800_PIIX4_SMB_IDX, SB800_PIIX4_SMB_MAP_SIZE);
+}
+EXPORT_SYMBOL_NS_GPL(piix4_sb800_region_release, "PIIX4_SMBUS");
+
+static bool piix4_sb800_use_mmio(struct pci_dev *PIIX4_dev)
+{
+	/*
+	 * cd6h/cd7h port I/O accesses can be disabled on AMD processors
+	 * w/ SMBus PCI revision ID 0x51 or greater. MMIO is supported on
+	 * the same processors and is the recommended access method.
+	 */
+	return (PIIX4_dev->vendor == PCI_VENDOR_ID_AMD &&
+		PIIX4_dev->device == PCI_DEVICE_ID_AMD_KERNCZ_SMBUS &&
+		PIIX4_dev->revision >= 0x51);
+}
+
+static int piix4_setup(struct pci_dev *PIIX4_dev,
+		       const struct pci_device_id *id)
+{
+	unsigned char temp;
+	unsigned short piix4_smba;
+
+	if ((PIIX4_dev->vendor == PCI_VENDOR_ID_SERVERWORKS) &&
+	    (PIIX4_dev->device == PCI_DEVICE_ID_SERVERWORKS_CSB5))
+		srvrworks_csb5_delay = 1;
+
+	/* On some motherboards, it was reported that accessing the SMBus
+	   caused severe hardware problems */
+	if (dmi_check_system(piix4_dmi_blacklist)) {
+		dev_err(&PIIX4_dev->dev,
+			"Accessing the SMBus on this system is unsafe!\n");
+		return -EPERM;
+	}
+
+	/* Don't access SMBus on IBM systems which get corrupted eeproms */
+	if (dmi_check_system(piix4_dmi_ibm) &&
+			PIIX4_dev->vendor == PCI_VENDOR_ID_INTEL) {
+		dev_err(&PIIX4_dev->dev, "IBM system detected; this module "
+			"may corrupt your serial eeprom! Refusing to load "
+			"module!\n");
+		return -EPERM;
+	}
+
+	/* Determine the address of the SMBus areas */
+	if (force_addr) {
+		piix4_smba = force_addr & 0xfff0;
+		force = 0;
+	} else {
+		pci_read_config_word(PIIX4_dev, SMBBA, &piix4_smba);
+		piix4_smba &= 0xfff0;
+		if(piix4_smba == 0) {
+			dev_err(&PIIX4_dev->dev, "SMBus base address "
+				"uninitialized - upgrade BIOS or use "
+				"force_addr=0xaddr\n");
+			return -ENODEV;
+		}
+	}
+
+	if (acpi_check_region(piix4_smba, SMBIOSIZE, piix4_driver.name))
+		return -ENODEV;
+
+	if (!request_region(piix4_smba, SMBIOSIZE, piix4_driver.name)) {
+		dev_err(&PIIX4_dev->dev, "SMBus region 0x%x already in use!\n",
+			piix4_smba);
+		return -EBUSY;
+	}
+
+	pci_read_config_byte(PIIX4_dev, SMBHSTCFG, &temp);
+
+	/* If force_addr is set, we program the new address here. Just to make
+	   sure, we disable the PIIX4 first. */
+	if (force_addr) {
+		pci_write_config_byte(PIIX4_dev, SMBHSTCFG, temp & 0xfe);
+		pci_write_config_word(PIIX4_dev, SMBBA, piix4_smba);
+		pci_write_config_byte(PIIX4_dev, SMBHSTCFG, temp | 0x01);
+		dev_info(&PIIX4_dev->dev, "WARNING: SMBus interface set to "
+			"new address %04x!\n", piix4_smba);
+	} else if ((temp & 1) == 0) {
+		if (force) {
+			/* This should never need to be done, but has been
+			 * noted that many Dell machines have the SMBus
+			 * interface on the PIIX4 disabled!? NOTE: This assumes
+			 * I/O space and other allocations WERE done by the
+			 * Bios!  Don't complain if your hardware does weird
+			 * things after enabling this. :') Check for Bios
+			 * updates before resorting to this.
+			 */
+			pci_write_config_byte(PIIX4_dev, SMBHSTCFG,
+					      temp | 1);
+			dev_notice(&PIIX4_dev->dev,
+				   "WARNING: SMBus interface has been FORCEFULLY ENABLED!\n");
+		} else {
+			dev_err(&PIIX4_dev->dev,
+				"SMBus Host Controller not enabled!\n");
+			release_region(piix4_smba, SMBIOSIZE);
+			return -ENODEV;
+		}
+	}
+
+	if (((temp & 0x0E) == 8) || ((temp & 0x0E) == 2))
+		dev_dbg(&PIIX4_dev->dev, "Using IRQ for SMBus\n");
+	else if ((temp & 0x0E) == 0)
+		dev_dbg(&PIIX4_dev->dev, "Using SMI# for SMBus\n");
+	else
+		dev_err(&PIIX4_dev->dev, "Illegal Interrupt configuration "
+			"(or code out of date)!\n");
+
+	pci_read_config_byte(PIIX4_dev, SMBREV, &temp);
+	dev_info(&PIIX4_dev->dev,
+		 "SMBus Host Controller at 0x%x, revision %d\n",
+		 piix4_smba, temp);
+
+	return piix4_smba;
+}
+
+static int piix4_setup_sb800_smba(struct pci_dev *PIIX4_dev,
+				  u8 smb_en,
+				  u8 aux,
+				  u8 *smb_en_status,
+				  unsigned short *piix4_smba)
+{
+	struct sb800_mmio_cfg mmio_cfg;
+	u8 smba_en_lo;
+	u8 smba_en_hi;
+	int retval;
+
+	mmio_cfg.use_mmio = piix4_sb800_use_mmio(PIIX4_dev);
+	retval = piix4_sb800_region_request(&PIIX4_dev->dev, &mmio_cfg);
+	if (retval)
+		return retval;
+
+	if (mmio_cfg.use_mmio) {
+		smba_en_lo = ioread8(mmio_cfg.addr);
+		smba_en_hi = ioread8(mmio_cfg.addr + 1);
+	} else {
+		outb_p(smb_en, SB800_PIIX4_SMB_IDX);
+		smba_en_lo = inb_p(SB800_PIIX4_SMB_IDX + 1);
+		outb_p(smb_en + 1, SB800_PIIX4_SMB_IDX);
+		smba_en_hi = inb_p(SB800_PIIX4_SMB_IDX + 1);
+	}
+
+	piix4_sb800_region_release(&PIIX4_dev->dev, &mmio_cfg);
+
+	if (!smb_en) {
+		*smb_en_status = smba_en_lo & 0x10;
+		*piix4_smba = smba_en_hi << 8;
+		if (aux)
+			*piix4_smba |= 0x20;
+	} else {
+		*smb_en_status = smba_en_lo & 0x01;
+		*piix4_smba = ((smba_en_hi << 8) | smba_en_lo) & 0xffe0;
+	}
+
+	if (!*smb_en_status) {
+		dev_err(&PIIX4_dev->dev,
+			"SMBus Host Controller not enabled!\n");
+		return -ENODEV;
+	}
+
+	return 0;
+}
+
+static int piix4_setup_sb800(struct pci_dev *PIIX4_dev,
+			     const struct pci_device_id *id, u8 aux)
+{
+	unsigned short piix4_smba;
+	u8 smb_en, smb_en_status, port_sel;
+	u8 i2ccfg, i2ccfg_offset = 0x10;
+	struct sb800_mmio_cfg mmio_cfg;
+	int retval;
+
+	/* SB800 and later SMBus does not support forcing address */
+	if (force || force_addr) {
+		dev_err(&PIIX4_dev->dev, "SMBus does not support "
+			"forcing address!\n");
+		return -EINVAL;
+	}
+
+	/* Determine the address of the SMBus areas */
+	if ((PIIX4_dev->vendor == PCI_VENDOR_ID_AMD &&
+	     PIIX4_dev->device == PCI_DEVICE_ID_AMD_HUDSON2_SMBUS &&
+	     PIIX4_dev->revision >= 0x41) ||
+	    (PIIX4_dev->vendor == PCI_VENDOR_ID_AMD &&
+	     PIIX4_dev->device == PCI_DEVICE_ID_AMD_KERNCZ_SMBUS &&
+	     PIIX4_dev->revision >= 0x49) ||
+	    (PIIX4_dev->vendor == PCI_VENDOR_ID_HYGON &&
+	     PIIX4_dev->device == PCI_DEVICE_ID_AMD_KERNCZ_SMBUS))
+		smb_en = 0x00;
+	else
+		smb_en = (aux) ? 0x28 : 0x2c;
+
+	retval = piix4_setup_sb800_smba(PIIX4_dev, smb_en, aux, &smb_en_status,
+					&piix4_smba);
+
+	if (retval)
+		return retval;
+
+	if (acpi_check_region(piix4_smba, SMBIOSIZE, piix4_driver.name))
+		return -ENODEV;
+
+	if (!request_region(piix4_smba, SMBIOSIZE, piix4_driver.name)) {
+		dev_err(&PIIX4_dev->dev, "SMBus region 0x%x already in use!\n",
+			piix4_smba);
+		return -EBUSY;
+	}
+
+	/* Aux SMBus does not support IRQ information */
+	if (aux) {
+		dev_info(&PIIX4_dev->dev,
+			 "Auxiliary SMBus Host Controller at 0x%x\n",
+			 piix4_smba);
+		return piix4_smba;
+	}
+
+	/* Request the SMBus I2C bus config region */
+	if (!request_region(piix4_smba + i2ccfg_offset, 1, "i2ccfg")) {
+		dev_err(&PIIX4_dev->dev, "SMBus I2C bus config region "
+			"0x%x already in use!\n", piix4_smba + i2ccfg_offset);
+		release_region(piix4_smba, SMBIOSIZE);
+		return -EBUSY;
+	}
+	i2ccfg = inb_p(piix4_smba + i2ccfg_offset);
+	release_region(piix4_smba + i2ccfg_offset, 1);
+
+	if (i2ccfg & 1)
+		dev_dbg(&PIIX4_dev->dev, "Using IRQ for SMBus\n");
+	else
+		dev_dbg(&PIIX4_dev->dev, "Using SMI# for SMBus\n");
+
+	dev_info(&PIIX4_dev->dev,
+		 "SMBus Host Controller at 0x%x, revision %d\n",
+		 piix4_smba, i2ccfg >> 4);
+
+	/* Find which register is used for port selection */
+	if (PIIX4_dev->vendor == PCI_VENDOR_ID_AMD ||
+	    PIIX4_dev->vendor == PCI_VENDOR_ID_HYGON) {
+		if (PIIX4_dev->device == PCI_DEVICE_ID_AMD_KERNCZ_SMBUS ||
+		    (PIIX4_dev->device == PCI_DEVICE_ID_AMD_HUDSON2_SMBUS &&
+		     PIIX4_dev->revision >= 0x1F)) {
+			piix4_port_sel_sb800 = SB800_PIIX4_PORT_IDX_KERNCZ;
+			piix4_port_mask_sb800 = SB800_PIIX4_PORT_IDX_MASK_KERNCZ;
+			piix4_port_shift_sb800 = SB800_PIIX4_PORT_IDX_SHIFT_KERNCZ;
+		} else {
+			piix4_port_sel_sb800 = SB800_PIIX4_PORT_IDX_ALT;
+			piix4_port_mask_sb800 = SB800_PIIX4_PORT_IDX_MASK;
+			piix4_port_shift_sb800 = SB800_PIIX4_PORT_IDX_SHIFT;
+		}
+	} else {
+		mmio_cfg.use_mmio = piix4_sb800_use_mmio(PIIX4_dev);
+		retval = piix4_sb800_region_request(&PIIX4_dev->dev, &mmio_cfg);
+		if (retval) {
+			release_region(piix4_smba, SMBIOSIZE);
+			return retval;
+		}
+
+		outb_p(SB800_PIIX4_PORT_IDX_SEL, SB800_PIIX4_SMB_IDX);
+		port_sel = inb_p(SB800_PIIX4_SMB_IDX + 1);
+		piix4_port_sel_sb800 = (port_sel & 0x01) ?
+				       SB800_PIIX4_PORT_IDX_ALT :
+				       SB800_PIIX4_PORT_IDX;
+		piix4_port_mask_sb800 = SB800_PIIX4_PORT_IDX_MASK;
+		piix4_port_shift_sb800 = SB800_PIIX4_PORT_IDX_SHIFT;
+		piix4_sb800_region_release(&PIIX4_dev->dev, &mmio_cfg);
+	}
+
+	dev_info(&PIIX4_dev->dev,
+		 "Using register 0x%02x for SMBus port selection\n",
+		 (unsigned int)piix4_port_sel_sb800);
+
+	return piix4_smba;
+}
+
+static int piix4_setup_aux(struct pci_dev *PIIX4_dev,
+			   const struct pci_device_id *id,
+			   unsigned short base_reg_addr)
+{
+	/* Set up auxiliary SMBus controllers found on some
+	 * AMD chipsets e.g. SP5100 (SB700 derivative) */
+
+	unsigned short piix4_smba;
+
+	/* Read address of auxiliary SMBus controller */
+	pci_read_config_word(PIIX4_dev, base_reg_addr, &piix4_smba);
+	if ((piix4_smba & 1) == 0) {
+		dev_dbg(&PIIX4_dev->dev,
+			"Auxiliary SMBus controller not enabled\n");
+		return -ENODEV;
+	}
+
+	piix4_smba &= 0xfff0;
+	if (piix4_smba == 0) {
+		dev_dbg(&PIIX4_dev->dev,
+			"Auxiliary SMBus base address uninitialized\n");
+		return -ENODEV;
+	}
+
+	if (acpi_check_region(piix4_smba, SMBIOSIZE, piix4_driver.name))
+		return -ENODEV;
+
+	if (!request_region(piix4_smba, SMBIOSIZE, piix4_driver.name)) {
+		dev_err(&PIIX4_dev->dev, "Auxiliary SMBus region 0x%x "
+			"already in use!\n", piix4_smba);
+		return -EBUSY;
+	}
+
+	dev_info(&PIIX4_dev->dev,
+		 "Auxiliary SMBus Host Controller at 0x%x\n",
+		 piix4_smba);
+
+	return piix4_smba;
+}
+
+int piix4_transaction(struct i2c_adapter *piix4_adapter, unsigned short piix4_smba)
+{
+	int temp;
+	int result = 0;
+	int timeout = 0;
+
+	dev_dbg(&piix4_adapter->dev, "Transaction (pre): CNT=%02x, CMD=%02x, "
+		"ADD=%02x, DAT0=%02x, DAT1=%02x\n", inb_p(SMBHSTCNT),
+		inb_p(SMBHSTCMD), inb_p(SMBHSTADD), inb_p(SMBHSTDAT0),
+		inb_p(SMBHSTDAT1));
+
+	/* Make sure the SMBus host is ready to start transmitting */
+	if ((temp = inb_p(SMBHSTSTS)) != 0x00) {
+		dev_dbg(&piix4_adapter->dev, "SMBus busy (%02x). "
+			"Resetting...\n", temp);
+		outb_p(temp, SMBHSTSTS);
+		if ((temp = inb_p(SMBHSTSTS)) != 0x00) {
+			dev_err(&piix4_adapter->dev, "Failed! (%02x)\n", temp);
+			return -EBUSY;
+		} else {
+			dev_dbg(&piix4_adapter->dev, "Successful!\n");
+		}
+	}
+
+	/* start the transaction by setting bit 6 */
+	outb_p(inb(SMBHSTCNT) | 0x040, SMBHSTCNT);
+
+	/* We will always wait for a fraction of a second! (See PIIX4 docs errata) */
+	if (srvrworks_csb5_delay) /* Extra delay for SERVERWORKS_CSB5 */
+		usleep_range(2000, 2100);
+	else
+		usleep_range(250, 500);
+
+	while ((++timeout < MAX_TIMEOUT) &&
+	       ((temp = inb_p(SMBHSTSTS)) & 0x01))
+		usleep_range(250, 500);
+
+	/* If the SMBus is still busy, we give up */
+	if (timeout == MAX_TIMEOUT) {
+		dev_err(&piix4_adapter->dev, "SMBus Timeout!\n");
+		result = -ETIMEDOUT;
+	}
+
+	if (temp & 0x10) {
+		result = -EIO;
+		dev_err(&piix4_adapter->dev, "Error: Failed bus transaction\n");
+	}
+
+	if (temp & 0x08) {
+		/* Arbitration lost to another master (see fault-codes.rst) */
+		result = -EAGAIN;
+		dev_dbg(&piix4_adapter->dev, "Bus collision! SMBus may be "
+			"locked until next hard reset. (sorry!)\n");
+		/* Clock stops and target is stuck in mid-transmission */
+	}
+
+	if ((temp & 0x04) && result != -EAGAIN) {
+		result = -ENXIO;
+		dev_dbg(&piix4_adapter->dev, "Error: no response!\n");
+	}
+
+	if (inb_p(SMBHSTSTS) != 0x00)
+		outb_p(inb(SMBHSTSTS), SMBHSTSTS);
+
+	if ((temp = inb_p(SMBHSTSTS)) != 0x00) {
+		dev_err(&piix4_adapter->dev, "Failed reset at end of "
+			"transaction (%02x)\n", temp);
+	}
+	dev_dbg(&piix4_adapter->dev, "Transaction (post): CNT=%02x, CMD=%02x, "
+		"ADD=%02x, DAT0=%02x, DAT1=%02x\n", inb_p(SMBHSTCNT),
+		inb_p(SMBHSTCMD), inb_p(SMBHSTADD), inb_p(SMBHSTDAT0),
+		inb_p(SMBHSTDAT1));
+	return result;
+}
+EXPORT_SYMBOL_NS_GPL(piix4_transaction, "PIIX4_SMBUS");
+
+/* Return negative errno on error. */
+static s32 piix4_access(struct i2c_adapter * adap, u16 addr,
+		 unsigned short flags, char read_write,
+		 u8 command, int size, union i2c_smbus_data * data)
+{
+	struct i2c_piix4_adapdata *adapdata = i2c_get_adapdata(adap);
+	unsigned short piix4_smba = adapdata->smba;
+	int i, len;
+	int status;
+
+	switch (size) {
+	case I2C_SMBUS_QUICK:
+		outb_p((addr << 1) | read_write,
+		       SMBHSTADD);
+		size = PIIX4_QUICK;
+		break;
+	case I2C_SMBUS_BYTE:
+		outb_p((addr << 1) | read_write,
+		       SMBHSTADD);
+		if (read_write == I2C_SMBUS_WRITE)
+			outb_p(command, SMBHSTCMD);
+		size = PIIX4_BYTE;
+		break;
+	case I2C_SMBUS_BYTE_DATA:
+		outb_p((addr << 1) | read_write,
+		       SMBHSTADD);
+		outb_p(command, SMBHSTCMD);
+		if (read_write == I2C_SMBUS_WRITE)
+			outb_p(data->byte, SMBHSTDAT0);
+		size = PIIX4_BYTE_DATA;
+		break;
+	case I2C_SMBUS_WORD_DATA:
+		outb_p((addr << 1) | read_write,
+		       SMBHSTADD);
+		outb_p(command, SMBHSTCMD);
+		if (read_write == I2C_SMBUS_WRITE) {
+			outb_p(data->word & 0xff, SMBHSTDAT0);
+			outb_p((data->word & 0xff00) >> 8, SMBHSTDAT1);
+		}
+		size = PIIX4_WORD_DATA;
+		break;
+	case I2C_SMBUS_BLOCK_DATA:
+		outb_p((addr << 1) | read_write,
+		       SMBHSTADD);
+		outb_p(command, SMBHSTCMD);
+		if (read_write == I2C_SMBUS_WRITE) {
+			len = data->block[0];
+			if (len == 0 || len > I2C_SMBUS_BLOCK_MAX)
+				return -EINVAL;
+			outb_p(len, SMBHSTDAT0);
+			inb_p(SMBHSTCNT);	/* Reset SMBBLKDAT */
+			for (i = 1; i <= len; i++)
+				outb_p(data->block[i], SMBBLKDAT);
+		}
+		size = PIIX4_BLOCK_DATA;
+		break;
+	default:
+		dev_warn(&adap->dev, "Unsupported transaction %d\n", size);
+		return -EOPNOTSUPP;
+	}
+
+	outb_p((size & 0x1C) + (ENABLE_INT9 & 1), SMBHSTCNT);
+
+	status = piix4_transaction(adap, piix4_smba);
+	if (status)
+		return status;
+
+	if ((read_write == I2C_SMBUS_WRITE) || (size == PIIX4_QUICK))
+		return 0;
+
+
+	switch (size) {
+	case PIIX4_BYTE:
+	case PIIX4_BYTE_DATA:
+		data->byte = inb_p(SMBHSTDAT0);
+		break;
+	case PIIX4_WORD_DATA:
+		data->word = inb_p(SMBHSTDAT0) + (inb_p(SMBHSTDAT1) << 8);
+		break;
+	case PIIX4_BLOCK_DATA:
+		data->block[0] = inb_p(SMBHSTDAT0);
+		if (data->block[0] == 0 || data->block[0] > I2C_SMBUS_BLOCK_MAX)
+			return -EPROTO;
+		inb_p(SMBHSTCNT);	/* Reset SMBBLKDAT */
+		for (i = 1; i <= data->block[0]; i++)
+			data->block[i] = inb_p(SMBBLKDAT);
+		break;
+	}
+	return 0;
+}
+
+static uint8_t piix4_imc_read(uint8_t idx)
+{
+	outb_p(idx, KERNCZ_IMC_IDX);
+	return inb_p(KERNCZ_IMC_DATA);
+}
+
+static void piix4_imc_write(uint8_t idx, uint8_t value)
+{
+	outb_p(idx, KERNCZ_IMC_IDX);
+	outb_p(value, KERNCZ_IMC_DATA);
+}
+
+static int piix4_imc_sleep(void)
+{
+	int timeout = MAX_TIMEOUT;
+
+	if (!request_muxed_region(KERNCZ_IMC_IDX, 2, "smbus_kerncz_imc"))
+		return -EBUSY;
+
+	/* clear response register */
+	piix4_imc_write(0x82, 0x00);
+	/* request ownership flag */
+	piix4_imc_write(0x83, 0xB4);
+	/* kick off IMC Mailbox command 96 */
+	piix4_imc_write(0x80, 0x96);
+
+	while (timeout--) {
+		if (piix4_imc_read(0x82) == 0xfa) {
+			release_region(KERNCZ_IMC_IDX, 2);
+			return 0;
+		}
+		usleep_range(1000, 2000);
+	}
+
+	release_region(KERNCZ_IMC_IDX, 2);
+	return -ETIMEDOUT;
+}
+
+static void piix4_imc_wakeup(void)
+{
+	int timeout = MAX_TIMEOUT;
+
+	if (!request_muxed_region(KERNCZ_IMC_IDX, 2, "smbus_kerncz_imc"))
+		return;
+
+	/* clear response register */
+	piix4_imc_write(0x82, 0x00);
+	/* release ownership flag */
+	piix4_imc_write(0x83, 0xB5);
+	/* kick off IMC Mailbox command 96 */
+	piix4_imc_write(0x80, 0x96);
+
+	while (timeout--) {
+		if (piix4_imc_read(0x82) == 0xfa)
+			break;
+		usleep_range(1000, 2000);
+	}
+
+	release_region(KERNCZ_IMC_IDX, 2);
+}
+
+int piix4_sb800_port_sel(u8 port, struct sb800_mmio_cfg *mmio_cfg)
+{
+	u8 smba_en_lo, val;
+
+	if (mmio_cfg->use_mmio) {
+		smba_en_lo = ioread8(mmio_cfg->addr + piix4_port_sel_sb800);
+		val = (smba_en_lo & ~piix4_port_mask_sb800) | port;
+		if (smba_en_lo != val)
+			iowrite8(val, mmio_cfg->addr + piix4_port_sel_sb800);
+
+		return (smba_en_lo & piix4_port_mask_sb800);
+	}
+
+	outb_p(piix4_port_sel_sb800, SB800_PIIX4_SMB_IDX);
+	smba_en_lo = inb_p(SB800_PIIX4_SMB_IDX + 1);
+
+	val = (smba_en_lo & ~piix4_port_mask_sb800) | port;
+	if (smba_en_lo != val)
+		outb_p(val, SB800_PIIX4_SMB_IDX + 1);
+
+	return (smba_en_lo & piix4_port_mask_sb800);
+}
+EXPORT_SYMBOL_NS_GPL(piix4_sb800_port_sel, "PIIX4_SMBUS");
+
+/*
+ * Handles access to multiple SMBus ports on the SB800.
+ * The port is selected by bits 2:1 of the smb_en register (0x2c).
+ * Returns negative errno on error.
+ *
+ * Note: The selected port must be returned to the initial selection to avoid
+ * problems on certain systems.
+ */
+static s32 piix4_access_sb800(struct i2c_adapter *adap, u16 addr,
+		 unsigned short flags, char read_write,
+		 u8 command, int size, union i2c_smbus_data *data)
+{
+	struct i2c_piix4_adapdata *adapdata = i2c_get_adapdata(adap);
+	unsigned short piix4_smba = adapdata->smba;
+	int retries = MAX_TIMEOUT;
+	int smbslvcnt;
+	u8 prev_port;
+	int retval;
+
+	retval = piix4_sb800_region_request(&adap->dev, &adapdata->mmio_cfg);
+	if (retval)
+		return retval;
+
+	/* Request the SMBUS semaphore, avoid conflicts with the IMC */
+	smbslvcnt  = inb_p(SMBSLVCNT);
+	do {
+		outb_p(smbslvcnt | 0x10, SMBSLVCNT);
+
+		/* Check the semaphore status */
+		smbslvcnt  = inb_p(SMBSLVCNT);
+		if (smbslvcnt & 0x10)
+			break;
+
+		usleep_range(1000, 2000);
+	} while (--retries);
+	/* SMBus is still owned by the IMC, we give up */
+	if (!retries) {
+		retval = -EBUSY;
+		goto release;
+	}
+
+	/*
+	 * Notify the IMC (Integrated Micro Controller) if required.
+	 * Among other responsibilities, the IMC is in charge of monitoring
+	 * the System fans and temperature sensors, and act accordingly.
+	 * All this is done through SMBus and can/will collide
+	 * with our transactions if they are long (BLOCK_DATA).
+	 * Therefore we need to request the ownership flag during those
+	 * transactions.
+	 */
+	if ((size == I2C_SMBUS_BLOCK_DATA) && adapdata->notify_imc) {
+		int ret;
+
+		ret = piix4_imc_sleep();
+		switch (ret) {
+		case -EBUSY:
+			dev_warn(&adap->dev,
+				 "IMC base address index region 0x%x already in use.\n",
+				 KERNCZ_IMC_IDX);
+			break;
+		case -ETIMEDOUT:
+			dev_warn(&adap->dev,
+				 "Failed to communicate with the IMC.\n");
+			break;
+		default:
+			break;
+		}
+
+		/* If IMC communication fails do not retry */
+		if (ret) {
+			dev_warn(&adap->dev,
+				 "Continuing without IMC notification.\n");
+			adapdata->notify_imc = false;
+		}
+	}
+
+	prev_port = piix4_sb800_port_sel(adapdata->port, &adapdata->mmio_cfg);
+
+	retval = piix4_access(adap, addr, flags, read_write,
+			      command, size, data);
+
+	piix4_sb800_port_sel(prev_port, &adapdata->mmio_cfg);
+
+	/* Release the semaphore */
+	outb_p(smbslvcnt | 0x20, SMBSLVCNT);
+
+	if ((size == I2C_SMBUS_BLOCK_DATA) && adapdata->notify_imc)
+		piix4_imc_wakeup();
+
+release:
+	piix4_sb800_region_release(&adap->dev, &adapdata->mmio_cfg);
+	return retval;
+}
+
+static u32 piix4_func(struct i2c_adapter *adapter)
+{
+	return I2C_FUNC_SMBUS_QUICK | I2C_FUNC_SMBUS_BYTE |
+	    I2C_FUNC_SMBUS_BYTE_DATA | I2C_FUNC_SMBUS_WORD_DATA |
+	    I2C_FUNC_SMBUS_BLOCK_DATA;
+}
+
+static const struct i2c_algorithm smbus_algorithm = {
+	.smbus_xfer	= piix4_access,
+	.functionality	= piix4_func,
+};
+
+static const struct i2c_algorithm piix4_smbus_algorithm_sb800 = {
+	.smbus_xfer	= piix4_access_sb800,
+	.functionality	= piix4_func,
+};
+
+static const struct pci_device_id piix4_ids[] = {
+	{ PCI_DEVICE(PCI_VENDOR_ID_INTEL, PCI_DEVICE_ID_INTEL_82371AB_3) },
+	{ PCI_DEVICE(PCI_VENDOR_ID_INTEL, PCI_DEVICE_ID_INTEL_82443MX_3) },
+	{ PCI_DEVICE(PCI_VENDOR_ID_EFAR, PCI_DEVICE_ID_EFAR_SLC90E66_3) },
+	{ PCI_DEVICE(PCI_VENDOR_ID_ATI, PCI_DEVICE_ID_ATI_IXP200_SMBUS) },
+	{ PCI_DEVICE(PCI_VENDOR_ID_ATI, PCI_DEVICE_ID_ATI_IXP300_SMBUS) },
+	{ PCI_DEVICE(PCI_VENDOR_ID_ATI, PCI_DEVICE_ID_ATI_IXP400_SMBUS) },
+	{ PCI_DEVICE(PCI_VENDOR_ID_ATI, PCI_DEVICE_ID_ATI_SBX00_SMBUS) },
+	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_HUDSON2_SMBUS) },
+	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_KERNCZ_SMBUS) },
+	{ PCI_DEVICE(PCI_VENDOR_ID_HYGON, PCI_DEVICE_ID_AMD_KERNCZ_SMBUS) },
+	{ PCI_DEVICE(PCI_VENDOR_ID_SERVERWORKS,
+		     PCI_DEVICE_ID_SERVERWORKS_OSB4) },
+	{ PCI_DEVICE(PCI_VENDOR_ID_SERVERWORKS,
+		     PCI_DEVICE_ID_SERVERWORKS_CSB5) },
+	{ PCI_DEVICE(PCI_VENDOR_ID_SERVERWORKS,
+		     PCI_DEVICE_ID_SERVERWORKS_CSB6) },
+	{ PCI_DEVICE(PCI_VENDOR_ID_SERVERWORKS,
+		     PCI_DEVICE_ID_SERVERWORKS_HT1000SB) },
+	{ PCI_DEVICE(PCI_VENDOR_ID_SERVERWORKS,
+		     PCI_DEVICE_ID_SERVERWORKS_HT1100LD) },
+	{ 0, }
+};
+
+MODULE_DEVICE_TABLE (pci, piix4_ids);
+
+static struct i2c_adapter *piix4_main_adapters[PIIX4_MAX_ADAPTERS];
+static struct i2c_adapter *piix4_aux_adapter;
+static int piix4_adapter_count;
+
+#ifdef CONFIG_ACPI
+struct piix4_asf_crs {
+	u32 gsi;
+	u8 triggering;
+	u8 polarity;
+	bool shareable;
+	bool has_irq;
+};
+
+/*
+ * Intercept the IRQ descriptor during the _CRS walk.  The default
+ * conversion (acpi_dev_get_irqresource()) replaces the descriptor's
+ * trigger/polarity with the ISA edge/high default ("ACPI: IRQ 7
+ * override to edge, high" at boot) and registers the GSI right away.
+ * On AMD Zen FCHs the ASF block asserts this line level/active-low as
+ * _CRS declares, so under the edge/high programming the slave interrupt
+ * never fires (mainline acknowledges the same problem for IRQs 1/12 in
+ * acpi_dev_irq_override()).  Keep the raw descriptor; the GSI is
+ * registered in piix4_asf_enable() once the device is known to be ours.
+ */
+static int piix4_asf_crs_preproc(struct acpi_resource *ares, void *data)
+{
+	struct piix4_asf_crs *crs = data;
+
+	if (ares->type == ACPI_RESOURCE_TYPE_IRQ) {
+		struct acpi_resource_irq *irq = &ares->data.irq;
+
+		if (irq->interrupt_count >= 1 && !crs->has_irq) {
+			crs->gsi = irq->interrupts[0];
+			crs->triggering = irq->triggering;
+			crs->polarity = irq->polarity;
+			crs->shareable = irq->shareable == ACPI_SHARED;
+			crs->has_irq = true;
+		}
+		return 1;
+	}
+	if (ares->type == ACPI_RESOURCE_TYPE_EXTENDED_IRQ) {
+		struct acpi_resource_extended_irq *irq = &ares->data.extended_irq;
+
+		if (irq->interrupt_count >= 1 && !crs->has_irq) {
+			crs->gsi = irq->interrupts[0];
+			crs->triggering = irq->triggering;
+			crs->polarity = irq->polarity;
+			crs->shareable = irq->shareable == ACPI_SHARED;
+			crs->has_irq = true;
+		}
+		return 1;
+	}
+
+	return 0;
+}
+
+/*
+ * Look for an SMB0001 device whose _CRS IO window starts at the aux
+ * controller's base.  Only records what firmware says; no hardware or
+ * IRQ state is touched here.
+ */
+static void piix4_asf_detect(struct pci_dev *dev, unsigned short aux_smba)
+{
+	struct acpi_device *adev;
+
+	if (!asf_host_notify)
+		return;
+
+	/* i2c-amd-asf-plat owns the ASF block on AMDI001A platforms */
+	if (acpi_dev_present("AMDI001A", NULL, -1)) {
+		dev_dbg(&dev->dev, "ASF: AMDI001A present, leaving the ASF block alone\n");
+		return;
+	}
+
+	for_each_acpi_dev_match(adev, ACPI_SMBUS_MS_HID, NULL, -1) {
+		struct piix4_asf_crs crs = {};
+		struct resource_entry *rentry;
+		struct resource *io = NULL;
+		LIST_HEAD(res_list);
+
+		if (acpi_dev_get_resources(adev, &res_list,
+					   piix4_asf_crs_preproc, &crs) < 0)
+			continue;
+
+		list_for_each_entry(rentry, &res_list, node) {
+			if (resource_type(rentry->res) == IORESOURCE_IO &&
+			    rentry->res->start == aux_smba) {
+				io = rentry->res;
+				break;
+			}
+		}
+
+		if (io) {
+			piix4_asf.smba = io->start;
+			piix4_asf.iolen = resource_size(io);
+			piix4_asf.gsi = crs.gsi;
+			piix4_asf.triggering = crs.triggering;
+			piix4_asf.polarity = crs.polarity;
+			piix4_asf.shareable = crs.shareable;
+			piix4_asf.has_irq = crs.has_irq;
+		}
+		acpi_dev_free_resource_list(&res_list);
+
+		if (io) {
+			acpi_dev_put(adev);
+			break;
+		}
+	}
+
+	if (piix4_asf.smba)
+		dev_info(&dev->dev,
+			 "ASF SMBus slave (SMB0001) at 0x%04x, %s IRQ %u (%s/%s)\n",
+			 piix4_asf.smba, piix4_asf.has_irq ? "GSI" : "no",
+			 piix4_asf.gsi,
+			 piix4_asf.triggering == ACPI_EDGE_SENSITIVE ?
+				"edge" : "level",
+			 piix4_asf.polarity == ACPI_ACTIVE_LOW ? "low" : "high");
+}
+
+static void piix4_asf_update_ioport(u8 bit, unsigned long offset, bool set)
+{
+	unsigned long reg;
+
+	reg = inb_p(offset);
+	__assign_bit(bit, &reg, set);
+	outb_p(reg, offset);
+}
+
+/* Caller must hold the FCH PM region (piix4_sb800_region_request) */
+static void piix4_asf_update_mmio(u8 bit, bool set)
+{
+	unsigned long reg;
+
+	reg = ioread32(piix4_asf.mmio_cfg.addr);
+	__assign_bit(bit, &reg, set);
+	iowrite32(reg, piix4_asf.mmio_cfg.addr);
+}
+
+/*
+ * ASFDATABNKSEL mixes control bits with the W1C bank-full flags, so a
+ * plain read-modify-write would consume a message that arrived in
+ * between.  Always write the flags as zero.
+ */
+static void piix4_asf_bnksel_data_en(unsigned short piix4_smba, bool set)
+{
+	unsigned long reg;
+
+	reg = inb_p(ASFDATABNKSEL) & ~ASF_BNK_FULL;
+	__assign_bit(ASF_BNK_DATA_EN, &reg, set);
+	outb_p(reg, ASFDATABNKSEL);
+}
+
+/* Clear the slave status, acking a pending (W1C) slave interrupt */
+static void piix4_asf_clear_status(unsigned short piix4_smba)
+{
+	outb_p(0, ASFSLVSTA);
+	outb_p(0, ASFSTA);
+	outb_p(BIT(ASF_STA_SLV_INT), ASFSTA);
+}
+
+/*
+ * Put every register we touch back to its firmware state, so the
+ * controller keeps doing master transfers under the stock driver after
+ * we let go.  Caller must hold piix4_asf_mutex and the FCH PM region.
+ */
+static void piix4_asf_restore_boot_state(unsigned short piix4_smba)
+{
+	u32 reg;
+
+	outb_p(piix4_asf.boot_slven | BIT(ASF_SLV_RST), ASFSLVEN);
+	outb_p(piix4_asf.boot_lisaddr, ASFLISADDR);
+	outb_p(piix4_asf.boot_bnksel & ~ASF_BNK_FULL, ASFDATABNKSEL);
+	/*
+	 * SMBHSTCNT is not touched: it lives in the adapter's own IO
+	 * region (already released on the adapter-failure path) and
+	 * piix4_access() rewrites it in full on every transaction anyway.
+	 */
+	piix4_asf_clear_status(piix4_smba);
+	outb_p(piix4_asf.boot_slven, ASFSLVEN);
+
+	reg = ioread32(piix4_asf.mmio_cfg.addr);
+	reg &= ~(BIT(ASF_MSTR_EN) | BIT(ASF_CLK_EN));
+	reg |= piix4_asf.boot_ctl;
+	iowrite32(reg, piix4_asf.mmio_cfg.addr);
+}
+
+/*
+ * Take the slave offline and configure the controller as a master, per
+ * amd_asf_xfer().  Caller must hold piix4_asf_mutex and the FCH PM region.
+ */
+static void piix4_asf_master_mode(unsigned short piix4_smba)
+{
+	piix4_asf_update_ioport(ASF_SLV_LISTN, ASFLISADDR, false);
+	piix4_asf_update_ioport(ASF_SLV_INTR, ASFSLVEN, false);
+	piix4_asf_update_ioport(ASF_SLV_RST, ASFSLVEN, true);
+	outb_p(0, ASFSLVSTA);
+	piix4_asf_update_mmio(ASF_MSTR_EN, true);
+	/*
+	 * ASFINDEX shares port 0x07 with SMBBLKDAT; route the data window
+	 * to the host FIFO while mastering, otherwise block reads return
+	 * the ASF bank contents instead of the slave's data.
+	 */
+	piix4_asf_bnksel_data_en(piix4_smba, true);
+}
+
+/*
+ * Put the controller in slave/listen mode so it can receive Host Notify.
+ * Caller must hold piix4_asf_mutex and the FCH PM region.
+ * Sequence from amd_asf_setup_target().
+ */
+static void piix4_asf_slave_arm(unsigned short piix4_smba)
+{
+	/* Reset both host and slave status */
+	outb_p(0, SMBHSTSTS);
+	piix4_asf_clear_status(piix4_smba);
+	/* Route the 0x07 data window back to the ASF banks while listening */
+	piix4_asf_bnksel_data_en(piix4_smba, false);
+
+	/*
+	 * Listen for messages addressed to the SMBus Host (Host Notify).
+	 * Written in full every time: firmware may clear the register
+	 * across a sleep state, and LISTN with address 0 would ACK the
+	 * General Call address instead.
+	 */
+	outb_p((ASF_HOST_ADDR << 1) | BIT(ASF_SLV_LISTN), ASFLISADDR);
+	/* Slave mode: master enable off, clock on */
+	piix4_asf_update_mmio(ASF_MSTR_EN, false);
+	piix4_asf_update_mmio(ASF_CLK_EN, true);
+	/*
+	 * Enable PEC handling and PEC append, as amd_asf_setup_target()
+	 * does.  Note piix4_access() rewrites SMBHSTCNT on every master
+	 * transaction, so these bits only affect slave reception.
+	 */
+	piix4_asf_update_ioport(ASF_HST_DATA_EN, SMBHSTCNT, true);
+	piix4_asf_update_ioport(ASF_HST_PEC_SP, SMBHSTCNT, true);
+	/* Take the slave out of reset and, last, enable its interrupt */
+	piix4_asf_update_ioport(ASF_SLV_RST, ASFSLVEN, false);
+	piix4_asf_update_ioport(ASF_SLV_INTR, ASFSLVEN, true);
+}
+
+/*
+ * Read one received message out of a flagged ASF data bank; when none
+ * is flagged, read bank 0 (as amd_asf_process_target() does) only if
+ * @allow_fallback.  Returns the bank index that was read (0/1, 2 on
+ * reception error with both banks flushed, -1 if nothing was read),
+ * and stores the notifying device's 7-bit address in *notify_addr if
+ * the message was a valid Host Notify (else -1).
+ * Data-bank sequence from amd_asf_process_target().  When both banks
+ * are flagged, @prefer picks which to read so that a stuck flag on one
+ * bank cannot starve the other.
+ * Caller must hold piix4_asf_mutex.
+ */
+static int piix4_asf_process_bank(int *notify_addr, bool allow_fallback,
+				  int prefer)
+{
+	unsigned short piix4_smba = piix4_asf.smba;
+	u8 data[ASF_BLOCK_MAX_BYTES];
+	u8 bank = 2, reg, cmd = 1;
+	u8 len = 0, idx;
+
+	*notify_addr = -1;
+
+	if (inb_p(ASFSLVSTA) & ASF_ERROR_STATUS) {
+		/* Reception error: flush both banks */
+		reg = inb_p(ASFDATABNKSEL) | ASF_BNK_FULL;
+		outb_p(reg, ASFDATABNKSEL);
+	} else {
+		reg = inb_p(ASFDATABNKSEL);
+		/* A flagged bank; alternate when both are so neither starves */
+		if ((reg & ASF_BNK_FULL) == ASF_BNK_FULL)
+			bank = prefer & 1;
+		else if (reg & BIT(3))
+			bank = 1;
+		else if (reg & BIT(2))
+			bank = 0;
+		else if (allow_fallback)
+			bank = 0;	/* no flag set: amd_asf_process_target() reads bank 0 */
+		else
+			return -1;
+		/* Select the bank without consuming either (bits are W1C) */
+		reg &= ~ASF_BNK_FULL;
+		if (bank)
+			reg |= BIT(ASF_BNK_SEL);
+		else
+			reg &= ~BIT(ASF_BNK_SEL);
+		outb_p(reg, ASFDATABNKSEL);
+
+		cmd = inb_p(ASFINDEX);
+		len = inb_p(ASFDATARWPTR);
+		if (len > ASF_BLOCK_MAX_BYTES)
+			len = ASF_BLOCK_MAX_BYTES;
+		for (idx = 0; idx < len; idx++)
+			data[idx] = inb_p(ASFINDEX);
+
+		/* Mark the bank consumed */
+		reg |= bank ? BIT(3) : BIT(2);
+		outb_p(reg, ASFDATABNKSEL);
+	}
+	outb_p(0, ASFSETDATARDPTR);
+
+	/*
+	 * Observed bank layout: the first byte read via ASFINDEX is the
+	 * message's target address byte, the payload follows.  A Host
+	 * Notify targets the SMBus Host (0x08, Wr) and carries the
+	 * notifying device's own address byte (Wr) plus two status bytes.
+	 */
+	if (cmd != (ASF_HOST_ADDR << 1) || len < ASF_HOST_NOTIFY_LEN ||
+	    (data[0] & 1) || (data[0] >> 1) < 0x08 || (data[0] >> 1) > 0x77)
+		return bank;
+
+	if (piix4_aux_adapter)
+		dev_dbg(&piix4_aux_adapter->dev,
+			"ASF Host Notify from 0x%02x: %*ph\n",
+			data[0] >> 1, (int)len, data);
+	*notify_addr = data[0] >> 1;
+	return bank;
+}
+
+/* Host Notify addresses collected under the mutex, delivered outside it */
+struct piix4_asf_notifies {
+	int addr[ASF_NOTIFY_MAX];
+	int count;
+};
+
+/*
+ * Drain every pending message: one the hard handler acked (pending),
+ * any whose status is still set, and any bank flagged full.  A bank
+ * whose full flag is set again after we consumed it is simply read
+ * again: either a new message landed in it (must not be lost) or the
+ * flag is stuck (the message is delivered twice).  That is a deliberate
+ * at-least-once tradeoff: Host Notify carries no payload to Linux
+ * clients beyond "go look at the device", so a bounded duplicate is
+ * preferable to silently losing a wakeup.  Returns
+ * true if a full flag is still set after ASF_DRAIN_MAX reads, i.e.
+ * the bank is genuinely stuck and the slave needs a reset.
+ * Caller must hold piix4_asf_mutex with the slave interrupt masked.
+ */
+static bool piix4_asf_drain(unsigned short piix4_smba,
+			    struct piix4_asf_notifies *n)
+{
+	int i, addr, bank;
+
+	for (i = 0; i < ASF_DRAIN_MAX; i++) {
+		u8 sta = inb_p(ASFSTA);
+		bool signalled, pending;
+
+		/*
+		 * Status bit and pending flag are two views of the same
+		 * reception: consume both, they authorize one read.
+		 */
+		if (sta & BIT(ASF_STA_SLV_INT))
+			outb_p(sta | BIT(ASF_STA_SLV_INT), ASFSTA);
+		pending = atomic_xchg(&piix4_asf.pending, 0);
+		signalled = (sta & BIT(ASF_STA_SLV_INT)) || pending;
+		if (!signalled && !(inb_p(ASFDATABNKSEL) & ASF_BNK_FULL))
+			return false;
+
+		/* Without a flag, only a signal justifies reading bank 0 */
+		bank = piix4_asf_process_bank(&addr, signalled, i);
+		if (bank < 0)
+			return false;
+		if (addr >= 0 && n->count < ASF_NOTIFY_MAX)
+			n->addr[n->count++] = addr;
+	}
+	return inb_p(ASFDATABNKSEL) & ASF_BNK_FULL;
+}
+
+static void piix4_asf_deliver(struct piix4_asf_notifies *n)
+{
+	int i;
+
+	if (!n->count)
+		return;
+
+	mutex_lock(&piix4_asf_notify_mutex);
+	if (piix4_asf_deliver_ok && piix4_aux_adapter)
+		for (i = 0; i < n->count; i++)
+			i2c_handle_smbus_host_notify(piix4_aux_adapter,
+						     n->addr[i]);
+	mutex_unlock(&piix4_asf_notify_mutex);
+}
+
+/* Return negative errno on error. */
+static s32 piix4_access_asf(struct i2c_adapter *adap, u16 addr,
+			    unsigned short flags, char read_write,
+			    u8 command, int size, union i2c_smbus_data *data)
+{
+	struct i2c_piix4_adapdata *adapdata = i2c_get_adapdata(adap);
+	unsigned short piix4_smba = adapdata->smba;
+	struct piix4_asf_notifies notifies = {};
+	s32 result;
+	int retval, attempt, i, before;
+	bool from_target;
+
+	mutex_lock(&piix4_asf_mutex);
+
+	/* Checked under the mutex so teardown can quiesce us */
+	if (!piix4_asf.active) {
+		mutex_unlock(&piix4_asf_mutex);
+		return piix4_access(adap, addr, flags, read_write, command,
+				    size, data);
+	}
+
+	retval = piix4_sb800_region_request(&adap->dev, &piix4_asf.mmio_cfg);
+	if (retval) {
+		mutex_unlock(&piix4_asf_mutex);
+		return retval;
+	}
+
+	if (piix4_asf.listening) {
+		/*
+		 * The slave reset below discards any received-but-unread
+		 * Host Notify.  Stop listening so nothing new is accepted,
+		 * quiesce the interrupt source (synchronize_hardirq(), not
+		 * synchronize_irq(): the IRQ thread blocks on
+		 * piix4_asf_mutex, which we hold), then drain.
+		 */
+		piix4_asf_update_ioport(ASF_SLV_LISTN, ASFLISADDR, false);
+		piix4_asf_update_ioport(ASF_SLV_INTR, ASFSLVEN, false);
+		synchronize_hardirq(piix4_asf.irq);
+		piix4_asf_drain(piix4_smba, &notifies);
+	}
+
+	for (attempt = 0; ; attempt++) {
+		piix4_asf_master_mode(piix4_smba);
+
+		result = piix4_access(adap, addr, flags, read_write, command,
+				      size, data);
+		/*
+		 * -EAGAIN: arbitration lost to the other master on this bus,
+		 * the device sending a Host Notify.  -ENXIO: address NAKed,
+		 * which is also how the device answers while it is busy
+		 * sending one -- but equally the normal answer of an absent
+		 * address.  Either way, yield: listen for a moment so a
+		 * message in flight lands in a bank and is drained (and
+		 * delivered below).  Retry an -EAGAIN unconditionally, an
+		 * -ENXIO only if the yield caught a message from the very
+		 * device we were addressing.
+		 */
+		if ((result != -EAGAIN && result != -ENXIO) ||
+		    !piix4_asf.want_listen || attempt >= ASF_XFER_RETRIES)
+			break;
+
+		before = notifies.count;
+		WRITE_ONCE(piix4_asf.listening, true);
+		piix4_asf_slave_arm(piix4_smba);
+		usleep_range(ASF_YIELD_US, ASF_YIELD_US * 2);
+		piix4_asf_update_ioport(ASF_SLV_LISTN, ASFLISADDR, false);
+		piix4_asf_update_ioport(ASF_SLV_INTR, ASFSLVEN, false);
+		synchronize_hardirq(piix4_asf.irq);
+		piix4_asf_drain(piix4_smba, &notifies);
+		from_target = false;
+		for (i = before; i < notifies.count; i++)
+			if (notifies.addr[i] == addr)
+				from_target = true;
+		if (result == -ENXIO && !from_target)
+			break;
+
+		dev_dbg(&adap->dev,
+			"ASF: xfer to %#04x lost the bus (%d), yielding (retry %d)\n",
+			addr, result, attempt + 1);
+	}
+	if (result < 0 && attempt)
+		dev_dbg(&adap->dev,
+			"ASF: xfer to %#04x still failing (%d) after %d retries\n",
+			addr, result, attempt);
+
+	/*
+	 * Back to listen mode so Host Notify keeps working.  This is also
+	 * the retry path if piix4_asf_start()/resume could not arm.
+	 */
+	if (piix4_asf.want_listen) {
+		WRITE_ONCE(piix4_asf.listening, true);
+		piix4_asf_slave_arm(piix4_smba);
+	}
+
+	piix4_sb800_region_release(&adap->dev, &piix4_asf.mmio_cfg);
+	mutex_unlock(&piix4_asf_mutex);
+
+	piix4_asf_deliver(&notifies);
+	return result;
+}
+
+static u32 piix4_func_asf(struct i2c_adapter *adapter)
+{
+	return piix4_func(adapter) | I2C_FUNC_SMBUS_HOST_NOTIFY;
+}
+
+static const struct i2c_algorithm piix4_smbus_algorithm_asf = {
+	.smbus_xfer	= piix4_access_asf,
+	.functionality	= piix4_func_asf,
+};
+
+static const struct i2c_algorithm *piix4_asf_algo(unsigned short smba)
+{
+	if (piix4_asf.active && smba == piix4_asf.smba)
+		return &piix4_smbus_algorithm_asf;
+	return NULL;
+}
+
+static irqreturn_t piix4_asf_irq_handler(int irq, void *dev_id)
+{
+	unsigned short piix4_smba = piix4_asf.smba;
+	u8 sta;
+
+	/*
+	 * The IRQ is only requested while the IO region is ours, so the
+	 * ports are always safe to touch here.  The line is shared: only
+	 * claim our own status bits.
+	 */
+	sta = inb_p(ASFSTA);
+	if (!(sta & BIT(ASF_STA_SLV_INT))) {
+		/*
+		 * With the block in master mode the completion of a host
+		 * transaction raises this line as well, host interrupt enable
+		 * or not, and holds it until the status is cleared -- which
+		 * piix4_transaction() only does after its polling sleep.  Ack
+		 * the done bit here, as i2c-amd-asf-plat.c does; the error
+		 * bits stay for piix4_transaction() to read.
+		 */
+		if (!(inb_p(SMBHSTSTS) & BIT(ASF_HST_INTR)))
+			return IRQ_NONE;
+		outb_p(BIT(ASF_HST_INTR), SMBHSTSTS);
+		return IRQ_HANDLED;
+	}
+
+	/*
+	 * Ack the status bit.  That alone does not deassert the level line
+	 * while a bank is full; the IRQ is requested IRQF_ONESHOT so it
+	 * stays masked until the thread has drained the banks.
+	 */
+	outb_p(sta | BIT(ASF_STA_SLV_INT), ASFSTA);
+
+	/*
+	 * Not armed (start/stop/suspend windows): ack and drop, and mask
+	 * the source so a bank nobody will drain cannot keep the level
+	 * line asserted (seen as a ~20k interrupt burst across resume).
+	 * Every path that arms the slave re-enables the interrupt.
+	 */
+	if (!READ_ONCE(piix4_asf.listening)) {
+		piix4_asf_update_ioport(ASF_SLV_INTR, ASFSLVEN, false);
+		return IRQ_HANDLED;
+	}
+
+	atomic_set(&piix4_asf.pending, 1);
+	return IRQ_WAKE_THREAD;
+}
+
+static irqreturn_t piix4_asf_irq_thread(int irq, void *dev_id)
+{
+	unsigned short piix4_smba = piix4_asf.smba;
+	struct piix4_asf_notifies notifies = {};
+	bool wedged;
+
+	mutex_lock(&piix4_asf_mutex);
+
+	if (!piix4_asf.listening) {
+		mutex_unlock(&piix4_asf_mutex);
+		return IRQ_HANDLED;
+	}
+
+	/*
+	 * The line is masked (IRQF_ONESHOT) until we return, so the hard
+	 * handler cannot race the bank reads.  Keep listening throughout,
+	 * so no message is NAKed (a NAKed Host Notify makes the device
+	 * retry into the reads the client issues in response) and nothing
+	 * that was ACKed is discarded.
+	 */
+	wedged = piix4_asf_drain(piix4_smba, &notifies);
+
+	/*
+	 * A full flag that survives ASF_DRAIN_MAX reads is stuck (seen on
+	 * this hardware under lost-interrupt conditions: both banks stuck
+	 * full, slave NAKing everything).  Only then reset the slave,
+	 * after one more drain with listening off so nothing ACKed
+	 * meanwhile is discarded.
+	 */
+	if (wedged) {
+		if (!piix4_sb800_region_request(piix4_asf.dev,
+						&piix4_asf.mmio_cfg)) {
+			dev_dbg(piix4_asf.dev, "ASF: receive bank stuck full, resetting slave\n");
+			piix4_asf_update_ioport(ASF_SLV_LISTN, ASFLISADDR, false);
+			piix4_asf_drain(piix4_smba, &notifies);
+			piix4_asf_update_ioport(ASF_SLV_RST, ASFSLVEN, true);
+			outb_p(0, ASFSLVSTA);
+			piix4_asf_slave_arm(piix4_smba);
+			piix4_sb800_region_release(piix4_asf.dev,
+						   &piix4_asf.mmio_cfg);
+		} else {
+			/*
+			 * Cannot reset or re-arm: stop ACKing messages nobody
+			 * will read.  The next master transfer re-arms
+			 * (want_listen).
+			 */
+			piix4_asf_update_ioport(ASF_SLV_LISTN, ASFLISADDR, false);
+			WRITE_ONCE(piix4_asf.listening, false);
+			dev_warn_ratelimited(piix4_asf.dev,
+					     "ASF: FCH PM region busy, slave not re-armed until the next transfer\n");
+		}
+	}
+
+	mutex_unlock(&piix4_asf_mutex);
+
+	piix4_asf_deliver(&notifies);
+	return IRQ_HANDLED;
+}
+
+/*
+ * Claim the ASF block for the aux adapter at piix4_smba: IO region,
+ * IRQ, firmware state.  Leaves the controller in master mode with the
+ * slave held in reset; piix4_asf_start() arms it once the adapter is
+ * registered.  Failures leave everything as it was.
+ */
+static void piix4_asf_enable(struct pci_dev *dev, unsigned short piix4_smba)
+{
+	unsigned long irqflags = IRQF_ONESHOT;
+	int retval;
+
+	if (!piix4_asf.smba || piix4_asf.smba != piix4_smba)
+		return;
+
+	if (!piix4_asf.has_irq) {
+		dev_warn(&dev->dev, "SMB0001 declares no IRQ, not enabling Host Notify\n");
+		return;
+	}
+
+	/* All ASF registers must lie inside the firmware-described window */
+	if (piix4_asf.iolen < ASF_IOSIZE) {
+		dev_warn(&dev->dev,
+			 "SMB0001 IO window too small (%#x < %#x), not enabling Host Notify\n",
+			 piix4_asf.iolen, ASF_IOSIZE);
+		return;
+	}
+
+	piix4_asf.mmio_cfg.use_mmio = piix4_sb800_use_mmio(dev);
+	if (!piix4_asf.mmio_cfg.use_mmio) {
+		dev_warn(&dev->dev,
+			 "ASF slave setup needs FCH PM MMIO, not enabling Host Notify\n");
+		return;
+	}
+
+	/*
+	 * The ASF registers extend past the SMBIOSIZE window already
+	 * requested for the adapter; claim the rest of the _CRS range.
+	 */
+	if (acpi_check_region(piix4_smba + SMBIOSIZE, ASF_IOSIZE - SMBIOSIZE,
+			      piix4_driver.name))
+		return;
+
+	if (!request_region(piix4_smba + SMBIOSIZE, ASF_IOSIZE - SMBIOSIZE,
+			    "piix4-asf")) {
+		dev_warn(&dev->dev,
+			 "ASF register region 0x%x already in use, not enabling Host Notify\n",
+			 piix4_smba + SMBIOSIZE);
+		return;
+	}
+
+	/*
+	 * Register the GSI with the attributes from _CRS instead of the
+	 * ISA edge/high default acpi_dev_get_irqresource() would impose.
+	 * This only takes effect if we are the first user of the pin
+	 * (mp_check_pin_attr()); otherwise -EBUSY.
+	 */
+	retval = acpi_register_gsi(&dev->dev, piix4_asf.gsi,
+				   piix4_asf.triggering, piix4_asf.polarity);
+	if (retval < 0) {
+		dev_warn(&dev->dev,
+			 "ASF: cannot program GSI %u as %s/%s (%d), not enabling Host Notify\n",
+			 piix4_asf.gsi,
+			 piix4_asf.triggering == ACPI_EDGE_SENSITIVE ?
+				"edge" : "level",
+			 piix4_asf.polarity == ACPI_ACTIVE_LOW ? "low" : "high",
+			 retval);
+		goto release_ioregion;
+	}
+	piix4_asf.irq = retval;
+	piix4_asf.gsi_registered = true;
+	if (piix4_asf.shareable)
+		irqflags |= IRQF_SHARED;
+
+	retval = piix4_sb800_region_request(&dev->dev, &piix4_asf.mmio_cfg);
+	if (retval)
+		goto unregister_gsi;
+
+	piix4_asf.dev = &dev->dev;
+	atomic_set(&piix4_asf.pending, 0);
+
+	mutex_lock(&piix4_asf_mutex);
+	/* Remember the firmware state for teardown */
+	piix4_asf.boot_ctl = ioread32(piix4_asf.mmio_cfg.addr) &
+			     (BIT(ASF_MSTR_EN) | BIT(ASF_CLK_EN));
+	piix4_asf.boot_lisaddr = inb_p(ASFLISADDR);
+	piix4_asf.boot_slven = inb_p(ASFSLVEN);
+	piix4_asf.boot_bnksel = inb_p(ASFDATABNKSEL);
+	/* Master mode until piix4_asf_start(); plain transfers keep working */
+	piix4_asf_master_mode(piix4_smba);
+	piix4_asf.active = true;
+	mutex_unlock(&piix4_asf_mutex);
+
+	piix4_sb800_region_release(&dev->dev, &piix4_asf.mmio_cfg);
+
+	/*
+	 * IRQF_ONESHOT: acking the status bit does not deassert the level
+	 * line while a bank is full, so keep it masked until the thread
+	 * has drained the banks.  Without it every Host Notify costs some
+	 * seventy hard interrupts between the ack and the thread's mask.
+	 * The handler returns IRQ_NONE until piix4_asf_start() arms the
+	 * slave.
+	 */
+	retval = request_threaded_irq(piix4_asf.irq, piix4_asf_irq_handler,
+				      piix4_asf_irq_thread, irqflags,
+				      "piix4-asf", &piix4_asf.irq_cookie);
+	if (retval) {
+		dev_warn(&dev->dev, "ASF: failed to request IRQ %d: %d\n",
+			 piix4_asf.irq, retval);
+		goto restore;
+	}
+	piix4_asf.irq_requested = true;
+
+	dev_info(&dev->dev, "SMBus Host Notify enabled via ASF (IRQ %d)\n",
+		 piix4_asf.irq);
+	return;
+
+restore:
+	mutex_lock(&piix4_asf_mutex);
+	piix4_asf.active = false;
+	if (!piix4_sb800_region_request(&dev->dev, &piix4_asf.mmio_cfg)) {
+		piix4_asf_restore_boot_state(piix4_smba);
+		piix4_sb800_region_release(&dev->dev, &piix4_asf.mmio_cfg);
+	}
+	mutex_unlock(&piix4_asf_mutex);
+unregister_gsi:
+	if (piix4_asf.gsi_registered)
+		acpi_unregister_gsi(piix4_asf.gsi);
+	piix4_asf.gsi_registered = false;
+	piix4_asf.irq = -1;
+release_ioregion:
+	release_region(piix4_smba + SMBIOSIZE, ASF_IOSIZE - SMBIOSIZE);
+}
+
+/* Arm the slave.  Called once the aux adapter is registered. */
+static void piix4_asf_start(void)
+{
+	unsigned short piix4_smba = piix4_asf.smba;
+
+	if (!piix4_asf.active)
+		return;
+
+	mutex_lock(&piix4_asf_notify_mutex);
+	piix4_asf_deliver_ok = true;
+	mutex_unlock(&piix4_asf_notify_mutex);
+
+	mutex_lock(&piix4_asf_mutex);
+	piix4_asf.want_listen = true;
+	if (!piix4_sb800_region_request(piix4_asf.dev, &piix4_asf.mmio_cfg)) {
+		WRITE_ONCE(piix4_asf.listening, true);
+		piix4_asf_slave_arm(piix4_smba);
+		piix4_sb800_region_release(piix4_asf.dev, &piix4_asf.mmio_cfg);
+	} else {
+		dev_warn(piix4_asf.dev, "ASF: FCH PM region busy, Host Notify armed on next transfer\n");
+	}
+	mutex_unlock(&piix4_asf_mutex);
+}
+
+/*
+ * Stop Host Notify delivery but keep the master wrapper in effect, so
+ * clients being removed from the adapter still get correct transfers.
+ * Caller must hold piix4_asf_mutex.
+ */
+static void piix4_asf_quiesce(unsigned short piix4_smba)
+{
+	piix4_asf.want_listen = false;
+	/* Sequence from amd_asf_unreg_target() */
+	piix4_asf_update_ioport(ASF_SLV_LISTN, ASFLISADDR, false);
+	piix4_asf_update_ioport(ASF_SLV_INTR, ASFSLVEN, false);
+	piix4_asf_update_ioport(ASF_SLV_RST, ASFSLVEN, true);
+	piix4_asf_clear_status(piix4_smba);
+	WRITE_ONCE(piix4_asf.listening, false);
+	if (piix4_asf.irq_requested)
+		synchronize_hardirq(piix4_asf.irq);
+	atomic_set(&piix4_asf.pending, 0);
+}
+
+/* Stop Host Notify and release the IRQ.  Called before the adapter goes. */
+static void piix4_asf_stop(void)
+{
+	unsigned short piix4_smba = piix4_asf.smba;
+
+	if (!piix4_asf.active)
+		return;
+
+	mutex_lock(&piix4_asf_mutex);
+	piix4_asf_quiesce(piix4_smba);
+	/* Leave the controller a plain master for whatever comes next */
+	if (!piix4_sb800_region_request(piix4_asf.dev, &piix4_asf.mmio_cfg)) {
+		piix4_asf_master_mode(piix4_smba);
+		piix4_sb800_region_release(piix4_asf.dev, &piix4_asf.mmio_cfg);
+	}
+	mutex_unlock(&piix4_asf_mutex);
+
+	/* Outside the mutex: the IRQ thread takes it */
+	if (piix4_asf.irq_requested) {
+		free_irq(piix4_asf.irq, &piix4_asf.irq_cookie);
+		piix4_asf.irq_requested = false;
+	}
+
+	/*
+	 * Wait out any delivery still in flight from a transfer, and stop
+	 * further ones: the adapter (and its host-notify domain) may go
+	 * away right after this.
+	 */
+	mutex_lock(&piix4_asf_notify_mutex);
+	piix4_asf_deliver_ok = false;
+	mutex_unlock(&piix4_asf_notify_mutex);
+}
+
+/* Return the hardware to its firmware state and release everything. */
+static void piix4_asf_disable(void)
+{
+	unsigned short piix4_smba = piix4_asf.smba;
+
+	if (piix4_asf.active) {
+		piix4_asf_stop();
+
+		mutex_lock(&piix4_asf_mutex);
+		piix4_asf.active = false;
+		if (!piix4_sb800_region_request(piix4_asf.dev,
+						&piix4_asf.mmio_cfg)) {
+			piix4_asf_restore_boot_state(piix4_smba);
+			piix4_sb800_region_release(piix4_asf.dev,
+						   &piix4_asf.mmio_cfg);
+		} else {
+			dev_warn(piix4_asf.dev,
+				 "ASF: FCH PM region busy, firmware state not restored\n");
+		}
+		mutex_unlock(&piix4_asf_mutex);
+
+		if (piix4_asf.gsi_registered)
+			acpi_unregister_gsi(piix4_asf.gsi);
+		release_region(piix4_smba + SMBIOSIZE, ASF_IOSIZE - SMBIOSIZE);
+	}
+
+	memset(&piix4_asf, 0, sizeof(piix4_asf));
+	piix4_asf.irq = -1;
+}
+
+static int piix4_asf_suspend(struct device *dev)
+{
+	unsigned short piix4_smba = piix4_asf.smba;
+
+	if (!piix4_asf.active)
+		return 0;
+
+	mutex_lock(&piix4_asf_mutex);
+	piix4_asf.resume_listen = piix4_asf.want_listen;
+	if (piix4_asf.want_listen)
+		piix4_asf_quiesce(piix4_smba);
+	mutex_unlock(&piix4_asf_mutex);
+	return 0;
+}
+
+static int piix4_asf_resume(struct device *dev)
+{
+	unsigned short piix4_smba = piix4_asf.smba;
+
+	if (!piix4_asf.active || !piix4_asf.resume_listen)
+		return 0;
+
+	/* Firmware may have reset the ASF block: reprogram it in full */
+	mutex_lock(&piix4_asf_mutex);
+	piix4_asf.want_listen = true;
+	if (!piix4_sb800_region_request(piix4_asf.dev, &piix4_asf.mmio_cfg)) {
+		piix4_asf_update_ioport(ASF_SLV_RST, ASFSLVEN, true);
+		outb_p(0, ASFSLVSTA);
+		WRITE_ONCE(piix4_asf.listening, true);
+		piix4_asf_slave_arm(piix4_smba);
+		piix4_sb800_region_release(piix4_asf.dev, &piix4_asf.mmio_cfg);
+	} else {
+		dev_warn(piix4_asf.dev, "ASF: FCH PM region busy on resume, Host Notify armed on next transfer\n");
+	}
+	mutex_unlock(&piix4_asf_mutex);
+	return 0;
+}
+#else /* !CONFIG_ACPI */
+static inline void piix4_asf_detect(struct pci_dev *dev, unsigned short smba) {}
+static inline void piix4_asf_enable(struct pci_dev *dev, unsigned short smba) {}
+static inline void piix4_asf_start(void) {}
+static inline void piix4_asf_stop(void) {}
+static inline void piix4_asf_disable(void) {}
+static inline const struct i2c_algorithm *piix4_asf_algo(unsigned short smba)
+{
+	return NULL;
+}
+static inline int piix4_asf_suspend(struct device *dev) { return 0; }
+static inline int piix4_asf_resume(struct device *dev) { return 0; }
+#endif /* CONFIG_ACPI */
+
+static int piix4_add_adapter(struct pci_dev *dev, unsigned short smba,
+			     bool sb800_main, u8 port, bool notify_imc,
+			     u8 hw_port_nr, const char *name,
+			     struct i2c_adapter **padap)
+{
+	struct i2c_adapter *adap;
+	struct i2c_piix4_adapdata *adapdata;
+	int retval;
+
+	adap = kzalloc_obj(*adap);
+	if (adap == NULL) {
+		release_region(smba, SMBIOSIZE);
+		return -ENOMEM;
+	}
+
+	adap->owner = THIS_MODULE;
+	adap->class = I2C_CLASS_HWMON;
+	/*
+	 * Host Notify support must be decided here: i2c_add_adapter() only
+	 * creates the host-notify IRQ domain when the adapter already
+	 * advertises I2C_FUNC_SMBUS_HOST_NOTIFY.
+	 */
+	if (sb800_main)
+		adap->algo = &piix4_smbus_algorithm_sb800;
+	else
+		adap->algo = piix4_asf_algo(smba) ?: &smbus_algorithm;
+
+	adapdata = kzalloc_obj(*adapdata);
+	if (adapdata == NULL) {
+		kfree(adap);
+		release_region(smba, SMBIOSIZE);
+		return -ENOMEM;
+	}
+
+	adapdata->mmio_cfg.use_mmio = piix4_sb800_use_mmio(dev);
+	adapdata->smba = smba;
+	adapdata->sb800_main = sb800_main;
+	adapdata->port = port << piix4_port_shift_sb800;
+	adapdata->notify_imc = notify_imc;
+
+	/* set up the sysfs linkage to our parent device */
+	adap->dev.parent = &dev->dev;
+
+	if (has_acpi_companion(&dev->dev)) {
+		acpi_preset_companion(&adap->dev,
+				      ACPI_COMPANION(&dev->dev),
+				      hw_port_nr);
+	}
+
+	snprintf(adap->name, sizeof(adap->name),
+		"SMBus PIIX4 adapter%s at %04x", name, smba);
+
+	i2c_set_adapdata(adap, adapdata);
+
+	retval = i2c_add_adapter(adap);
+	if (retval) {
+		kfree(adapdata);
+		kfree(adap);
+		release_region(smba, SMBIOSIZE);
+		return retval;
+	}
+
+	/*
+	 * The AUX bus can not be probed as on some platforms it reports all
+	 * devices present and all reads return "0".
+	 * This would allow the ee1004 to be probed incorrectly.
+	 */
+	if (port == 0)
+		i2c_register_spd_write_enable(adap);
+
+	*padap = adap;
+	return 0;
+}
+
+static int piix4_add_adapters_sb800(struct pci_dev *dev, unsigned short smba,
+				    bool notify_imc)
+{
+	struct i2c_piix4_adapdata *adapdata;
+	int port;
+	int retval;
+
+	if (dev->device == PCI_DEVICE_ID_AMD_KERNCZ_SMBUS ||
+	    (dev->device == PCI_DEVICE_ID_AMD_HUDSON2_SMBUS &&
+	     dev->revision >= 0x1F)) {
+		piix4_adapter_count = HUDSON2_MAIN_PORTS;
+	} else {
+		piix4_adapter_count = PIIX4_MAX_ADAPTERS;
+	}
+
+	for (port = 0; port < piix4_adapter_count; port++) {
+		u8 hw_port_nr = port == 0 ? 0 : port + 1;
+
+		retval = piix4_add_adapter(dev, smba, true, port, notify_imc,
+					   hw_port_nr,
+					   piix4_main_port_names_sb800[port],
+					   &piix4_main_adapters[port]);
+		if (retval < 0)
+			goto error;
+	}
+
+	return retval;
+
+error:
+	dev_err(&dev->dev,
+		"Error setting up SB800 adapters. Unregistering!\n");
+	while (--port >= 0) {
+		adapdata = i2c_get_adapdata(piix4_main_adapters[port]);
+		if (adapdata->smba) {
+			i2c_del_adapter(piix4_main_adapters[port]);
+			kfree(adapdata);
+			kfree(piix4_main_adapters[port]);
+			piix4_main_adapters[port] = NULL;
+		}
+	}
+
+	return retval;
+}
+
+static int piix4_probe(struct pci_dev *dev, const struct pci_device_id *id)
+{
+	int retval;
+	bool is_sb800 = false;
+	bool is_asf = false;
+	acpi_status status;
+	acpi_handle handle;
+
+	if ((dev->vendor == PCI_VENDOR_ID_ATI &&
+	     dev->device == PCI_DEVICE_ID_ATI_SBX00_SMBUS &&
+	     dev->revision >= 0x40) ||
+	    dev->vendor == PCI_VENDOR_ID_AMD ||
+	    dev->vendor == PCI_VENDOR_ID_HYGON) {
+		bool notify_imc = false;
+		is_sb800 = true;
+
+		if ((dev->vendor == PCI_VENDOR_ID_AMD ||
+		     dev->vendor == PCI_VENDOR_ID_HYGON) &&
+		    dev->device == PCI_DEVICE_ID_AMD_KERNCZ_SMBUS) {
+			u8 imc;
+
+			/*
+			 * Detect if IMC is active or not, this method is
+			 * described on coreboot's AMD IMC notes
+			 */
+			pci_bus_read_config_byte(dev->bus, PCI_DEVFN(0x14, 3),
+						 0x40, &imc);
+			if (imc & 0x80)
+				notify_imc = true;
+		}
+
+		/* base address location etc changed in SB800 */
+		retval = piix4_setup_sb800(dev, id, 0);
+		if (retval < 0)
+			return retval;
+
+		/*
+		 * Try to register multiplexed main SMBus adapter,
+		 * give up if we can't
+		 */
+		retval = piix4_add_adapters_sb800(dev, retval, notify_imc);
+		if (retval < 0)
+			return retval;
+	} else {
+		retval = piix4_setup(dev, id);
+		if (retval < 0)
+			return retval;
+
+		/* Try to register main SMBus adapter, give up if we can't */
+		retval = piix4_add_adapter(dev, retval, false, 0, false, 0,
+					   "", &piix4_main_adapters[0]);
+		if (retval < 0)
+			return retval;
+		piix4_adapter_count = 1;
+	}
+
+	/* Check for auxiliary SMBus on some AMD chipsets */
+	retval = -ENODEV;
+
+	if (dev->vendor == PCI_VENDOR_ID_ATI &&
+	    dev->device == PCI_DEVICE_ID_ATI_SBX00_SMBUS) {
+		if (dev->revision < 0x40) {
+			retval = piix4_setup_aux(dev, id, 0x58);
+		} else {
+			/* SB800 added aux bus too */
+			retval = piix4_setup_sb800(dev, id, 1);
+		}
+	}
+
+	status = acpi_get_handle(NULL, (acpi_string)SB800_ASF_ACPI_PATH, &handle);
+	if (ACPI_SUCCESS(status))
+		is_asf = true;
+
+	if (dev->vendor == PCI_VENDOR_ID_AMD &&
+	    (dev->device == PCI_DEVICE_ID_AMD_HUDSON2_SMBUS ||
+	     dev->device == PCI_DEVICE_ID_AMD_KERNCZ_SMBUS)) {
+		/* Do not setup AUX port if ASF is enabled */
+		if (!is_asf)
+			retval = piix4_setup_sb800(dev, id, 1);
+	}
+
+	if (retval > 0) {
+		/*
+		 * If the firmware describes the aux controller's ASF slave
+		 * function (SMB0001), enable Host Notify reception before
+		 * registering the adapter.
+		 */
+		piix4_asf_detect(dev, retval);
+		piix4_asf_enable(dev, retval);
+
+		/* Try to add the aux adapter if it exists,
+		 * piix4_add_adapter will clean up if this fails */
+		piix4_add_adapter(dev, retval, false, 0, false, 1,
+				  is_sb800 ? piix4_aux_port_name_sb800 : "",
+				  &piix4_aux_adapter);
+		if (piix4_aux_adapter)
+			piix4_asf_start();
+		else
+			piix4_asf_disable();
+	}
+
+	return 0;
+}
+
+static void piix4_adap_remove(struct i2c_adapter *adap)
+{
+	struct i2c_piix4_adapdata *adapdata = i2c_get_adapdata(adap);
+
+	if (adapdata->smba) {
+		i2c_del_adapter(adap);
+		if (adapdata->port == (0 << piix4_port_shift_sb800))
+			release_region(adapdata->smba, SMBIOSIZE);
+		kfree(adapdata);
+		kfree(adap);
+	}
+}
+
+static void piix4_remove(struct pci_dev *dev)
+{
+	int port = piix4_adapter_count;
+
+	while (--port >= 0) {
+		if (piix4_main_adapters[port]) {
+			piix4_adap_remove(piix4_main_adapters[port]);
+			piix4_main_adapters[port] = NULL;
+		}
+	}
+
+	if (piix4_aux_adapter) {
+		/* Stop notifications first, keep the master wrapper for clients */
+		piix4_asf_stop();
+		piix4_adap_remove(piix4_aux_adapter);
+		piix4_aux_adapter = NULL;
+		piix4_asf_disable();
+	}
+}
+
+static void piix4_shutdown(struct pci_dev *dev)
+{
+	/* Hand a kexec'd kernel a controller in its firmware state */
+	piix4_asf_disable();
+}
+
+static DEFINE_SIMPLE_DEV_PM_OPS(piix4_pm_ops, piix4_asf_suspend,
+				piix4_asf_resume);
+
+static struct pci_driver piix4_driver = {
+	.name		= "piix4_smbus",
+	.id_table	= piix4_ids,
+	.probe		= piix4_probe,
+	.remove		= piix4_remove,
+	.shutdown	= piix4_shutdown,
+	.driver.pm	= pm_sleep_ptr(&piix4_pm_ops),
+};
+
+module_pci_driver(piix4_driver);
+
+MODULE_AUTHOR("Frodo Looijaard <frodol@dds.nl>");
+MODULE_AUTHOR("Philip Edelbrock <phil@netroedge.com>");
+MODULE_DESCRIPTION("PIIX4 SMBus driver");
+MODULE_LICENSE("GPL");

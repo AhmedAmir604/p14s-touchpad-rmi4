@@ -1,0 +1,16 @@
+event0	Power Button
+event10	HD-Audio Generic HDMI/DP,pcm=7
+event11	HD-Audio Generic HDMI/DP,pcm=8
+event12	HD-Audio Generic HDMI/DP,pcm=9
+event13	ThinkPad Extra Buttons
+event14	HD-Audio Generic Mic
+event15	HD-Audio Generic Headphone
+event1	Lid Switch
+event2	Sleep Button
+event3	Power Button
+event4	AT Translated Set 2 keyboard
+event5	Video Bus
+event6	RAYD0001:00 2386:4B4E
+event7	Synaptics TM3471-030
+event8	TPPS/2 Elan TrackPoint
+event9	HD-Audio Generic HDMI/DP,pcm=3

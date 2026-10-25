@@ -1,0 +1,38 @@
+[ 2064.437021] waynoway kernel: i2c_piix4: loading out-of-tree module taints kernel.
+[ 2064.437135] waynoway kernel: i2c_piix4: module verification failed: signature and/or required key missing - tainting kernel
+[ 2064.439019] waynoway kernel: piix4_smbus 0000:00:14.0: validated legacy ASF resources: I/O 0xb20, GSI 7
+[ 2064.439485] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Controller at 0xb00, revision 0
+[ 2064.439808] waynoway kernel: piix4_smbus 0000:00:14.0: Using register 0x02 for SMBus port selection
+[ 2064.442013] waynoway kernel: ee1004 2-0050: 512 byte EE1004-compliant SPD EEPROM, read-only
+[ 2064.442352] waynoway kernel: i2c i2c-2: Successfully instantiated SPD at 0x50
+[ 2064.442674] waynoway kernel: piix4_smbus 0000:00:14.0: Auxiliary SMBus Host Controller at 0xb20
+[ 2064.443106] waynoway kernel: piix4_smbus 0000:00:14.0: ASF IRQ 7 prepared as level-low shared interrupt
+[ 2064.443485] waynoway kernel: i2c i2c-4: event-driven ASF Host Notify enabled with 64 us fair arbitration
+[ 2065.304052] waynoway kernel: psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
+[ 2065.338044] waynoway kernel: psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
+[ 2065.338598] waynoway kernel: psmouse serio1: synaptics: Trying to set up SMBus access
+[ 2065.388045] waynoway kernel: rmi4_smbus 4-002c: registering SMbus-connected sensor
+[ 2065.508016] waynoway kernel: rmi4_f01 rmi4-00.fn01: found RMI device, manufacturer: Synaptics, product: TM3471-030, fw id: 3942087
+[ 2065.589097] waynoway kernel: input: Synaptics TM3471-030 as /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/input/input22
+[ 2065.599038] waynoway kernel: serio: RMI4 PS/2 pass-through port at rmi4-00.fn03
+[ 2065.711017] waynoway kernel: psmouse serio3: trackpoint: Elan TrackPoint firmware: 0x12, buttons: 3/3
+[ 2065.738016] waynoway kernel: input: TPPS/2 Elan TrackPoint as /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/rmi4-00.fn03/serio3/input/input23
+[ 2076.258029] waynoway kernel: i2c i2c-4: ASF bus collision; disabling the auxiliary bus
+[ 2076.258621] waynoway kernel: i2c i2c-4: RMI4 transaction failed: err=-5 rw=R cmd=05 size=5 len=0 first=00 pre=00/00/80 idle=00/00/80 host=0a live=00 control=14 asf=00 slave=00 bank=80 sem=01 enable=c3 timer=20
+[ 2076.258995] waynoway kernel: rmi4_f12 rmi4-00.fn12: Failed to read object data. Code: -5.
+[ 2076.772026] waynoway kernel: i2c i2c-4: RMI4 transaction failed: err=-5 rw=W cmd=00 size=5 len=2 first=48 pre=00/00/00 idle=00/00/00 host=00 live=00 control=00 asf=00 slave=00 bank=00 sem=00 enable=00 timer=00
+[ 2076.772372] waynoway kernel: rmi4_physical rmi4-00: rmi_driver_clear_irq_bits: Failed to change enabled interrupts!
+[ 2077.070070] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Controller at 0xb00, revision 0
+[ 2077.070458] waynoway kernel: piix4_smbus 0000:00:14.0: Using register 0x02 for SMBus port selection
+[ 2077.073012] waynoway kernel: ee1004 2-0050: 512 byte EE1004-compliant SPD EEPROM, read-only
+[ 2077.073441] waynoway kernel: i2c i2c-2: Successfully instantiated SPD at 0x50
+[ 2077.073783] waynoway kernel: piix4_smbus 0000:00:14.0: Auxiliary SMBus Host Controller at 0xb20
+[ 2078.031241] waynoway kernel: psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
+[ 2078.079198] waynoway kernel: psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
+[ 2078.079766] waynoway kernel: psmouse serio1: synaptics: Trying to set up SMBus access
+[ 2078.082154] waynoway kernel: psmouse serio1: synaptics: SMbus companion is not ready yet
+[ 2078.147187] waynoway kernel: psmouse serio1: synaptics: Touchpad model: 1, fw: 10.32, id: 0x1e2a1, caps: 0xf01ea3/0x940300/0x12e800/0x500000, board id: 3471, fw id: 3942087
+[ 2078.147709] waynoway kernel: psmouse serio1: synaptics: serio: Synaptics pass-through port at isa0060/serio1/input0
+[ 2078.197295] waynoway kernel: input: SynPS/2 Synaptics TouchPad as /devices/platform/i8042/serio1/input/input25
+[ 2078.701052] waynoway kernel: psmouse serio4: trackpoint: Elan TrackPoint firmware: 0x12, buttons: 3/3
+[ 2078.917020] waynoway kernel: input: TPPS/2 Elan TrackPoint as /devices/platform/i8042/serio1/serio4/input/input26

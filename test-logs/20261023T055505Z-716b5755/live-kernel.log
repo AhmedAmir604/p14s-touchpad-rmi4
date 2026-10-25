@@ -1,0 +1,47 @@
+[   70.223022] waynoway kernel: i2c_piix4: loading out-of-tree module taints kernel.
+[   70.223143] waynoway kernel: i2c_piix4: module verification failed: signature and/or required key missing - tainting kernel
+[   70.224011] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Controller at 0xb00, revision 0
+[   70.224365] waynoway kernel: piix4_smbus 0000:00:14.0: Using register 0x02 for SMBus port selection
+[   70.227012] waynoway kernel: ee1004 2-0050: 512 byte EE1004-compliant SPD EEPROM, read-only
+[   70.227326] waynoway kernel: i2c i2c-2: Successfully instantiated SPD at 0x50
+[   70.227619] waynoway kernel: piix4_smbus 0000:00:14.0: Auxiliary SMBus Host Controller at 0xb20
+[   70.227880] waynoway kernel: piix4_smbus 0000:00:14.0: ASF SMBus slave (SMB0001) at 0x0b20, GSI IRQ 7 (level/low)
+[   70.228148] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Notify enabled via ASF (IRQ 7)
+[   71.144192] waynoway kernel: psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
+[   71.180220] waynoway kernel: psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
+[   71.180731] waynoway kernel: psmouse serio1: synaptics: Trying to set up SMBus access
+[   71.225065] waynoway kernel: rmi4_smbus 4-002c: registering SMbus-connected sensor
+[   71.362392] waynoway kernel: rmi4_f01 rmi4-00.fn01: found RMI device, manufacturer: Synaptics, product: TM3471-030, fw id: 3942087
+[   71.456049] waynoway kernel: input: Synaptics TM3471-030 as /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/input/input22
+[   71.471320] waynoway kernel: serio: RMI4 PS/2 pass-through port at rmi4-00.fn03
+[   71.607064] waynoway kernel: psmouse serio3: trackpoint: Elan TrackPoint firmware: 0x12, buttons: 3/3
+[   71.644021] waynoway kernel: input: TPPS/2 Elan TrackPoint as /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/rmi4-00.fn03/serio3/input/input23
+[  310.112022] waynoway kernel: audit: type=1400 audit(1792735146.916:336): apparmor="AUDIT" operation="userns_create" class="namespace" info="Userns create - transitioning profile" profile="unconfined" pid=11882 comm="(ubuntu-insigh)" requested="userns_create" target="unprivileged_userns" execpath="/usr/lib/systemd/systemd-executor"
+[  310.112104] waynoway kernel: audit: type=1400 audit(1792735146.917:337): apparmor="DENIED" operation="capable" class="cap" profile="unprivileged_userns" pid=11882 comm="(ubuntu-insigh)" capability=21  capname="sys_admin"
+[  310.181027] waynoway kernel: audit: type=1400 audit(1792735146.986:338): apparmor="DENIED" operation="getattr" class="file" info="Failed name lookup - disconnected path" error=-13 profile="unprivileged_userns" name="" pid=11901 comm="systemd-detect-" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[  360.594018] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  360.601247] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  404.605033] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  404.607020] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  414.935018] waynoway kernel: warning: `ThreadPoolForeg' uses wireless extensions which will stop working for Wi-Fi 7 hardware; use nl80211
+[  485.538089] waynoway kernel: audit: type=1400 audit(1792735322.343:339): apparmor="AUDIT" operation="userns_create" class="namespace" info="Userns create - transitioning profile" profile="unconfined" pid=20125 comm="(ubuntu-insigh)" requested="userns_create" target="unprivileged_userns" execpath="/usr/lib/systemd/systemd-executor"
+[  485.540036] waynoway kernel: audit: type=1400 audit(1792735322.345:340): apparmor="DENIED" operation="capable" class="cap" profile="unprivileged_userns" pid=20125 comm="(ubuntu-insigh)" capability=21  capname="sys_admin"
+[  595.228035] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  595.230022] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  595.250048] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  595.252015] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  621.383019] waynoway kernel: rmi4_physical rmi4-00: rmi_driver_clear_irq_bits: Failed to change enabled interrupts!
+[  621.673067] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Controller at 0xb00, revision 0
+[  621.673462] waynoway kernel: piix4_smbus 0000:00:14.0: Using register 0x02 for SMBus port selection
+[  621.676010] waynoway kernel: ee1004 2-0050: 512 byte EE1004-compliant SPD EEPROM, read-only
+[  621.676345] waynoway kernel: i2c i2c-2: Successfully instantiated SPD at 0x50
+[  621.676601] waynoway kernel: piix4_smbus 0000:00:14.0: Auxiliary SMBus Host Controller at 0xb20
+[  622.677133] waynoway kernel: psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
+[  622.713121] waynoway kernel: psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
+[  622.714026] waynoway kernel: psmouse serio1: synaptics: Trying to set up SMBus access
+[  622.717792] waynoway kernel: psmouse serio1: synaptics: SMbus companion is not ready yet
+[  622.795311] waynoway kernel: psmouse serio1: synaptics: Touchpad model: 1, fw: 10.32, id: 0x1e2a1, caps: 0xf01ea3/0x940300/0x12e800/0x500000, board id: 3471, fw id: 3942087
+[  622.796073] waynoway kernel: psmouse serio1: synaptics: serio: Synaptics pass-through port at isa0060/serio1/input0
+[  622.850882] waynoway kernel: input: SynPS/2 Synaptics TouchPad as /devices/platform/i8042/serio1/input/input25
+[  623.399087] waynoway kernel: psmouse serio4: trackpoint: Elan TrackPoint firmware: 0x12, buttons: 3/3
+[  623.632053] waynoway kernel: input: TPPS/2 Elan TrackPoint as /devices/platform/i8042/serio1/serio4/input/input26

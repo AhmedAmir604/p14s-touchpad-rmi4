@@ -1,0 +1,5 @@
+Run 20260725T160403Z-b6584c98
+This script will perform exactly one patched load and then restore stock.
+ABORT: stock i2c_piix4 is not loaded
+Logs: /home/report-israel/kernelhack/test-logs/20260725T160403Z-b6584c98
+A reboot is still required to restore IRQ 7's original route.

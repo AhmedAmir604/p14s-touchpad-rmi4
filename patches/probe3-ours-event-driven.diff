@@ -1,0 +1,1521 @@
+--- i2c-piix4.c.orig	2026-07-12 07:57:18.198892813 +0500
++++ i2c-piix4.c	2026-07-25 21:54:51.883692694 +0500
+@@ -33,7 +33,14 @@
+ #include <linux/slab.h>
+ #include <linux/dmi.h>
+ #include <linux/acpi.h>
++#include <linux/completion.h>
++#include <linux/interrupt.h>
+ #include <linux/io.h>
++#include <linux/irq.h>
++#include <linux/irqdomain.h>
++#include <linux/jiffies.h>
++#include <linux/mutex.h>
++#include <linux/spinlock.h>
+ #include <linux/platform_data/x86/amd-fch.h>
+ 
+ #include "i2c-piix4.h"
+@@ -53,6 +60,51 @@
+ #define MAX_TIMEOUT	500
+ #define  ENABLE_INT9	0
+ 
++/*
++ * AMD ASF registers in the auxiliary SMBus I/O window.  Older ThinkPads
++ * describe this block as ACPI device SMB0001 rather than the newer AMDI001A.
++ */
++#define PIIX4_ASF_IO_SIZE		0x20
++#define PIIX4_ASF_HOST_ADDRESS		0x08
++#define PIIX4_ASF_RMI4_ADDRESS		0x2c
++#define PIIX4_ASF_LISTEN_ADDRESS	(0x09 + piix4_smba)
++#define PIIX4_ASF_STATUS		(0x0a + piix4_smba)
++#define PIIX4_ASF_SLAVE_STATUS		(0x0d + piix4_smba)
++#define PIIX4_ASF_DATA_BANK_SELECT	(0x13 + piix4_smba)
++#define PIIX4_ASF_SEMAPHORE		(0x14 + piix4_smba)
++#define PIIX4_ASF_SLAVE_ENABLE		(0x15 + piix4_smba)
++#define PIIX4_ASF_DELAY_MASTER_TIMER	(0x16 + piix4_smba)
++
++#define PIIX4_ASF_HOST_INTR		BIT(1)
++#define PIIX4_ASF_HOST_DEVICE_ERROR	BIT(2)
++#define PIIX4_ASF_HOST_BUSY		BIT(0)
++#define PIIX4_ASF_KILL_HOST		BIT(1)
++#define PIIX4_ASF_SLAVE_INTR		BIT(6)
++#define PIIX4_ASF_ACTIVE_SLAVE_BUSY	BIT(7)
++#define PIIX4_ASF_LISTEN_ENABLE		BIT(0)
++#define PIIX4_ASF_SLAVE_INTR_ENABLE	BIT(1)
++#define PIIX4_ASF_KILL_SLAVE		BIT(4)
++#define PIIX4_ASF_FAIR_ARB_ENABLE	BIT(7)
++#define PIIX4_ASF_HOST_SEMAPHORE	BIT(0)
++#define PIIX4_ASF_CLEAR_SEMAPHORE	BIT(1)
++#define PIIX4_ASF_LAST_BANK		BIT(0)
++#define PIIX4_ASF_BANK0_FULL		BIT(2)
++#define PIIX4_ASF_BANK1_FULL		BIT(3)
++#define PIIX4_ASF_READ_BANK_SHIFT	4
++#define PIIX4_ASF_READ_HOST_BANK	BIT(7)
++#define PIIX4_ASF_BANK_FULL_MASK	(PIIX4_ASF_BANK0_FULL | \
++					 PIIX4_ASF_BANK1_FULL)
++#define PIIX4_ASF_HOST_STATUS_MASK	GENMASK(4, 1)
++#define PIIX4_ASF_HOST_ERROR_MASK	GENMASK(4, 2)
++#define PIIX4_ASF_SEMAPHORE_RETRIES	MAX_TIMEOUT
++#define PIIX4_ASF_TRANSACTION_TIMEOUT_MS	150
++#define PIIX4_ASF_BUS_FREE_US		20
++#define PIIX4_ASF_BUS_IDLE_ATTEMPTS	100
++#define PIIX4_ASF_FAIR_ARB_TIMER	0x20
++#define PIIX4_ASF_NOTIFY_DRAIN_LIMIT	32
++#define PIIX4_ASF_NOTIFY_RATE		600
++#define PIIX4_ASF_NOTIFY_BURST		300
++
+ /* PIIX4 constants */
+ #define PIIX4_QUICK		0x00
+ #define PIIX4_BYTE		0x04
+@@ -108,6 +160,15 @@
+ static int srvrworks_csb5_delay;
+ static struct pci_driver piix4_driver;
+ 
++/*
++ * Keep this opt-in while the legacy ASF path is under hardware validation.
++ * The DMI and ACPI resource checks below are mandatory even when requested.
++ */
++static bool asf_host_notify;
++module_param(asf_host_notify, bool, 0444);
++MODULE_PARM_DESC(asf_host_notify,
++		 "Enable validated AMD ASF Host Notify support on the auxiliary bus");
++
+ static const struct dmi_system_id piix4_dmi_blacklist[] = {
+ 	{
+ 		.ident = "Sapphire AM2RD790",
+@@ -136,6 +197,35 @@
+ 	{ }
+ };
+ 
++static const struct dmi_system_id piix4_asf_dmi_table[] = {
++	{
++		.ident = "Lenovo ThinkPad P14s Gen 2a",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21A0003QUS"),
++			DMI_MATCH(DMI_PRODUCT_VERSION, "ThinkPad P14s Gen 2a"),
++		},
++	},
++	{ }
++};
++
++struct piix4_asf_acpi_resources {
++	bool valid;
++	bool io_found;
++	bool irq_found;
++	u16 io_base;
++	u8 io_length;
++	u32 gsi;
++};
++
++struct piix4_asf_bus_state {
++	u8 host_status;
++	u8 asf_status;
++	u8 bank_select;
++};
++
++static struct piix4_asf_acpi_resources piix4_asf_resources;
++
+ /*
+  * SB800 globals
+  */
+@@ -149,14 +239,142 @@
+ 
+ struct i2c_piix4_adapdata {
+ 	unsigned short smba;
++	unsigned short region_size;
+ 
+ 	/* SB800 */
+ 	bool sb800_main;
+ 	bool notify_imc;
+ 	u8 port;		/* Port number, shifted */
+ 	struct sb800_mmio_cfg mmio_cfg;
++
++	/* Legacy AMD ASF Host Notify */
++	bool asf_prepared;
++	bool asf_notify_enabled;
++	bool asf_xfer_active;
++	bool asf_gsi_registered;
++	bool asf_host_stuck;
++	int asf_irq;
++	u32 asf_gsi;
++	u8 asf_host_status;
++	u8 asf_orig_listen_address;
++	u8 asf_orig_slave_enable;
++	u8 asf_orig_bank_select;
++	u8 asf_orig_delay_master_timer;
++	bool asf_notify_rate_armed;
++	bool asf_notify_overrate;
++	unsigned long asf_notify_tokens;
++	unsigned long asf_notify_last_jiffies;
++	struct device *asf_dev;
++	struct i2c_adapter *asf_adapter;
++	atomic_t asf_notify_pending;
++	struct completion asf_completion;
++	struct mutex asf_lock;
++	raw_spinlock_t asf_rate_lock;
+ };
+ 
++static acpi_status
++piix4_asf_resource_cb(struct acpi_resource *resource, void *context)
++{
++	struct piix4_asf_acpi_resources *res = context;
++
++	switch (resource->type) {
++	case ACPI_RESOURCE_TYPE_IO: {
++		struct acpi_resource_io *io = &resource->data.io;
++
++		if (io->io_decode == ACPI_DECODE_16 &&
++		    io->minimum == io->maximum) {
++			res->io_base = io->minimum;
++			res->io_length = io->address_length;
++			res->io_found = true;
++		}
++		break;
++	}
++	case ACPI_RESOURCE_TYPE_IRQ: {
++		struct acpi_resource_irq *irq = &resource->data.irq;
++
++		if (irq->interrupt_count == 1 &&
++		    irq->triggering == ACPI_LEVEL_SENSITIVE &&
++		    irq->polarity == ACPI_ACTIVE_LOW &&
++		    irq->shareable == ACPI_SHARED) {
++			res->gsi = irq->interrupts[0];
++			res->irq_found = true;
++		}
++		break;
++	}
++	default:
++		break;
++	}
++
++	return AE_OK;
++}
++
++static acpi_status
++piix4_asf_device_cb(acpi_handle handle, u32 level, void *context,
++		    void **return_value)
++{
++	struct piix4_asf_acpi_resources candidate = { };
++	struct piix4_asf_acpi_resources *result = context;
++	acpi_status status;
++
++	status = acpi_walk_resources(handle, METHOD_NAME__CRS,
++				     piix4_asf_resource_cb, &candidate);
++	if (ACPI_FAILURE(status))
++		return AE_OK;
++
++	if (!candidate.io_found || !candidate.irq_found ||
++	    candidate.io_length != PIIX4_ASF_IO_SIZE)
++		return AE_OK;
++
++	candidate.valid = true;
++	*result = candidate;
++	return AE_CTRL_TERMINATE;
++}
++
++static bool piix4_asf_detect(struct pci_dev *dev)
++{
++	acpi_status status;
++
++	memset(&piix4_asf_resources, 0, sizeof(piix4_asf_resources));
++
++	if (!asf_host_notify)
++		return false;
++
++	if (!dmi_check_system(piix4_asf_dmi_table)) {
++		dev_warn(&dev->dev,
++			 "ASF Host Notify requested on unsupported DMI system\n");
++		return false;
++	}
++
++	if (dev->vendor != PCI_VENDOR_ID_AMD ||
++	    dev->device != PCI_DEVICE_ID_AMD_KERNCZ_SMBUS) {
++		dev_warn(&dev->dev,
++			 "ASF Host Notify requested on unsupported SMBus controller\n");
++		return false;
++	}
++
++	status = acpi_get_devices("SMB0001", piix4_asf_device_cb,
++				  &piix4_asf_resources, NULL);
++	if (ACPI_FAILURE(status) || !piix4_asf_resources.valid) {
++		dev_warn(&dev->dev,
++			 "SMB0001 lacks the required 32-byte I/O and level-low shared IRQ resources\n");
++		return false;
++	}
++
++	dev_info(&dev->dev,
++		 "validated legacy ASF resources: I/O 0x%x, GSI %u\n",
++		 piix4_asf_resources.io_base, piix4_asf_resources.gsi);
++	return true;
++}
++
++static unsigned short piix4_io_region_size(unsigned short smba)
++{
++	if (piix4_asf_resources.valid &&
++	    smba == piix4_asf_resources.io_base)
++		return PIIX4_ASF_IO_SIZE;
++
++	return SMBIOSIZE;
++}
++
+ int piix4_sb800_region_request(struct device *dev, struct sb800_mmio_cfg *mmio_cfg)
+ {
+ 	if (mmio_cfg->use_mmio) {
+@@ -227,6 +445,7 @@
+ {
+ 	unsigned char temp;
+ 	unsigned short piix4_smba;
++	unsigned short region_size;
+ 
+ 	if ((PIIX4_dev->vendor == PCI_VENDOR_ID_SERVERWORKS) &&
+ 	    (PIIX4_dev->device == PCI_DEVICE_ID_SERVERWORKS_CSB5))
+@@ -264,10 +483,11 @@
+ 		}
+ 	}
+ 
+-	if (acpi_check_region(piix4_smba, SMBIOSIZE, piix4_driver.name))
++	region_size = piix4_io_region_size(piix4_smba);
++	if (acpi_check_region(piix4_smba, region_size, piix4_driver.name))
+ 		return -ENODEV;
+ 
+-	if (!request_region(piix4_smba, SMBIOSIZE, piix4_driver.name)) {
++	if (!request_region(piix4_smba, region_size, piix4_driver.name)) {
+ 		dev_err(&PIIX4_dev->dev, "SMBus region 0x%x already in use!\n",
+ 			piix4_smba);
+ 		return -EBUSY;
+@@ -300,7 +520,7 @@
+ 		} else {
+ 			dev_err(&PIIX4_dev->dev,
+ 				"SMBus Host Controller not enabled!\n");
+-			release_region(piix4_smba, SMBIOSIZE);
++			release_region(piix4_smba, region_size);
+ 			return -ENODEV;
+ 		}
+ 	}
+@@ -372,6 +592,7 @@
+ 			     const struct pci_device_id *id, u8 aux)
+ {
+ 	unsigned short piix4_smba;
++	unsigned short region_size;
+ 	u8 smb_en, smb_en_status, port_sel;
+ 	u8 i2ccfg, i2ccfg_offset = 0x10;
+ 	struct sb800_mmio_cfg mmio_cfg;
+@@ -403,10 +624,11 @@
+ 	if (retval)
+ 		return retval;
+ 
+-	if (acpi_check_region(piix4_smba, SMBIOSIZE, piix4_driver.name))
++	region_size = piix4_io_region_size(piix4_smba);
++	if (acpi_check_region(piix4_smba, region_size, piix4_driver.name))
+ 		return -ENODEV;
+ 
+-	if (!request_region(piix4_smba, SMBIOSIZE, piix4_driver.name)) {
++	if (!request_region(piix4_smba, region_size, piix4_driver.name)) {
+ 		dev_err(&PIIX4_dev->dev, "SMBus region 0x%x already in use!\n",
+ 			piix4_smba);
+ 		return -EBUSY;
+@@ -424,7 +646,7 @@
+ 	if (!request_region(piix4_smba + i2ccfg_offset, 1, "i2ccfg")) {
+ 		dev_err(&PIIX4_dev->dev, "SMBus I2C bus config region "
+ 			"0x%x already in use!\n", piix4_smba + i2ccfg_offset);
+-		release_region(piix4_smba, SMBIOSIZE);
++		release_region(piix4_smba, region_size);
+ 		return -EBUSY;
+ 	}
+ 	i2ccfg = inb_p(piix4_smba + i2ccfg_offset);
+@@ -457,7 +679,7 @@
+ 		mmio_cfg.use_mmio = piix4_sb800_use_mmio(PIIX4_dev);
+ 		retval = piix4_sb800_region_request(&PIIX4_dev->dev, &mmio_cfg);
+ 		if (retval) {
+-			release_region(piix4_smba, SMBIOSIZE);
++			release_region(piix4_smba, region_size);
+ 			return retval;
+ 		}
+ 
+@@ -486,6 +708,7 @@
+ 	 * AMD chipsets e.g. SP5100 (SB700 derivative) */
+ 
+ 	unsigned short piix4_smba;
++	unsigned short region_size;
+ 
+ 	/* Read address of auxiliary SMBus controller */
+ 	pci_read_config_word(PIIX4_dev, base_reg_addr, &piix4_smba);
+@@ -502,10 +725,11 @@
+ 		return -ENODEV;
+ 	}
+ 
+-	if (acpi_check_region(piix4_smba, SMBIOSIZE, piix4_driver.name))
++	region_size = piix4_io_region_size(piix4_smba);
++	if (acpi_check_region(piix4_smba, region_size, piix4_driver.name))
+ 		return -ENODEV;
+ 
+-	if (!request_region(piix4_smba, SMBIOSIZE, piix4_driver.name)) {
++	if (!request_region(piix4_smba, region_size, piix4_driver.name)) {
+ 		dev_err(&PIIX4_dev->dev, "Auxiliary SMBus region 0x%x "
+ 			"already in use!\n", piix4_smba);
+ 		return -EBUSY;
+@@ -518,11 +742,670 @@
+ 	return piix4_smba;
+ }
+ 
+-int piix4_transaction(struct i2c_adapter *piix4_adapter, unsigned short piix4_smba)
++static int piix4_asf_acquire_semaphore(struct i2c_piix4_adapdata *adapdata)
++{
++	unsigned short piix4_smba = adapdata->smba;
++	int retries = PIIX4_ASF_SEMAPHORE_RETRIES;
++
++	do {
++		outb_p(PIIX4_ASF_HOST_SEMAPHORE,
++		       PIIX4_ASF_SEMAPHORE);
++		if (inb_p(PIIX4_ASF_SEMAPHORE) &
++		    PIIX4_ASF_HOST_SEMAPHORE)
++			return 0;
++
++		usleep_range(250, 500);
++	} while (--retries);
++
++	outb_p(PIIX4_ASF_CLEAR_SEMAPHORE, PIIX4_ASF_SEMAPHORE);
++	return -EBUSY;
++}
++
++static void piix4_asf_release_semaphore(
++				struct i2c_piix4_adapdata *adapdata)
++{
++	unsigned short piix4_smba = adapdata->smba;
++
++	outb_p(PIIX4_ASF_CLEAR_SEMAPHORE, PIIX4_ASF_SEMAPHORE);
++}
++
++static void
++piix4_asf_sample_bus_state(struct i2c_piix4_adapdata *adapdata,
++			   struct piix4_asf_bus_state *state)
++{
++	unsigned short piix4_smba = adapdata->smba;
++
++	state->host_status = inb_p(SMBHSTSTS);
++	if (state->host_status & PIIX4_ASF_HOST_BUSY) {
++		/*
++		 * Conservatively avoid cross-state sampling while the ASF host
++		 * is active.  FF marks the deliberately unsampled fields.
++		 */
++		state->asf_status = 0xff;
++		state->bank_select = 0xff;
++		return;
++	}
++	state->asf_status = inb_p(PIIX4_ASF_STATUS);
++	state->bank_select = inb_p(PIIX4_ASF_DATA_BANK_SELECT);
++}
++
++static bool
++piix4_asf_bus_is_idle(const struct piix4_asf_bus_state *state)
++{
++	/*
++	 * This revision reports SlaveIntr at ASFStatus bit 6 rather than the
++	 * documented bit 5.  DataBankSel is sampled for diagnostics, but its
++	 * reserved bit 6 is not used as a gate on this controller revision.
++	 */
++	return !(state->host_status & PIIX4_ASF_HOST_BUSY) &&
++	       !(state->asf_status &
++		 (PIIX4_ASF_ACTIVE_SLAVE_BUSY | PIIX4_ASF_SLAVE_INTR));
++}
++
++static int
++piix4_asf_wait_bus_idle(struct i2c_piix4_adapdata *adapdata,
++			struct piix4_asf_bus_state *first,
++			struct piix4_asf_bus_state *last)
++{
++	int attempt;
++
++	piix4_asf_sample_bus_state(adapdata, first);
++	*last = *first;
++
++	for (attempt = 0; attempt < PIIX4_ASF_BUS_IDLE_ATTEMPTS; attempt++) {
++		if (piix4_asf_bus_is_idle(last)) {
++			/*
++			 * Qualify an idle observation across one conservative
++			 * 100 kHz bus-free interval before programming ADD/CMD.
++			 */
++			udelay(PIIX4_ASF_BUS_FREE_US);
++			piix4_asf_sample_bus_state(adapdata, last);
++			if (piix4_asf_bus_is_idle(last))
++				return 0;
++		} else {
++			udelay(PIIX4_ASF_BUS_FREE_US);
++			piix4_asf_sample_bus_state(adapdata, last);
++		}
++	}
++
++	return -EBUSY;
++}
++
++static bool
++piix4_asf_read_notify_bank(struct i2c_piix4_adapdata *adapdata, u8 bank,
++			   u8 *notify_address)
++{
++	unsigned short piix4_smba = adapdata->smba;
++	u8 host_address;
++	u8 device_address;
++
++	outb_p(bank << PIIX4_ASF_READ_BANK_SHIFT,
++	       PIIX4_ASF_DATA_BANK_SELECT);
++	inb_p(SMBHSTCNT);	/* Reset the shared data index. */
++	host_address = inb_p(SMBBLKDAT);
++	device_address = inb_p(SMBBLKDAT);
++
++	if (host_address != (PIIX4_ASF_HOST_ADDRESS << 1) ||
++	    device_address != (PIIX4_ASF_RMI4_ADDRESS << 1))
++		return false;
++
++	*notify_address = device_address >> 1;
++	return true;
++}
++
++static bool
++piix4_asf_notify_rate_exceeded(struct i2c_piix4_adapdata *adapdata)
++{
++	const unsigned long capacity = PIIX4_ASF_NOTIFY_BURST * HZ;
++	unsigned long elapsed;
++	unsigned long now = jiffies;
++	bool exceeded;
++
++	raw_spin_lock(&adapdata->asf_rate_lock);
++	if (adapdata->asf_notify_rate_armed &&
++	    !adapdata->asf_notify_overrate) {
++		elapsed = now - adapdata->asf_notify_last_jiffies;
++		if (elapsed >=
++		    DIV_ROUND_UP(capacity, PIIX4_ASF_NOTIFY_RATE))
++			adapdata->asf_notify_tokens = capacity;
++		else
++			adapdata->asf_notify_tokens =
++				min(capacity,
++				    adapdata->asf_notify_tokens +
++				    elapsed * PIIX4_ASF_NOTIFY_RATE);
++		adapdata->asf_notify_last_jiffies = now;
++
++		if (adapdata->asf_notify_tokens >= HZ)
++			adapdata->asf_notify_tokens -= HZ;
++		else {
++			adapdata->asf_notify_overrate = true;
++			adapdata->asf_notify_rate_armed = false;
++		}
++	}
++	exceeded = adapdata->asf_notify_overrate;
++	raw_spin_unlock(&adapdata->asf_rate_lock);
++
++	return exceeded;
++}
++
++static bool
++piix4_asf_notify_is_overrate(struct i2c_piix4_adapdata *adapdata)
++{
++	unsigned long flags;
++	bool exceeded;
++
++	raw_spin_lock_irqsave(&adapdata->asf_rate_lock, flags);
++	exceeded = adapdata->asf_notify_overrate;
++	if (exceeded)
++		adapdata->asf_notify_rate_armed = false;
++	raw_spin_unlock_irqrestore(&adapdata->asf_rate_lock, flags);
++
++	return exceeded;
++}
++
++static void
++piix4_asf_notify_rate_arm(struct i2c_piix4_adapdata *adapdata)
++{
++	unsigned long flags;
++
++	raw_spin_lock_irqsave(&adapdata->asf_rate_lock, flags);
++	adapdata->asf_notify_tokens = PIIX4_ASF_NOTIFY_BURST * HZ;
++	adapdata->asf_notify_last_jiffies = jiffies;
++	adapdata->asf_notify_overrate = false;
++	adapdata->asf_notify_rate_armed = true;
++	raw_spin_unlock_irqrestore(&adapdata->asf_rate_lock, flags);
++}
++
++static void
++piix4_asf_notify_rate_disarm(struct i2c_piix4_adapdata *adapdata)
++{
++	unsigned long flags;
++
++	raw_spin_lock_irqsave(&adapdata->asf_rate_lock, flags);
++	adapdata->asf_notify_rate_armed = false;
++	raw_spin_unlock_irqrestore(&adapdata->asf_rate_lock, flags);
++}
++
++static irqreturn_t piix4_asf_irq_handler(int irq, void *dev_id)
++{
++	struct i2c_piix4_adapdata *adapdata = dev_id;
++	unsigned short piix4_smba = adapdata->smba;
++	u8 host_status;
++	u8 asf_status;
++	bool complete_xfer = false;
++	bool handled = false;
++	bool wake_thread = false;
++
++	host_status = inb_p(SMBHSTSTS);
++	asf_status = inb_p(PIIX4_ASF_STATUS);
++
++	if (host_status & PIIX4_ASF_HOST_INTR) {
++		/*
++		 * Capture before clearing: the waiter must still see error
++		 * flags even though this level-triggered source is W1C.
++		 */
++		if (READ_ONCE(adapdata->asf_xfer_active)) {
++			WRITE_ONCE(adapdata->asf_host_status, host_status);
++			complete_xfer = true;
++		}
++		outb_p(host_status & PIIX4_ASF_HOST_STATUS_MASK, SMBHSTSTS);
++		if (complete_xfer)
++			complete(&adapdata->asf_completion);
++		handled = true;
++	} else if (!READ_ONCE(adapdata->asf_xfer_active) &&
++		   host_status & PIIX4_ASF_HOST_ERROR_MASK) {
++		outb_p(host_status & PIIX4_ASF_HOST_ERROR_MASK, SMBHSTSTS);
++		handled = true;
++	}
++
++	if (asf_status & PIIX4_ASF_SLAVE_INTR) {
++		/*
++		 * Clear the level source in hard IRQ context.  The thread may
++		 * wait for an in-flight host transaction on asf_lock.
++		 */
++		outb_p(PIIX4_ASF_SLAVE_INTR, PIIX4_ASF_STATUS);
++		piix4_asf_notify_rate_exceeded(adapdata);
++		atomic_set(&adapdata->asf_notify_pending, 1);
++		handled = true;
++		wake_thread = true;
++	}
++
++	if (wake_thread)
++		return IRQ_WAKE_THREAD;
++
++	return handled ? IRQ_HANDLED : IRQ_NONE;
++}
++
++static irqreturn_t piix4_asf_irq_thread(int irq, void *dev_id)
++{
++	struct i2c_piix4_adapdata *adapdata = dev_id;
++	struct i2c_adapter *adap = adapdata->asf_adapter;
++	unsigned short piix4_smba = adapdata->smba;
++	u8 notify_address[2];
++	u8 bank_select;
++	u8 clear_banks;
++	u8 remaining;
++	u8 asf_status;
++	int count;
++	int first;
++	int second;
++	int round;
++	int i;
++	bool rate_limited = false;
++
++	for (round = 0; round < PIIX4_ASF_NOTIFY_DRAIN_LIMIT; round++) {
++		if (piix4_asf_notify_is_overrate(adapdata)) {
++			rate_limited = true;
++			break;
++		}
++
++		count = 0;
++		clear_banks = 0;
++		atomic_set(&adapdata->asf_notify_pending, 0);
++
++		mutex_lock(&adapdata->asf_lock);
++		bank_select = inb_p(PIIX4_ASF_DATA_BANK_SELECT);
++		if (bank_select & PIIX4_ASF_LAST_BANK) {
++			first = 0;
++			second = 1;
++		} else {
++			first = 1;
++			second = 0;
++		}
++
++		if (bank_select & (first ? PIIX4_ASF_BANK1_FULL :
++					  PIIX4_ASF_BANK0_FULL)) {
++			clear_banks |= first ? PIIX4_ASF_BANK1_FULL :
++					       PIIX4_ASF_BANK0_FULL;
++			if (adapdata->asf_notify_enabled &&
++			    piix4_asf_read_notify_bank(
++				    adapdata, first, &notify_address[count]))
++				count++;
++		}
++
++		if (bank_select & (second ? PIIX4_ASF_BANK1_FULL :
++					   PIIX4_ASF_BANK0_FULL)) {
++			clear_banks |= second ? PIIX4_ASF_BANK1_FULL :
++						PIIX4_ASF_BANK0_FULL;
++			if (adapdata->asf_notify_enabled &&
++			    piix4_asf_read_notify_bank(
++				    adapdata, second, &notify_address[count]))
++				count++;
++		}
++
++		/* Clear only banks consumed from this snapshot. */
++		if (clear_banks)
++			outb_p(clear_banks, PIIX4_ASF_DATA_BANK_SELECT);
++		remaining = inb_p(PIIX4_ASF_DATA_BANK_SELECT) &
++			    PIIX4_ASF_BANK_FULL_MASK;
++		mutex_unlock(&adapdata->asf_lock);
++
++		for (i = 0; i < count; i++) {
++			if (READ_ONCE(adap->host_notify_domain))
++				i2c_handle_smbus_host_notify(
++					adap, notify_address[i]);
++		}
++
++		if (!remaining &&
++		    !atomic_read(&adapdata->asf_notify_pending))
++			return IRQ_HANDLED;
++	}
++
++	mutex_lock(&adapdata->asf_lock);
++	adapdata->asf_notify_enabled = false;
++	outb_p((inb_p(PIIX4_ASF_SLAVE_ENABLE) |
++		PIIX4_ASF_KILL_SLAVE) &
++	       ~PIIX4_ASF_SLAVE_INTR_ENABLE, PIIX4_ASF_SLAVE_ENABLE);
++	bank_select = inb_p(PIIX4_ASF_DATA_BANK_SELECT);
++	outb_p(bank_select & PIIX4_ASF_BANK_FULL_MASK,
++	       PIIX4_ASF_DATA_BANK_SELECT);
++	asf_status = inb_p(PIIX4_ASF_STATUS);
++	if (asf_status & PIIX4_ASF_SLAVE_INTR)
++		outb_p(PIIX4_ASF_SLAVE_INTR, PIIX4_ASF_STATUS);
++	mutex_unlock(&adapdata->asf_lock);
++	piix4_asf_notify_rate_disarm(adapdata);
++	if (rate_limited)
++		dev_err(adapdata->asf_dev,
++			"ASF notification rate exceeded %u/s; notifications disabled\n",
++			PIIX4_ASF_NOTIFY_RATE);
++	else
++		dev_err(adapdata->asf_dev,
++			"ASF notification flood did not drain; notifications disabled\n");
++
++	return IRQ_HANDLED;
++}
++
++static void
++piix4_asf_restore_registers(struct i2c_piix4_adapdata *adapdata)
++{
++	unsigned short piix4_smba = adapdata->smba;
++	bool semaphore_held;
++	u8 status;
++
++	semaphore_held = !piix4_asf_acquire_semaphore(adapdata);
++	if (!semaphore_held)
++		dev_err(adapdata->asf_dev,
++			"forcing ASF register restore without the host semaphore\n");
++
++	status = inb_p(SMBHSTSTS) & PIIX4_ASF_HOST_STATUS_MASK;
++	if (status)
++		outb_p(status, SMBHSTSTS);
++	status = inb_p(PIIX4_ASF_STATUS);
++	if (status & PIIX4_ASF_SLAVE_INTR)
++		outb_p(PIIX4_ASF_SLAVE_INTR, PIIX4_ASF_STATUS);
++
++	outb_p(adapdata->asf_orig_bank_select,
++	       PIIX4_ASF_DATA_BANK_SELECT);
++	outb_p(adapdata->asf_orig_listen_address,
++	       PIIX4_ASF_LISTEN_ADDRESS);
++	outb_p(adapdata->asf_orig_delay_master_timer,
++	       PIIX4_ASF_DELAY_MASTER_TIMER);
++	outb_p(adapdata->asf_orig_slave_enable,
++	       PIIX4_ASF_SLAVE_ENABLE);
++	if (semaphore_held)
++		piix4_asf_release_semaphore(adapdata);
++
++	if (inb_p(PIIX4_ASF_LISTEN_ADDRESS) !=
++			adapdata->asf_orig_listen_address ||
++	    inb_p(PIIX4_ASF_DELAY_MASTER_TIMER) !=
++			adapdata->asf_orig_delay_master_timer ||
++	    inb_p(PIIX4_ASF_SLAVE_ENABLE) !=
++			adapdata->asf_orig_slave_enable)
++		dev_err(adapdata->asf_dev,
++			"failed to restore original ASF register state\n");
++}
++
++static int piix4_asf_prepare(struct pci_dev *dev, struct i2c_adapter *adap)
++{
++	struct i2c_piix4_adapdata *adapdata = i2c_get_adapdata(adap);
++	struct irq_data *irq_data;
++	unsigned short piix4_smba = adapdata->smba;
++	u8 status;
++	int retval;
++
++	init_completion(&adapdata->asf_completion);
++	mutex_init(&adapdata->asf_lock);
++	raw_spin_lock_init(&adapdata->asf_rate_lock);
++	atomic_set(&adapdata->asf_notify_pending, 0);
++	adapdata->asf_notify_rate_armed = false;
++	adapdata->asf_notify_overrate = false;
++	adapdata->asf_irq = -1;
++	adapdata->asf_gsi = piix4_asf_resources.gsi;
++
++	retval = piix4_asf_acquire_semaphore(adapdata);
++	if (retval) {
++		dev_err(adapdata->asf_dev,
++			"failed to acquire ASF semaphore during setup\n");
++		return retval;
++	}
++
++	adapdata->asf_orig_listen_address =
++		inb_p(PIIX4_ASF_LISTEN_ADDRESS);
++	adapdata->asf_orig_slave_enable =
++		inb_p(PIIX4_ASF_SLAVE_ENABLE);
++	adapdata->asf_orig_bank_select =
++		inb_p(PIIX4_ASF_DATA_BANK_SELECT) &
++		(PIIX4_ASF_READ_HOST_BANK | GENMASK(5, 4));
++	adapdata->asf_orig_delay_master_timer =
++		inb_p(PIIX4_ASF_DELAY_MASTER_TIMER);
++
++	/* Keep target interrupts quiescent until the IRQ domain exists. */
++	outb_p((adapdata->asf_orig_slave_enable |
++		PIIX4_ASF_KILL_SLAVE) &
++	       ~PIIX4_ASF_SLAVE_INTR_ENABLE, PIIX4_ASF_SLAVE_ENABLE);
++	status = inb_p(SMBHSTSTS) & PIIX4_ASF_HOST_STATUS_MASK;
++	if (status)
++		outb_p(status, SMBHSTSTS);
++	status = inb_p(PIIX4_ASF_STATUS);
++	if (status & PIIX4_ASF_SLAVE_INTR)
++		outb_p(PIIX4_ASF_SLAVE_INTR, PIIX4_ASF_STATUS);
++	piix4_asf_release_semaphore(adapdata);
++
++	retval = acpi_register_gsi(&dev->dev, adapdata->asf_gsi,
++				   ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW);
++	if (retval < 0) {
++		dev_err(adapdata->asf_dev,
++			"failed to map ASF GSI %u: %d\n",
++			adapdata->asf_gsi, retval);
++		piix4_asf_restore_registers(adapdata);
++		return retval;
++	}
++
++	adapdata->asf_irq = retval;
++	adapdata->asf_gsi_registered = true;
++	irq_data = irq_get_irq_data(adapdata->asf_irq);
++	if (!irq_data || !irqd_is_level_type(irq_data)) {
++		dev_err(adapdata->asf_dev,
++			"ASF IRQ %d was not configured as level-triggered\n",
++			adapdata->asf_irq);
++		retval = -EINVAL;
++		goto unregister_gsi;
++	}
++
++	/*
++	 * Do not use IRQF_ONESHOT: the thread can wait on asf_lock while the
++	 * hard handler must remain able to deliver a host completion.
++	 * IRQF_NO_THREAD preserves that split even with forced threading.
++	 */
++	retval = request_threaded_irq(adapdata->asf_irq,
++				      piix4_asf_irq_handler,
++				      piix4_asf_irq_thread,
++				      IRQF_SHARED | IRQF_TRIGGER_LOW |
++				      IRQF_NO_THREAD,
++				      "piix4_smbus_asf", adapdata);
++	if (retval) {
++		dev_err(adapdata->asf_dev,
++			"failed to request ASF IRQ %d: %d\n",
++			adapdata->asf_irq, retval);
++		goto unregister_gsi;
++	}
++
++	adapdata->asf_prepared = true;
++	dev_info(adapdata->asf_dev,
++		 "ASF IRQ %d prepared as level-low shared interrupt\n",
++		 adapdata->asf_irq);
++	return 0;
++
++unregister_gsi:
++	acpi_unregister_gsi(adapdata->asf_gsi);
++	adapdata->asf_gsi_registered = false;
++	adapdata->asf_irq = -1;
++	piix4_asf_restore_registers(adapdata);
++	return retval;
++}
++
++static int piix4_asf_enable_notify(struct i2c_adapter *adap)
++{
++	struct i2c_piix4_adapdata *adapdata = i2c_get_adapdata(adap);
++	unsigned short piix4_smba = adapdata->smba;
++	u8 bank_select;
++	u8 listen_address;
++	u8 slave_enable;
++	u8 status;
++	int retval;
++
++	if (!adapdata->asf_prepared || !adap->host_notify_domain)
++		return -EINVAL;
++
++	mutex_lock(&adapdata->asf_lock);
++	retval = piix4_asf_acquire_semaphore(adapdata);
++	if (retval)
++		goto unlock;
++
++	bank_select = inb_p(PIIX4_ASF_DATA_BANK_SELECT);
++	outb_p(bank_select & PIIX4_ASF_BANK_FULL_MASK,
++	       PIIX4_ASF_DATA_BANK_SELECT);
++	status = inb_p(PIIX4_ASF_STATUS);
++	if (status & PIIX4_ASF_SLAVE_INTR)
++		outb_p(PIIX4_ASF_SLAVE_INTR, PIIX4_ASF_STATUS);
++
++	listen_address = (PIIX4_ASF_HOST_ADDRESS << 1) |
++			 PIIX4_ASF_LISTEN_ENABLE;
++	slave_enable = (adapdata->asf_orig_slave_enable |
++			PIIX4_ASF_SLAVE_INTR_ENABLE |
++			PIIX4_ASF_FAIR_ARB_ENABLE) &
++		       ~PIIX4_ASF_KILL_SLAVE;
++	outb_p(listen_address, PIIX4_ASF_LISTEN_ADDRESS);
++	outb_p(PIIX4_ASF_FAIR_ARB_TIMER, PIIX4_ASF_DELAY_MASTER_TIMER);
++	piix4_asf_notify_rate_arm(adapdata);
++	outb_p(slave_enable, PIIX4_ASF_SLAVE_ENABLE);
++
++	if (inb_p(PIIX4_ASF_LISTEN_ADDRESS) != listen_address ||
++	    inb_p(PIIX4_ASF_DELAY_MASTER_TIMER) !=
++			PIIX4_ASF_FAIR_ARB_TIMER ||
++	    (inb_p(PIIX4_ASF_SLAVE_ENABLE) &
++	     (PIIX4_ASF_SLAVE_INTR_ENABLE | PIIX4_ASF_FAIR_ARB_ENABLE)) !=
++			(PIIX4_ASF_SLAVE_INTR_ENABLE |
++			 PIIX4_ASF_FAIR_ARB_ENABLE) ||
++	    (inb_p(PIIX4_ASF_SLAVE_ENABLE) & PIIX4_ASF_KILL_SLAVE)) {
++		dev_err(&adap->dev,
++			"ASF Host Notify register verification failed\n");
++		retval = -EIO;
++	} else {
++		adapdata->asf_notify_enabled = true;
++		dev_info(&adap->dev,
++			 "event-driven ASF Host Notify enabled with 64 us fair arbitration\n");
++	}
++
++	piix4_asf_release_semaphore(adapdata);
++unlock:
++	mutex_unlock(&adapdata->asf_lock);
++	return retval;
++}
++
++static void piix4_asf_disable_notify(struct i2c_adapter *adap)
++{
++	struct i2c_piix4_adapdata *adapdata = i2c_get_adapdata(adap);
++	unsigned short piix4_smba = adapdata->smba;
++	u8 bank_select;
++	u8 status;
++
++	if (!adapdata->asf_prepared)
++		return;
++
++	mutex_lock(&adapdata->asf_lock);
++	adapdata->asf_notify_enabled = false;
++	if (!piix4_asf_acquire_semaphore(adapdata)) {
++		outb_p((adapdata->asf_orig_slave_enable |
++			PIIX4_ASF_KILL_SLAVE) &
++		       ~PIIX4_ASF_SLAVE_INTR_ENABLE,
++		       PIIX4_ASF_SLAVE_ENABLE);
++		outb_p(adapdata->asf_orig_listen_address,
++		       PIIX4_ASF_LISTEN_ADDRESS);
++		outb_p(adapdata->asf_orig_delay_master_timer,
++		       PIIX4_ASF_DELAY_MASTER_TIMER);
++
++		bank_select = inb_p(PIIX4_ASF_DATA_BANK_SELECT);
++		outb_p(bank_select & PIIX4_ASF_BANK_FULL_MASK,
++		       PIIX4_ASF_DATA_BANK_SELECT);
++		status = inb_p(PIIX4_ASF_STATUS);
++		if (status & PIIX4_ASF_SLAVE_INTR)
++			outb_p(PIIX4_ASF_SLAVE_INTR, PIIX4_ASF_STATUS);
++		piix4_asf_release_semaphore(adapdata);
++	} else {
++		dev_err(adapdata->asf_dev,
++			"forcing ASF notification shutdown without the host semaphore\n");
++		outb_p((adapdata->asf_orig_slave_enable |
++			PIIX4_ASF_KILL_SLAVE) &
++		       ~PIIX4_ASF_SLAVE_INTR_ENABLE,
++		       PIIX4_ASF_SLAVE_ENABLE);
++		outb_p(adapdata->asf_orig_listen_address,
++		       PIIX4_ASF_LISTEN_ADDRESS);
++		outb_p(adapdata->asf_orig_delay_master_timer,
++		       PIIX4_ASF_DELAY_MASTER_TIMER);
++		bank_select = inb_p(PIIX4_ASF_DATA_BANK_SELECT);
++		outb_p(bank_select & PIIX4_ASF_BANK_FULL_MASK,
++		       PIIX4_ASF_DATA_BANK_SELECT);
++		status = inb_p(PIIX4_ASF_STATUS);
++		if (status & PIIX4_ASF_SLAVE_INTR)
++			outb_p(PIIX4_ASF_SLAVE_INTR, PIIX4_ASF_STATUS);
++	}
++	mutex_unlock(&adapdata->asf_lock);
++	piix4_asf_notify_rate_disarm(adapdata);
++
++	synchronize_irq(adapdata->asf_irq);
++}
++
++static void
++piix4_asf_unprepare(struct i2c_piix4_adapdata *adapdata)
++{
++	if (!adapdata->asf_prepared)
++		return;
++
++	free_irq(adapdata->asf_irq, adapdata);
++	if (adapdata->asf_gsi_registered)
++		acpi_unregister_gsi(adapdata->asf_gsi);
++
++	mutex_lock(&adapdata->asf_lock);
++	piix4_asf_restore_registers(adapdata);
++	mutex_unlock(&adapdata->asf_lock);
++
++	adapdata->asf_gsi_registered = false;
++	adapdata->asf_prepared = false;
++	adapdata->asf_irq = -1;
++}
++
++static int
++piix4_asf_quiesce_host_irq(struct i2c_piix4_adapdata *adapdata)
++{
++	unsigned short piix4_smba = adapdata->smba;
++	u8 status;
++	int attempt;
++
++	for (attempt = 0; attempt < 3; attempt++) {
++		status = inb_p(SMBHSTSTS) & PIIX4_ASF_HOST_STATUS_MASK;
++		if (status)
++			outb_p(status, SMBHSTSTS);
++
++		/*
++		 * An old handler which already sampled Intr must finish while
++		 * asf_xfer_active is false.  A merely pending vector is safe
++		 * only after its hardware status has also been verified clear.
++		 */
++		synchronize_hardirq(adapdata->asf_irq);
++		if (!(inb_p(SMBHSTSTS) & PIIX4_ASF_HOST_STATUS_MASK))
++			return 0;
++	}
++
++	adapdata->asf_host_stuck = true;
++	dev_err(adapdata->asf_dev,
++		"failed to quiesce the ASF host interrupt; bus disabled\n");
++	return -EIO;
++}
++
++static void
++piix4_asf_abort_host(struct i2c_piix4_adapdata *adapdata)
++{
++	unsigned short piix4_smba = adapdata->smba;
++	u8 control;
++	u8 status;
++	int retries = 100;
++
++	control = inb_p(SMBHSTCNT);
++	outb_p(control | PIIX4_ASF_KILL_HOST, SMBHSTCNT);
++	do {
++		status = inb_p(SMBHSTSTS);
++		if (!(status & PIIX4_ASF_HOST_BUSY))
++			break;
++		usleep_range(100, 200);
++	} while (--retries);
++	outb_p(control & ~PIIX4_ASF_KILL_HOST, SMBHSTCNT);
++
++	if (status & PIIX4_ASF_HOST_BUSY) {
++		adapdata->asf_host_stuck = true;
++		dev_err(adapdata->asf_dev,
++			"ASF host remained busy after KillHost; slave left disabled\n");
++	}
++}
++
++static int __piix4_transaction(struct i2c_adapter *piix4_adapter,
++			       unsigned short piix4_smba,
++			       struct i2c_piix4_adapdata *asfdata)
+ {
+ 	int temp;
+ 	int result = 0;
+ 	int timeout = 0;
++	u8 post_status;
+ 
+ 	dev_dbg(&piix4_adapter->dev, "Transaction (pre): CNT=%02x, CMD=%02x, "
+ 		"ADD=%02x, DAT0=%02x, DAT1=%02x\n", inb_p(SMBHSTCNT),
+@@ -536,29 +1419,90 @@
+ 		outb_p(temp, SMBHSTSTS);
+ 		if ((temp = inb_p(SMBHSTSTS)) != 0x00) {
+ 			dev_err(&piix4_adapter->dev, "Failed! (%02x)\n", temp);
++			if (asfdata) {
++				asfdata->asf_host_stuck = true;
++				dev_err(&piix4_adapter->dev,
++					"ASF host did not reset; disabling the auxiliary bus\n");
++			}
+ 			return -EBUSY;
+ 		} else {
+ 			dev_dbg(&piix4_adapter->dev, "Successful!\n");
+ 		}
+ 	}
+ 
+-	/* start the transaction by setting bit 6 */
+-	outb_p(inb(SMBHSTCNT) | 0x040, SMBHSTCNT);
+-
+-	/* We will always wait for a fraction of a second! (See PIIX4 docs errata) */
+-	if (srvrworks_csb5_delay) /* Extra delay for SERVERWORKS_CSB5 */
+-		usleep_range(2000, 2100);
+-	else
+-		usleep_range(250, 500);
++	if (asfdata) {
++		WRITE_ONCE(asfdata->asf_xfer_active, false);
++		result = piix4_asf_quiesce_host_irq(asfdata);
++		if (result)
++			return result;
++		reinit_completion(&asfdata->asf_completion);
++		WRITE_ONCE(asfdata->asf_host_status, 0);
++		WRITE_ONCE(asfdata->asf_xfer_active, true);
++	}
+ 
+-	while ((++timeout < MAX_TIMEOUT) &&
+-	       ((temp = inb_p(SMBHSTSTS)) & 0x01))
+-		usleep_range(250, 500);
++	/* Start the transaction by setting bit 6. */
++	outb_p(inb(SMBHSTCNT) | 0x040, SMBHSTCNT);
+ 
+-	/* If the SMBus is still busy, we give up */
+-	if (timeout == MAX_TIMEOUT) {
+-		dev_err(&piix4_adapter->dev, "SMBus Timeout!\n");
+-		result = -ETIMEDOUT;
++	if (asfdata) {
++		timeout = wait_for_completion_timeout(
++				&asfdata->asf_completion,
++				msecs_to_jiffies(
++					PIIX4_ASF_TRANSACTION_TIMEOUT_MS));
++		WRITE_ONCE(asfdata->asf_xfer_active, false);
++		if (!timeout)
++			synchronize_hardirq(asfdata->asf_irq);
++		temp = READ_ONCE(asfdata->asf_host_status);
++		if (!timeout) {
++			temp = inb_p(SMBHSTSTS);
++			dev_err(&piix4_adapter->dev,
++				"ASF SMBus transaction timed out (status %02x)\n",
++				temp);
++			result = -ETIMEDOUT;
++		}
++		if (timeout) {
++			/*
++			 * AMD's ASF programming sequence requires one SMBus
++			 * clock after HostBusy falls before the next command.
++			 * This platform runs the auxiliary bus at 100 kHz.
++			 */
++			udelay(PIIX4_ASF_BUS_FREE_US);
++			post_status = inb_p(SMBHSTSTS);
++			if (post_status & PIIX4_ASF_HOST_BUSY) {
++				dev_err(&piix4_adapter->dev,
++					"ASF host became busy again after completion (status %02x)\n",
++					post_status);
++				piix4_asf_abort_host(asfdata);
++				if (!result)
++					result = -EIO;
++			}
++		}
++		if (temp & PIIX4_ASF_HOST_BUSY) {
++			piix4_asf_abort_host(asfdata);
++			if (!result)
++				result = -EIO;
++		}
++		if (!timeout &&
++		    piix4_asf_quiesce_host_irq(asfdata) && !result)
++			result = -EIO;
++	} else {
++		/*
++		 * We will always wait for a fraction of a second
++		 * (see the PIIX4 documentation errata).
++		 */
++		if (srvrworks_csb5_delay)
++			usleep_range(2000, 2100);
++		else
++			usleep_range(250, 500);
++
++		while ((++timeout < MAX_TIMEOUT) &&
++		       ((temp = inb_p(SMBHSTSTS)) & 0x01))
++			usleep_range(250, 500);
++
++		/* If the SMBus is still busy, we give up. */
++		if (timeout == MAX_TIMEOUT) {
++			dev_err(&piix4_adapter->dev, "SMBus Timeout!\n");
++			result = -ETIMEDOUT;
++		}
+ 	}
+ 
+ 	if (temp & 0x10) {
+@@ -570,11 +1514,17 @@
+ 		result = -EIO;
+ 		dev_dbg(&piix4_adapter->dev, "Bus collision! SMBus may be "
+ 			"locked until next hard reset. (sorry!)\n");
++		if (asfdata) {
++			asfdata->asf_host_stuck = true;
++			dev_err(&piix4_adapter->dev,
++				"ASF bus collision; disabling the auxiliary bus\n");
++		}
+ 		/* Clock stops and target is stuck in mid-transmission */
+ 	}
+ 
+-	if (temp & 0x04) {
+-		result = -ENXIO;
++	if (temp & PIIX4_ASF_HOST_DEVICE_ERROR) {
++		if (!result)
++			result = -ENXIO;
+ 		dev_dbg(&piix4_adapter->dev, "Error: no response!\n");
+ 	}
+ 
+@@ -584,6 +1534,12 @@
+ 	if ((temp = inb_p(SMBHSTSTS)) != 0x00) {
+ 		dev_err(&piix4_adapter->dev, "Failed reset at end of "
+ 			"transaction (%02x)\n", temp);
++		if (asfdata) {
++			asfdata->asf_host_stuck = true;
++			result = -EIO;
++			dev_err(&piix4_adapter->dev,
++				"ASF status remained set; disabling the auxiliary bus\n");
++		}
+ 	}
+ 	dev_dbg(&piix4_adapter->dev, "Transaction (post): CNT=%02x, CMD=%02x, "
+ 		"ADD=%02x, DAT0=%02x, DAT1=%02x\n", inb_p(SMBHSTCNT),
+@@ -591,12 +1547,20 @@
+ 		inb_p(SMBHSTDAT1));
+ 	return result;
+ }
++
++int piix4_transaction(struct i2c_adapter *piix4_adapter,
++		      unsigned short piix4_smba)
++{
++	return __piix4_transaction(piix4_adapter, piix4_smba, NULL);
++}
+ EXPORT_SYMBOL_NS_GPL(piix4_transaction, "PIIX4_SMBUS");
+ 
+ /* Return negative errno on error. */
+-static s32 piix4_access(struct i2c_adapter * adap, u16 addr,
+-		 unsigned short flags, char read_write,
+-		 u8 command, int size, union i2c_smbus_data * data)
++static s32 __piix4_access(struct i2c_adapter *adap, u16 addr,
++			  unsigned short flags, char read_write,
++			  u8 command, int size,
++			  union i2c_smbus_data *data,
++			  struct i2c_piix4_adapdata *asfdata)
+ {
+ 	struct i2c_piix4_adapdata *adapdata = i2c_get_adapdata(adap);
+ 	unsigned short piix4_smba = adapdata->smba;
+@@ -643,6 +1607,9 @@
+ 			if (len == 0 || len > I2C_SMBUS_BLOCK_MAX)
+ 				return -EINVAL;
+ 			outb_p(len, SMBHSTDAT0);
++			if (asfdata)
++				outb_p(PIIX4_ASF_READ_HOST_BANK,
++				       PIIX4_ASF_DATA_BANK_SELECT);
+ 			inb_p(SMBHSTCNT);	/* Reset SMBBLKDAT */
+ 			for (i = 1; i <= len; i++)
+ 				outb_p(data->block[i], SMBBLKDAT);
+@@ -656,7 +1623,7 @@
+ 
+ 	outb_p((size & 0x1C) + (ENABLE_INT9 & 1), SMBHSTCNT);
+ 
+-	status = piix4_transaction(adap, piix4_smba);
++	status = __piix4_transaction(adap, piix4_smba, asfdata);
+ 	if (status)
+ 		return status;
+ 
+@@ -676,6 +1643,9 @@
+ 		data->block[0] = inb_p(SMBHSTDAT0);
+ 		if (data->block[0] == 0 || data->block[0] > I2C_SMBUS_BLOCK_MAX)
+ 			return -EPROTO;
++		if (asfdata)
++			outb_p(PIIX4_ASF_READ_HOST_BANK,
++			       PIIX4_ASF_DATA_BANK_SELECT);
+ 		inb_p(SMBHSTCNT);	/* Reset SMBBLKDAT */
+ 		for (i = 1; i <= data->block[0]; i++)
+ 			data->block[i] = inb_p(SMBBLKDAT);
+@@ -684,6 +1654,137 @@
+ 	return 0;
+ }
+ 
++static s32 piix4_access(struct i2c_adapter *adap, u16 addr,
++			unsigned short flags, char read_write,
++			u8 command, int size,
++			union i2c_smbus_data *data)
++{
++	return __piix4_access(adap, addr, flags, read_write, command, size,
++			      data, NULL);
++}
++
++static s32 piix4_access_asf(struct i2c_adapter *adap, u16 addr,
++			    unsigned short flags, char read_write,
++			    u8 command, int size,
++			    union i2c_smbus_data *data)
++{
++	struct i2c_piix4_adapdata *adapdata = i2c_get_adapdata(adap);
++	struct piix4_asf_bus_state pre_first = { };
++	struct piix4_asf_bus_state pre_last = { };
++	unsigned short piix4_smba = adapdata->smba;
++	u8 asf_status = 0;
++	u8 bank_select = 0;
++	u8 block_first = 0;
++	u8 block_len = 0;
++	u8 delay_master_timer = 0;
++	u8 host_control = 0;
++	u8 host_live = 0;
++	u8 host_status = 0;
++	u8 semaphore = 0;
++	u8 slave_enable = 0;
++	u8 slave_status = 0;
++	bool host_busy = false;
++	bool semaphore_held = false;
++	int retval;
++
++	if (read_write == I2C_SMBUS_WRITE &&
++	    size == I2C_SMBUS_BLOCK_DATA && data) {
++		block_len = data->block[0];
++		if (block_len)
++			block_first = data->block[1];
++	}
++
++	mutex_lock(&adapdata->asf_lock);
++
++	if (adapdata->asf_host_stuck) {
++		retval = -EIO;
++		goto unlock;
++	}
++
++	retval = piix4_asf_acquire_semaphore(adapdata);
++	if (retval) {
++		dev_dbg(&adap->dev,
++			"ASF host semaphore not acquired\n");
++		goto capture;
++	}
++	semaphore_held = true;
++
++	retval = piix4_asf_wait_bus_idle(adapdata, &pre_first, &pre_last);
++	if (retval) {
++		dev_err_ratelimited(&adap->dev,
++			"ASF bus did not become idle before host transfer: host=%02x asf=%02x bank=%02x\n",
++			pre_last.host_status, pre_last.asf_status,
++			pre_last.bank_select);
++		goto capture;
++	}
++
++	retval = __piix4_access(adap, addr, flags, read_write,
++				command, size, data, adapdata);
++
++capture:
++	if (retval < 0 && addr == PIIX4_ASF_RMI4_ADDRESS) {
++		host_status = READ_ONCE(adapdata->asf_host_status);
++		host_live = inb_p(SMBHSTSTS);
++		host_busy = host_live & PIIX4_ASF_HOST_BUSY;
++		if (host_busy) {
++			host_control = 0xff;
++			asf_status = 0xff;
++			slave_status = 0xff;
++			bank_select = 0xff;
++			semaphore = 0xff;
++			slave_enable = 0xff;
++			delay_master_timer = 0xff;
++		} else {
++			host_control = inb_p(SMBHSTCNT);
++			asf_status = inb_p(PIIX4_ASF_STATUS);
++			slave_status = inb_p(PIIX4_ASF_SLAVE_STATUS);
++			bank_select = inb_p(PIIX4_ASF_DATA_BANK_SELECT);
++			semaphore = inb_p(PIIX4_ASF_SEMAPHORE);
++			slave_enable = inb_p(PIIX4_ASF_SLAVE_ENABLE);
++			delay_master_timer =
++				inb_p(PIIX4_ASF_DELAY_MASTER_TIMER);
++		}
++	}
++
++	if (semaphore_held) {
++		if (!host_busy && adapdata->asf_host_stuck)
++			host_busy = inb_p(SMBHSTSTS) & PIIX4_ASF_HOST_BUSY;
++		if (adapdata->asf_host_stuck) {
++			adapdata->asf_notify_enabled = false;
++			if (!host_busy) {
++				slave_enable = inb_p(PIIX4_ASF_SLAVE_ENABLE);
++				outb_p((slave_enable |
++					PIIX4_ASF_KILL_SLAVE) &
++				       ~PIIX4_ASF_SLAVE_INTR_ENABLE,
++				       PIIX4_ASF_SLAVE_ENABLE);
++			}
++		}
++		/*
++		 * Never strand the software semaphore, even when a failed host
++		 * transfer remains busy and the optional snapshot was skipped.
++		 */
++		piix4_asf_release_semaphore(adapdata);
++	}
++
++unlock:
++	mutex_unlock(&adapdata->asf_lock);
++
++	if (retval < 0 && addr == PIIX4_ASF_RMI4_ADDRESS)
++		dev_err_ratelimited(&adap->dev,
++			"RMI4 transaction failed: err=%d rw=%c cmd=%02x size=%d len=%u first=%02x pre=%02x/%02x/%02x idle=%02x/%02x/%02x host=%02x live=%02x control=%02x asf=%02x slave=%02x bank=%02x sem=%02x enable=%02x timer=%02x\n",
++			retval,
++			read_write == I2C_SMBUS_READ ? 'R' : 'W',
++			command, size, block_len, block_first,
++			pre_first.host_status, pre_first.asf_status,
++			pre_first.bank_select, pre_last.host_status,
++			pre_last.asf_status, pre_last.bank_select,
++			host_status, host_live, host_control,
++			asf_status, slave_status, bank_select, semaphore,
++			slave_enable, delay_master_timer);
++
++	return retval;
++}
++
+ static uint8_t piix4_imc_read(uint8_t idx)
+ {
+ 	outb_p(idx, KERNCZ_IMC_IDX);
+@@ -870,6 +1971,11 @@
+ 	    I2C_FUNC_SMBUS_BLOCK_DATA;
+ }
+ 
++static u32 piix4_func_asf(struct i2c_adapter *adapter)
++{
++	return piix4_func(adapter) | I2C_FUNC_SMBUS_HOST_NOTIFY;
++}
++
+ static const struct i2c_algorithm smbus_algorithm = {
+ 	.smbus_xfer	= piix4_access,
+ 	.functionality	= piix4_func,
+@@ -880,6 +1986,11 @@
+ 	.functionality	= piix4_func,
+ };
+ 
++static const struct i2c_algorithm piix4_smbus_algorithm_asf = {
++	.smbus_xfer	= piix4_access_asf,
++	.functionality	= piix4_func_asf,
++};
++
+ static const struct pci_device_id piix4_ids[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_INTEL, PCI_DEVICE_ID_INTEL_82371AB_3) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_INTEL, PCI_DEVICE_ID_INTEL_82443MX_3) },
+@@ -917,31 +2028,40 @@
+ {
+ 	struct i2c_adapter *adap;
+ 	struct i2c_piix4_adapdata *adapdata;
++	unsigned short region_size = piix4_io_region_size(smba);
++	bool use_asf = !sb800_main && piix4_asf_resources.valid &&
++		       smba == piix4_asf_resources.io_base;
+ 	int retval;
+ 
+ 	adap = kzalloc_obj(*adap);
+ 	if (adap == NULL) {
+-		release_region(smba, SMBIOSIZE);
++		release_region(smba, region_size);
+ 		return -ENOMEM;
+ 	}
+ 
+ 	adap->owner = THIS_MODULE;
+ 	adap->class = I2C_CLASS_HWMON;
+-	adap->algo = sb800_main ? &piix4_smbus_algorithm_sb800
+-				: &smbus_algorithm;
++	if (use_asf)
++		adap->algo = &piix4_smbus_algorithm_asf;
++	else
++		adap->algo = sb800_main ? &piix4_smbus_algorithm_sb800
++					: &smbus_algorithm;
+ 
+ 	adapdata = kzalloc_obj(*adapdata);
+ 	if (adapdata == NULL) {
+ 		kfree(adap);
+-		release_region(smba, SMBIOSIZE);
++		release_region(smba, region_size);
+ 		return -ENOMEM;
+ 	}
+ 
+ 	adapdata->mmio_cfg.use_mmio = piix4_sb800_use_mmio(dev);
+ 	adapdata->smba = smba;
++	adapdata->region_size = region_size;
+ 	adapdata->sb800_main = sb800_main;
+ 	adapdata->port = port << piix4_port_shift_sb800;
+ 	adapdata->notify_imc = notify_imc;
++	adapdata->asf_dev = &dev->dev;
++	adapdata->asf_adapter = adap;
+ 
+ 	/* set up the sysfs linkage to our parent device */
+ 	adap->dev.parent = &dev->dev;
+@@ -957,12 +2077,32 @@
+ 
+ 	i2c_set_adapdata(adap, adapdata);
+ 
++	if (use_asf) {
++		retval = piix4_asf_prepare(dev, adap);
++		if (retval)
++			goto free_adapter;
++	}
++
+ 	retval = i2c_add_adapter(adap);
+ 	if (retval) {
+-		kfree(adapdata);
+-		kfree(adap);
+-		release_region(smba, SMBIOSIZE);
+-		return retval;
++		if (use_asf) {
++			if (adap->host_notify_domain) {
++				irq_domain_remove(adap->host_notify_domain);
++				adap->host_notify_domain = NULL;
++			}
++			piix4_asf_unprepare(adapdata);
++		}
++		goto free_adapter;
++	}
++
++	if (use_asf) {
++		retval = piix4_asf_enable_notify(adap);
++		if (retval) {
++			piix4_asf_disable_notify(adap);
++			i2c_del_adapter(adap);
++			piix4_asf_unprepare(adapdata);
++			goto free_adapter;
++		}
+ 	}
+ 
+ 	/*
+@@ -975,6 +2115,12 @@
+ 
+ 	*padap = adap;
+ 	return 0;
++
++free_adapter:
++	kfree(adapdata);
++	kfree(adap);
++	release_region(smba, region_size);
++	return retval;
+ }
+ 
+ static int piix4_add_adapters_sb800(struct pci_dev *dev, unsigned short smba,
+@@ -1029,6 +2175,8 @@
+ 	acpi_status status;
+ 	acpi_handle handle;
+ 
++	piix4_asf_detect(dev);
++
+ 	if ((dev->vendor == PCI_VENDOR_ID_ATI &&
+ 	     dev->device == PCI_DEVICE_ID_ATI_SBX00_SMBUS &&
+ 	     dev->revision >= 0x40) ||
+@@ -1105,9 +2253,14 @@
+ 	if (retval > 0) {
+ 		/* Try to add the aux adapter if it exists,
+ 		 * piix4_add_adapter will clean up if this fails */
+-		piix4_add_adapter(dev, retval, false, 0, false, 1,
+-				  is_sb800 ? piix4_aux_port_name_sb800 : "",
+-				  &piix4_aux_adapter);
++		retval = piix4_add_adapter(
++				dev, retval, false, 0, false, 1,
++				is_sb800 ? piix4_aux_port_name_sb800 : "",
++				&piix4_aux_adapter);
++		if (retval)
++			dev_err(&dev->dev,
++				"failed to add auxiliary SMBus adapter: %d\n",
++				retval);
+ 	}
+ 
+ 	return 0;
+@@ -1118,9 +2271,14 @@
+ 	struct i2c_piix4_adapdata *adapdata = i2c_get_adapdata(adap);
+ 
+ 	if (adapdata->smba) {
++		if (adapdata->asf_prepared)
++			piix4_asf_disable_notify(adap);
+ 		i2c_del_adapter(adap);
++		if (adapdata->asf_prepared)
++			piix4_asf_unprepare(adapdata);
+ 		if (adapdata->port == (0 << piix4_port_shift_sb800))
+-			release_region(adapdata->smba, SMBIOSIZE);
++			release_region(adapdata->smba,
++				       adapdata->region_size);
+ 		kfree(adapdata);
+ 		kfree(adap);
+ 	}

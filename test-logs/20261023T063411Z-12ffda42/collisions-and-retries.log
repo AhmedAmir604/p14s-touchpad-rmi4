@@ -1,0 +1,2 @@
+[  252.532113] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  252.539194] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)

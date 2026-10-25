@@ -1,0 +1,506 @@
+[   86.540020] waynoway kernel: i2c_piix4: loading out-of-tree module taints kernel.
+[   86.540124] waynoway kernel: i2c_piix4: module verification failed: signature and/or required key missing - tainting kernel
+[   86.541025] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Controller at 0xb00, revision 0
+[   86.541398] waynoway kernel: piix4_smbus 0000:00:14.0: Using register 0x02 for SMBus port selection
+[   86.544014] waynoway kernel: ee1004 2-0050: 512 byte EE1004-compliant SPD EEPROM, read-only
+[   86.544365] waynoway kernel: i2c i2c-2: Successfully instantiated SPD at 0x50
+[   86.544705] waynoway kernel: piix4_smbus 0000:00:14.0: Auxiliary SMBus Host Controller at 0xb20
+[   86.545080] waynoway kernel: piix4_smbus 0000:00:14.0: ASF SMBus slave (SMB0001) at 0x0b20, GSI IRQ 7 (level/low)
+[   86.545386] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Notify enabled via ASF (IRQ 7)
+[   87.472044] waynoway kernel: psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
+[   87.518046] waynoway kernel: psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
+[   87.518525] waynoway kernel: psmouse serio1: synaptics: Trying to set up SMBus access
+[   87.518793] waynoway kernel: psmouse serio1: synaptics: intertouch pdata: nosleep=0 doze_interval=6
+[   87.554043] waynoway kernel: rmi4_smbus 4-002c: registering SMbus-connected sensor
+[   87.690041] waynoway kernel: rmi4_f01 rmi4-00.fn01: found RMI device, manufacturer: Synaptics, product: TM3471-030, fw id: 3942087
+[   87.784095] waynoway kernel: input: Synaptics TM3471-030 as /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/input/input22
+[   87.798030] waynoway kernel: serio: RMI4 PS/2 pass-through port at rmi4-00.fn03
+[   87.928033] waynoway kernel: psmouse serio3: trackpoint: Elan TrackPoint firmware: 0x12, buttons: 3/3
+[   87.965045] waynoway kernel: input: TPPS/2 Elan TrackPoint as /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/rmi4-00.fn03/serio3/input/input23
+[  198.411039] waynoway kernel: warning: `ThreadPoolForeg' uses wireless extensions which will stop working for Wi-Fi 7 hardware; use nl80211
+[  236.638042] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  236.640046] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  302.230021] waynoway kernel: audit: type=1400 audit(1792743314.158:335): apparmor="AUDIT" operation="userns_create" class="namespace" info="Userns create - transitioning profile" profile="unconfined" pid=15277 comm="(ubuntu-insigh)" requested="userns_create" target="unprivileged_userns" execpath="/usr/lib/systemd/systemd-executor"
+[  302.230189] waynoway kernel: audit: type=1400 audit(1792743314.158:336): apparmor="DENIED" operation="capable" class="cap" profile="unprivileged_userns" pid=15277 comm="(ubuntu-insigh)" capability=21  capname="sys_admin"
+[  302.310044] waynoway kernel: audit: type=1400 audit(1792743314.238:337): apparmor="DENIED" operation="getattr" class="file" info="Failed name lookup - disconnected path" error=-13 profile="unprivileged_userns" name="" pid=15285 comm="systemd-detect-" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[  334.182058] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  334.184030] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  507.334036] waynoway kernel: audit: type=1400 audit(1792743519.262:338): apparmor="AUDIT" operation="userns_create" class="namespace" info="Userns create - transitioning profile" profile="unconfined" pid=19127 comm="(ubuntu-insigh)" requested="userns_create" target="unprivileged_userns" execpath="/usr/lib/systemd/systemd-executor"
+[  507.335029] waynoway kernel: audit: type=1400 audit(1792743519.263:339): apparmor="DENIED" operation="capable" class="cap" profile="unprivileged_userns" pid=19127 comm="(ubuntu-insigh)" capability=21  capname="sys_admin"
+[  698.498036] waynoway kernel: workqueue: acpi_ec_event_processor hogged CPU for >13333us 4 times, consider switching to WQ_UNBOUND
+[ 1049.790037] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[ 1049.796179] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[ 1092.422101] waynoway kernel: workqueue: acpi_ec_event_processor hogged CPU for >13333us 5 times, consider switching to WQ_UNBOUND
+[ 1975.112069] waynoway kernel: wlp3s0: deauthenticating from e8:84:c6:9a:a5:d8 by local choice (Reason: 3=DEAUTH_LEAVING)
+[ 1976.326315] waynoway kernel: amdgpu 0000:07:00.0: [drm] *ERROR* dc_dmub_srv_log_diagnostic_data: DMCUB error - collecting diagnostic data
+[ 1979.265028] waynoway kernel: PM: suspend entry (s2idle)
+[ 1979.274060] waynoway kernel: Filesystems sync: 0.009 seconds
+[ 1981.291819] waynoway kernel: Freezing user space processes
+[ 1981.292602] waynoway kernel: Freezing user space processes completed (elapsed 0.002 seconds)
+[ 1981.295052] waynoway kernel: OOM killer disabled.
+[ 1981.295432] waynoway kernel: Freezing remaining freezable tasks
+[ 1981.295593] waynoway kernel: Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
+[ 1981.295754] waynoway kernel: printk: Suspending console(s) (use no_console_suspend to debug)
+[ 1981.295951] waynoway kernel: atkbd serio0: Disabling IRQ1 wakeup source to avoid platform firmware bug
+[ 1981.296964] waynoway kernel: ACPI: EC: interrupt blocked
+[ 1981.297009] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[ 1981.297070] waynoway kernel: 
+[ 1981.297117] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[ 1981.297141] waynoway kernel: 
+[ 1981.297166] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[ 1981.297196] waynoway kernel:   Arg0:   00000000328c4f51 <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[ 1981.297228] waynoway kernel:   Arg1:   00000000a8bd31b2 <Obj>           Integer 0000000000000000
+[ 1981.297253] waynoway kernel:   Arg2:   00000000ac7cb3cb <Obj>           Integer 0000000000000003
+[ 1981.297281] waynoway kernel:   Arg3:   0000000049ed9cf7 <Obj>           Package 0000000049ed9cf7
+[ 1981.297315] waynoway kernel: 
+[ 1981.297339] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[ 1981.297368] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[ 1981.297393] waynoway kernel: 
+[ 1981.297417] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[ 1981.297442] waynoway kernel: 
+[ 1981.297466] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[ 1981.297491] waynoway kernel:   Arg0:   0000000049ed9cf7 <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[ 1981.297516] waynoway kernel:   Arg1:   00000000ac7cb3cb <Obj>           Integer 0000000000000000
+[ 1981.297540] waynoway kernel:   Arg2:   00000000a8bd31b2 <Obj>           Integer 0000000000000007
+[ 1981.297568] waynoway kernel:   Arg3:   00000000328c4f51 <Obj>           Package 00000000328c4f51
+[ 1981.297597] waynoway kernel: 
+[ 1981.297631] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[ 1981.297661] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[ 1981.297696] waynoway kernel: 
+[ 1981.297720] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[ 1981.297744] waynoway kernel: 
+[ 1981.297764] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[ 1981.297788] waynoway kernel:   Arg0:   00000000328c4f51 <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[ 1981.297812] waynoway kernel:   Arg1:   00000000a8bd31b2 <Obj>           Integer 0000000000000000
+[ 1981.297837] waynoway kernel:   Arg2:   00000000ac7cb3cb <Obj>           Integer 0000000000000008
+[ 1981.297861] waynoway kernel:   Arg3:   0000000049ed9cf7 <Obj>           Package 0000000049ed9cf7
+[ 1981.297881] waynoway kernel: 
+[ 1981.297909] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[ 1981.297930] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[ 1981.297954] waynoway kernel: 
+[ 1981.297978] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[ 1981.298012] waynoway kernel: 
+[ 1981.298039] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[ 1981.298062] waynoway kernel:   Arg0:   0000000049ed9cf7 <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[ 1981.298256] waynoway kernel:   Arg1:   00000000ac7cb3cb <Obj>           Integer 0000000000000000
+[ 1981.298285] waynoway kernel:   Arg2:   00000000a8bd31b2 <Obj>           Integer 0000000000000004
+[ 1981.298492] waynoway kernel:   Arg3:   00000000328c4f51 <Obj>           Package 00000000328c4f51
+[ 1981.298645] waynoway kernel: 
+[ 1981.298794] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[ 1981.298821] waynoway kernel: ACPI: EC: interrupt unblocked
+[ 1981.298979] waynoway kernel: usb usb5: root hub lost power or was reset
+[ 1981.302013] waynoway kernel: usb usb6: root hub lost power or was reset
+[ 1981.304689] waynoway kernel: xhci-pci-renesas 0000:06:00.0: Zeroing 64bit base registers, expecting fault
+[ 1981.306790] waynoway kernel: amdgpu 0000:07:00.0: [drm] PCIE GART of 1024M enabled.
+[ 1981.310262] waynoway kernel: amdgpu 0000:07:00.0: [drm] PTB located at 0x000000F4FFC00000
+[ 1981.313508] waynoway kernel: amdgpu 0000:07:00.0: SMU is resuming...
+[ 1981.314709] waynoway kernel: amdgpu 0000:07:00.0: dpm has been disabled
+[ 1981.317770] waynoway kernel: amdgpu 0000:07:00.0: SMU is resumed successfully!
+[ 1981.321074] waynoway kernel: amdgpu 0000:07:00.0: ring gfx uses VM inv eng 0 on hub 0
+[ 1981.324546] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.0.0 uses VM inv eng 1 on hub 0
+[ 1981.329392] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.1.0 uses VM inv eng 4 on hub 0
+[ 1981.341210] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.2.0 uses VM inv eng 5 on hub 0
+[ 1981.347903] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.3.0 uses VM inv eng 6 on hub 0
+[ 1981.351645] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.0.1 uses VM inv eng 7 on hub 0
+[ 1981.355050] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.1.1 uses VM inv eng 8 on hub 0
+[ 1981.358518] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.2.1 uses VM inv eng 9 on hub 0
+[ 1981.362074] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.3.1 uses VM inv eng 10 on hub 0
+[ 1981.364876] waynoway kernel: amdgpu 0000:07:00.0: ring kiq_0.2.1.0 uses VM inv eng 11 on hub 0
+[ 1981.367686] waynoway kernel: amdgpu 0000:07:00.0: ring sdma0 uses VM inv eng 0 on hub 8
+[ 1981.371310] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_dec uses VM inv eng 1 on hub 8
+[ 1981.374389] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_enc0 uses VM inv eng 4 on hub 8
+[ 1981.375420] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_enc1 uses VM inv eng 5 on hub 8
+[ 1981.375820] waynoway kernel: amdgpu 0000:07:00.0: ring jpeg_dec uses VM inv eng 6 on hub 8
+[ 1981.376283] waynoway kernel: nvme nvme0: 16/0/0 default/read/poll queues
+[ 1981.376655] waynoway kernel: usb 5-2: reset high-speed USB device number 2 using xhci-pci-renesas
+[ 1981.377124] waynoway kernel: OOM killer enabled.
+[ 1981.377156] waynoway kernel: Restarting tasks: Starting
+[ 1981.377185] waynoway kernel: Restarting tasks: Done
+[ 1981.377213] waynoway kernel: efivarfs: resyncing variable state
+[ 1981.377242] waynoway kernel: efivarfs: finished resyncing variable state
+[ 1981.377271] waynoway kernel: random: crng reseeded on system resumption
+[ 1981.383828] waynoway kernel: PM: suspend exit
+[ 1981.473053] waynoway kernel: Generic FE-GE Realtek PHY r8169-0-200:00: attached PHY driver (mii_bus:phy_addr=r8169-0-200:00, irq=MAC)
+[ 1981.573142] waynoway kernel: r8169 0000:02:00.0 enp2s0f0: Link is Down
+[ 1981.598077] waynoway kernel: Generic FE-GE Realtek PHY r8169-0-500:00: attached PHY driver (mii_bus:phy_addr=r8169-0-500:00, irq=MAC)
+[ 1981.755162] waynoway kernel: r8169 0000:05:00.0 enp5s0: Link is Down
+[ 1982.420065] waynoway kernel: usb 3-3: reset full-speed USB device number 2 using xhci_hcd
+[ 1982.899076] waynoway kernel: audit: type=1400 audit(1792759263.707:340): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=35809 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[ 1985.495049] waynoway kernel: wlp3s0: authenticate with e8:84:c6:9a:a5:d8 (local address=04:d3:b0:8b:e9:80)
+[ 1985.497332] waynoway kernel: wlp3s0: send auth to e8:84:c6:9a:a5:d8 (try 1/3)
+[ 1985.504027] waynoway kernel: wlp3s0: authenticated
+[ 1985.504122] waynoway kernel: wlp3s0: associating to AP e8:84:c6:9a:a5:d8 with corrupt beacon
+[ 1985.504251] waynoway kernel: wlp3s0: associate with e8:84:c6:9a:a5:d8 (try 1/3)
+[ 1985.515058] waynoway kernel: wlp3s0: RX AssocResp from e8:84:c6:9a:a5:d8 (capab=0x1431 status=0 aid=35)
+[ 1985.520051] waynoway kernel: wlp3s0: associated
+[ 4233.428025] waynoway kernel: traps: chrome[14724] trap invalid opcode ip:5b39d92e769f sp:7ffdc512a1c0 error:0 in chrome[bb6469f,5b39d04a3000+cdb8000]
+[ 4262.542148] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[ 4262.544053] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[ 4262.559049] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-6), yielding (retry 1)
+[ 7596.528806] waynoway kernel: perf: interrupt took too long (2501 > 2500), lowering kernel.perf_event_max_sample_rate to 79000
+[12187.182052] waynoway kernel: wlp3s0: deauthenticating from e8:84:c6:9a:a5:d8 by local choice (Reason: 3=DEAUTH_LEAVING)
+[12190.777112] waynoway kernel: amdgpu 0000:07:00.0: [drm] *ERROR* dc_dmub_srv_log_diagnostic_data: DMCUB error - collecting diagnostic data
+[12191.776116] waynoway kernel: PM: suspend entry (s2idle)
+[12191.785039] waynoway kernel: Filesystems sync: 0.009 seconds
+[12193.771046] waynoway kernel: Freezing user space processes
+[12193.771924] waynoway kernel: Freezing user space processes completed (elapsed 0.002 seconds)
+[12193.774012] waynoway kernel: OOM killer disabled.
+[12193.775388] waynoway kernel: Freezing remaining freezable tasks
+[12193.776319] waynoway kernel: Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
+[12193.777305] waynoway kernel: printk: Suspending console(s) (use no_console_suspend to debug)
+[12193.778256] waynoway kernel: ACPI: EC: interrupt blocked
+[12193.779113] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[12193.779858] waynoway kernel: 
+[12193.780568] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[12193.781243] waynoway kernel: 
+[12193.781802] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[12193.782377] waynoway kernel:   Arg0:   000000008bae45f1 <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[12193.783280] waynoway kernel:   Arg1:   00000000e7028f12 <Obj>           Integer 0000000000000000
+[12193.783459] waynoway kernel:   Arg2:   00000000249fa4be <Obj>           Integer 0000000000000003
+[12193.783990] waynoway kernel:   Arg3:   00000000c3e0436b <Obj>           Package 00000000c3e0436b
+[12193.784647] waynoway kernel: 
+[12193.785051] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[12193.785177] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[12193.785263] waynoway kernel: 
+[12193.785391] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[12193.785482] waynoway kernel: 
+[12193.785598] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[12193.785624] waynoway kernel:   Arg0:   00000000c3e0436b <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[12193.785653] waynoway kernel:   Arg1:   00000000249fa4be <Obj>           Integer 0000000000000000
+[12193.785698] waynoway kernel:   Arg2:   00000000e7028f12 <Obj>           Integer 0000000000000007
+[12193.785738] waynoway kernel:   Arg3:   000000008bae45f1 <Obj>           Package 000000008bae45f1
+[12193.785773] waynoway kernel: 
+[12193.785800] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[12193.785828] waynoway kernel: ACPI: button: The lid device is not compliant to SW_LID.
+[12193.785859] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[12193.785887] waynoway kernel: 
+[12193.785910] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[12193.785937] waynoway kernel: 
+[12193.785965] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[12193.785988] waynoway kernel:   Arg0:   000000008bae45f1 <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[12193.786024] waynoway kernel:   Arg1:   00000000e7028f12 <Obj>           Integer 0000000000000000
+[12193.786056] waynoway kernel:   Arg2:   00000000249fa4be <Obj>           Integer 0000000000000008
+[12193.786092] waynoway kernel:   Arg3:   00000000c3e0436b <Obj>           Package 00000000c3e0436b
+[12193.786135] waynoway kernel: 
+[12193.786162] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[12193.786189] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[12193.786216] waynoway kernel: 
+[12193.786243] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[12193.786269] waynoway kernel: 
+[12193.786295] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[12193.786324] waynoway kernel:   Arg0:   00000000c3e0436b <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[12193.786360] waynoway kernel:   Arg1:   00000000249fa4be <Obj>           Integer 0000000000000000
+[12193.786390] waynoway kernel:   Arg2:   00000000e7028f12 <Obj>           Integer 0000000000000004
+[12193.786432] waynoway kernel:   Arg3:   000000008bae45f1 <Obj>           Package 000000008bae45f1
+[12193.786468] waynoway kernel: 
+[12193.786509] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[12193.786534] waynoway kernel: ACPI: EC: interrupt unblocked
+[12193.786586] waynoway kernel: usb usb5: root hub lost power or was reset
+[12193.788812] waynoway kernel: usb usb6: root hub lost power or was reset
+[12193.793530] waynoway kernel: xhci-pci-renesas 0000:06:00.0: Zeroing 64bit base registers, expecting fault
+[12193.797522] waynoway kernel: amdgpu 0000:07:00.0: [drm] PCIE GART of 1024M enabled.
+[12193.801878] waynoway kernel: amdgpu 0000:07:00.0: [drm] PTB located at 0x000000F4FFC00000
+[12193.808709] waynoway kernel: amdgpu 0000:07:00.0: SMU is resuming...
+[12193.830343] waynoway kernel: amdgpu 0000:07:00.0: dpm has been disabled
+[12193.840038] waynoway kernel: amdgpu 0000:07:00.0: SMU is resumed successfully!
+[12193.845275] waynoway kernel: amdgpu 0000:07:00.0: ring gfx uses VM inv eng 0 on hub 0
+[12193.850877] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.0.0 uses VM inv eng 1 on hub 0
+[12193.854653] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.1.0 uses VM inv eng 4 on hub 0
+[12193.855786] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.2.0 uses VM inv eng 5 on hub 0
+[12193.856756] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.3.0 uses VM inv eng 6 on hub 0
+[12193.859902] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.0.1 uses VM inv eng 7 on hub 0
+[12193.863863] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.1.1 uses VM inv eng 8 on hub 0
+[12193.867135] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.2.1 uses VM inv eng 9 on hub 0
+[12193.868855] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.3.1 uses VM inv eng 10 on hub 0
+[12193.869539] waynoway kernel: amdgpu 0000:07:00.0: ring kiq_0.2.1.0 uses VM inv eng 11 on hub 0
+[12193.870997] waynoway kernel: amdgpu 0000:07:00.0: ring sdma0 uses VM inv eng 0 on hub 8
+[12193.871755] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_dec uses VM inv eng 1 on hub 8
+[12193.872505] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_enc0 uses VM inv eng 4 on hub 8
+[12193.873425] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_enc1 uses VM inv eng 5 on hub 8
+[12193.874269] waynoway kernel: amdgpu 0000:07:00.0: ring jpeg_dec uses VM inv eng 6 on hub 8
+[12193.875609] waynoway kernel: nvme nvme0: 16/0/0 default/read/poll queues
+[12193.876191] waynoway kernel: usb 3-3: reset full-speed USB device number 2 using xhci_hcd
+[12193.876884] waynoway kernel: usb 5-2: reset high-speed USB device number 2 using xhci-pci-renesas
+[12193.877560] waynoway kernel: usb 3-4: reset full-speed USB device number 3 using xhci_hcd
+[12193.878279] waynoway kernel: OOM killer enabled.
+[12193.878326] waynoway kernel: Restarting tasks: Starting
+[12193.878368] waynoway kernel: Restarting tasks: Done
+[12193.878407] waynoway kernel: efivarfs: resyncing variable state
+[12193.878437] waynoway kernel: Bluetooth: hci0: Firmware revision 0.1 build 19 week 44 2021
+[12193.878482] waynoway kernel: Bluetooth: hci0: Reading supported features failed (-16)
+[12193.878519] waynoway kernel: Bluetooth: hci0: Error reading debug features
+[12193.878555] waynoway kernel: Bluetooth: hci0: HCI LE Coded PHY feature bit is set, but its usage is not supported.
+[12193.878592] waynoway kernel: efivarfs: finished resyncing variable state
+[12193.878622] waynoway kernel: random: crng reseeded on system resumption
+[12193.878658] waynoway kernel: PM: suspend exit
+[12193.926167] waynoway kernel: Bluetooth: MGMT ver 1.23
+[12193.996319] waynoway kernel: Generic FE-GE Realtek PHY r8169-0-200:00: attached PHY driver (mii_bus:phy_addr=r8169-0-200:00, irq=MAC)
+[12194.097053] waynoway kernel: r8169 0000:02:00.0 enp2s0f0: Link is Down
+[12194.121058] waynoway kernel: Generic FE-GE Realtek PHY r8169-0-500:00: attached PHY driver (mii_bus:phy_addr=r8169-0-500:00, irq=MAC)
+[12194.276052] waynoway kernel: r8169 0000:05:00.0 enp5s0: Link is Down
+[12195.137109] waynoway kernel: usb 3-3: reset full-speed USB device number 2 using xhci_hcd
+[12198.040057] waynoway kernel: wlp3s0: authenticate with e8:84:c6:9a:a5:d8 (local address=04:d3:b0:8b:e9:80)
+[12198.041061] waynoway kernel: wlp3s0: send auth to e8:84:c6:9a:a5:d8 (try 1/3)
+[12198.054048] waynoway kernel: wlp3s0: authenticated
+[12198.057081] waynoway kernel: wlp3s0: associate with e8:84:c6:9a:a5:d8 (try 1/3)
+[12198.066079] waynoway kernel: wlp3s0: RX AssocResp from e8:84:c6:9a:a5:d8 (capab=0x1431 status=0 aid=53)
+[12198.080337] waynoway kernel: wlp3s0: associated
+[12201.524057] waynoway kernel: wlp3s0: deauthenticating from e8:84:c6:9a:a5:d8 by local choice (Reason: 3=DEAUTH_LEAVING)
+[12201.999149] waynoway kernel: amdgpu 0000:07:00.0: [drm] *ERROR* dc_dmub_srv_log_diagnostic_data: DMCUB error - collecting diagnostic data
+[12202.243043] waynoway kernel: PM: suspend entry (s2idle)
+[12202.257196] waynoway kernel: Filesystems sync: 0.013 seconds
+[12202.361070] waynoway kernel: Freezing user space processes
+[12203.900100] waynoway kernel: Freezing user space processes completed (elapsed 0.003 seconds)
+[12203.900901] waynoway kernel: OOM killer disabled.
+[12203.902605] waynoway kernel: Freezing remaining freezable tasks
+[12203.902917] waynoway kernel: Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
+[12203.903267] waynoway kernel: printk: Suspending console(s) (use no_console_suspend to debug)
+[12203.903518] waynoway kernel: ACPI: EC: interrupt blocked
+[12203.903953] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[12203.904281] waynoway kernel: 
+[12203.904652] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[12203.904822] waynoway kernel: 
+[12203.904996] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[12203.905507] waynoway kernel:   Arg0:   000000007eedb61e <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[12203.905743] waynoway kernel:   Arg1:   00000000a1b6dfa1 <Obj>           Integer 0000000000000000
+[12203.905915] waynoway kernel:   Arg2:   00000000c46d5279 <Obj>           Integer 0000000000000003
+[12203.906747] waynoway kernel:   Arg3:   00000000e089947b <Obj>           Package 00000000e089947b
+[12203.907108] waynoway kernel: 
+[12203.907264] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[12203.907476] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[12203.907738] waynoway kernel: 
+[12203.907890] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[12203.908050] waynoway kernel: 
+[12203.908206] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[12203.908478] waynoway kernel:   Arg0:   00000000e089947b <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[12203.908730] waynoway kernel:   Arg1:   00000000c46d5279 <Obj>           Integer 0000000000000000
+[12203.908883] waynoway kernel:   Arg2:   00000000a1b6dfa1 <Obj>           Integer 0000000000000007
+[12203.909148] waynoway kernel:   Arg3:   000000007eedb61e <Obj>           Package 000000007eedb61e
+[12203.909401] waynoway kernel: 
+[12203.909555] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[12203.909801] waynoway kernel: workqueue: acpi_ec_event_processor hogged CPU for >13333us 7 times, consider switching to WQ_UNBOUND
+[12203.909955] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[12203.910223] waynoway kernel: 
+[12203.910368] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[12203.910509] waynoway kernel: 
+[12203.910651] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[12203.910796] waynoway kernel:   Arg0:   000000007eedb61e <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[12203.910938] waynoway kernel:   Arg1:   00000000a1b6dfa1 <Obj>           Integer 0000000000000000
+[12203.911274] waynoway kernel:   Arg2:   00000000c46d5279 <Obj>           Integer 0000000000000008
+[12203.911497] waynoway kernel:   Arg3:   00000000e089947b <Obj>           Package 00000000e089947b
+[12203.911829] waynoway kernel: 
+[12203.911983] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[12203.912206] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[12203.912468] waynoway kernel: 
+[12203.912671] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[12203.912871] waynoway kernel: 
+[12203.913081] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[12203.913380] waynoway kernel:   Arg0:   00000000e089947b <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[12203.913519] waynoway kernel:   Arg1:   00000000c46d5279 <Obj>           Integer 0000000000000000
+[12203.913553] waynoway kernel:   Arg2:   00000000a1b6dfa1 <Obj>           Integer 0000000000000004
+[12203.913607] waynoway kernel:   Arg3:   000000007eedb61e <Obj>           Package 000000007eedb61e
+[12203.913641] waynoway kernel: 
+[12203.913668] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[12203.913700] waynoway kernel: ACPI: EC: interrupt unblocked
+[12203.913747] waynoway kernel: usb usb5: root hub lost power or was reset
+[12203.914435] waynoway kernel: usb usb6: root hub lost power or was reset
+[12203.916027] waynoway kernel: xhci-pci-renesas 0000:06:00.0: Zeroing 64bit base registers, expecting fault
+[12203.920327] waynoway kernel: amdgpu 0000:07:00.0: [drm] PCIE GART of 1024M enabled.
+[12203.924373] waynoway kernel: amdgpu 0000:07:00.0: [drm] PTB located at 0x000000F4FFC00000
+[12203.928941] waynoway kernel: amdgpu 0000:07:00.0: SMU is resuming...
+[12203.935289] waynoway kernel: amdgpu 0000:07:00.0: dpm has been disabled
+[12203.945212] waynoway kernel: amdgpu 0000:07:00.0: SMU is resumed successfully!
+[12203.965957] waynoway kernel: amdgpu 0000:07:00.0: ring gfx uses VM inv eng 0 on hub 0
+[12203.971427] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.0.0 uses VM inv eng 1 on hub 0
+[12203.977092] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.1.0 uses VM inv eng 4 on hub 0
+[12203.981973] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.2.0 uses VM inv eng 5 on hub 0
+[12203.985660] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.3.0 uses VM inv eng 6 on hub 0
+[12203.988887] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.0.1 uses VM inv eng 7 on hub 0
+[12203.993034] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.1.1 uses VM inv eng 8 on hub 0
+[12203.995657] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.2.1 uses VM inv eng 9 on hub 0
+[12203.996292] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.3.1 uses VM inv eng 10 on hub 0
+[12203.996914] waynoway kernel: amdgpu 0000:07:00.0: ring kiq_0.2.1.0 uses VM inv eng 11 on hub 0
+[12203.997577] waynoway kernel: amdgpu 0000:07:00.0: ring sdma0 uses VM inv eng 0 on hub 8
+[12203.998266] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_dec uses VM inv eng 1 on hub 8
+[12203.998899] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_enc0 uses VM inv eng 4 on hub 8
+[12203.999553] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_enc1 uses VM inv eng 5 on hub 8
+[12204.000269] waynoway kernel: amdgpu 0000:07:00.0: ring jpeg_dec uses VM inv eng 6 on hub 8
+[12204.000915] waynoway kernel: nvme nvme0: 16/0/0 default/read/poll queues
+[12204.001473] waynoway kernel: usb 5-2: reset high-speed USB device number 2 using xhci-pci-renesas
+[12204.002183] waynoway kernel: OOM killer enabled.
+[12204.002227] waynoway kernel: Restarting tasks: Starting
+[12204.002264] waynoway kernel: Restarting tasks: Done
+[12204.002301] waynoway kernel: efivarfs: resyncing variable state
+[12204.002337] waynoway kernel: efivarfs: finished resyncing variable state
+[12204.002378] waynoway kernel: random: crng reseeded on system resumption
+[12204.003773] waynoway kernel: PM: suspend exit
+[12204.101088] waynoway kernel: Generic FE-GE Realtek PHY r8169-0-200:00: attached PHY driver (mii_bus:phy_addr=r8169-0-200:00, irq=MAC)
+[12204.201088] waynoway kernel: r8169 0000:02:00.0 enp2s0f0: Link is Down
+[12204.225106] waynoway kernel: Generic FE-GE Realtek PHY r8169-0-500:00: attached PHY driver (mii_bus:phy_addr=r8169-0-500:00, irq=MAC)
+[12204.370043] waynoway kernel: r8169 0000:05:00.0 enp5s0: Link is Down
+[12208.120069] waynoway kernel: wlp3s0: authenticate with e8:84:c6:9a:a5:d8 (local address=04:d3:b0:8b:e9:80)
+[12208.122285] waynoway kernel: wlp3s0: send auth to e8:84:c6:9a:a5:d8 (try 1/3)
+[12208.129056] waynoway kernel: wlp3s0: authenticated
+[12208.131066] waynoway kernel: wlp3s0: associate with e8:84:c6:9a:a5:d8 (try 1/3)
+[12208.146109] waynoway kernel: wlp3s0: RX AssocResp from e8:84:c6:9a:a5:d8 (capab=0x1431 status=0 aid=54)
+[12208.155061] waynoway kernel: wlp3s0: associated
+[12231.922109] waynoway kernel: wlp3s0: deauthenticating from e8:84:c6:9a:a5:d8 by local choice (Reason: 3=DEAUTH_LEAVING)
+[12232.237273] waynoway kernel: amdgpu 0000:07:00.0: [drm] *ERROR* dc_dmub_srv_log_diagnostic_data: DMCUB error - collecting diagnostic data
+[12232.477066] waynoway kernel: PM: suspend entry (s2idle)
+[12232.485064] waynoway kernel: Filesystems sync: 0.008 seconds
+[12234.180848] waynoway kernel: Freezing user space processes
+[12234.181036] waynoway kernel: Freezing user space processes completed (elapsed 0.003 seconds)
+[12234.181929] waynoway kernel: OOM killer disabled.
+[12234.184908] waynoway kernel: Freezing remaining freezable tasks
+[12234.185018] waynoway kernel: Freezing remaining freezable tasks completed (elapsed 0.002 seconds)
+[12234.185347] waynoway kernel: printk: Suspending console(s) (use no_console_suspend to debug)
+[12234.185672] waynoway kernel: ACPI: EC: interrupt blocked
+[12234.186100] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[12234.186782] waynoway kernel: 
+[12234.187467] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[12234.187771] waynoway kernel: 
+[12234.187946] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[12234.188515] waynoway kernel:   Arg0:   00000000d3faa2e0 <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[12234.188879] waynoway kernel:   Arg1:   00000000703f4c05 <Obj>           Integer 0000000000000000
+[12234.189194] waynoway kernel:   Arg2:   000000004259cdce <Obj>           Integer 0000000000000003
+[12234.189618] waynoway kernel:   Arg3:   0000000078fa0eed <Obj>           Package 0000000078fa0eed
+[12234.189914] waynoway kernel: 
+[12234.190325] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[12234.190595] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[12234.190870] waynoway kernel: 
+[12234.191156] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[12234.191421] waynoway kernel: 
+[12234.191574] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[12234.191953] waynoway kernel:   Arg0:   0000000078fa0eed <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[12234.192373] waynoway kernel:   Arg1:   000000004259cdce <Obj>           Integer 0000000000000000
+[12234.192726] waynoway kernel:   Arg2:   00000000703f4c05 <Obj>           Integer 0000000000000007
+[12234.193286] waynoway kernel:   Arg3:   00000000d3faa2e0 <Obj>           Package 00000000d3faa2e0
+[12234.193652] waynoway kernel: 
+[12234.193925] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[12234.194147] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[12234.194531] waynoway kernel: 
+[12234.194852] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[12234.195386] waynoway kernel: 
+[12234.195772] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[12234.196350] waynoway kernel:   Arg0:   00000000425dfc20 <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[12234.196925] waynoway kernel:   Arg1:   00000000d3faa2e0 <Obj>           Integer 0000000000000000
+[12234.197520] waynoway kernel:   Arg2:   00000000703f4c05 <Obj>           Integer 0000000000000008
+[12234.198097] waynoway kernel:   Arg3:   000000004259cdce <Obj>           Package 000000004259cdce
+[12234.198502] waynoway kernel: 
+[12234.198884] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[12234.199470] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[12234.199866] waynoway kernel: 
+[12234.200269] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[12234.201276] waynoway kernel: 
+[12234.201659] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[12234.202063] waynoway kernel:   Arg0:   000000004259cdce <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[12234.202454] waynoway kernel:   Arg1:   00000000703f4c05 <Obj>           Integer 0000000000000000
+[12234.202786] waynoway kernel:   Arg2:   00000000d3faa2e0 <Obj>           Integer 0000000000000004
+[12234.203236] waynoway kernel:   Arg3:   00000000425dfc20 <Obj>           Package 00000000425dfc20
+[12234.203619] waynoway kernel: 
+[12234.203990] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[12234.204384] waynoway kernel: ACPI: EC: interrupt unblocked
+[12234.204939] waynoway kernel: usb usb5: root hub lost power or was reset
+[12234.212449] waynoway kernel: usb usb6: root hub lost power or was reset
+[12234.241796] waynoway kernel: xhci-pci-renesas 0000:06:00.0: Zeroing 64bit base registers, expecting fault
+[12234.245910] waynoway kernel: amdgpu 0000:07:00.0: [drm] PCIE GART of 1024M enabled.
+[12234.250678] waynoway kernel: amdgpu 0000:07:00.0: [drm] PTB located at 0x000000F4FFC00000
+[12234.257469] waynoway kernel: amdgpu 0000:07:00.0: SMU is resuming...
+[12234.263073] waynoway kernel: amdgpu 0000:07:00.0: dpm has been disabled
+[12234.267325] waynoway kernel: amdgpu 0000:07:00.0: SMU is resumed successfully!
+[12234.272488] waynoway kernel: amdgpu 0000:07:00.0: ring gfx uses VM inv eng 0 on hub 0
+[12234.273299] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.0.0 uses VM inv eng 1 on hub 0
+[12234.273933] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.1.0 uses VM inv eng 4 on hub 0
+[12234.274553] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.2.0 uses VM inv eng 5 on hub 0
+[12234.275231] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.3.0 uses VM inv eng 6 on hub 0
+[12234.275884] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.0.1 uses VM inv eng 7 on hub 0
+[12234.276552] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.1.1 uses VM inv eng 8 on hub 0
+[12234.277238] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.2.1 uses VM inv eng 9 on hub 0
+[12234.277863] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.3.1 uses VM inv eng 10 on hub 0
+[12234.279325] waynoway kernel: amdgpu 0000:07:00.0: ring kiq_0.2.1.0 uses VM inv eng 11 on hub 0
+[12234.280042] waynoway kernel: amdgpu 0000:07:00.0: ring sdma0 uses VM inv eng 0 on hub 8
+[12234.282040] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_dec uses VM inv eng 1 on hub 8
+[12234.282862] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_enc0 uses VM inv eng 4 on hub 8
+[12234.283556] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_enc1 uses VM inv eng 5 on hub 8
+[12234.284212] waynoway kernel: amdgpu 0000:07:00.0: ring jpeg_dec uses VM inv eng 6 on hub 8
+[12234.284880] waynoway kernel: nvme nvme0: 16/0/0 default/read/poll queues
+[12234.285468] waynoway kernel: usb 5-2: reset high-speed USB device number 2 using xhci-pci-renesas
+[12234.286167] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[12234.286805] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[12234.287385] waynoway kernel: OOM killer enabled.
+[12234.287428] waynoway kernel: Restarting tasks: Starting
+[12234.287459] waynoway kernel: Restarting tasks: Done
+[12234.287494] waynoway kernel: efivarfs: resyncing variable state
+[12234.287534] waynoway kernel: efivarfs: finished resyncing variable state
+[12234.287572] waynoway kernel: random: crng reseeded on system resumption
+[12234.287608] waynoway kernel: PM: suspend exit
+[12234.380079] waynoway kernel: Generic FE-GE Realtek PHY r8169-0-200:00: attached PHY driver (mii_bus:phy_addr=r8169-0-200:00, irq=MAC)
+[12234.480125] waynoway kernel: r8169 0000:02:00.0 enp2s0f0: Link is Down
+[12234.504070] waynoway kernel: Generic FE-GE Realtek PHY r8169-0-500:00: attached PHY driver (mii_bus:phy_addr=r8169-0-500:00, irq=MAC)
+[12234.628193] waynoway kernel: r8169 0000:05:00.0 enp5s0: Link is Down
+[12238.292068] waynoway kernel: wlp3s0: authenticate with e8:84:c6:9a:a5:d8 (local address=04:d3:b0:8b:e9:80)
+[12238.294296] waynoway kernel: wlp3s0: send auth to e8:84:c6:9a:a5:d8 (try 1/3)
+[12238.306105] waynoway kernel: wlp3s0: authenticated
+[12238.308078] waynoway kernel: wlp3s0: associate with e8:84:c6:9a:a5:d8 (try 1/3)
+[12238.322056] waynoway kernel: wlp3s0: RX AssocResp from e8:84:c6:9a:a5:d8 (capab=0x1431 status=0 aid=49)
+[12238.328045] waynoway kernel: wlp3s0: associated
+[13416.645042] waynoway kernel: workqueue: acpi_ec_event_processor hogged CPU for >13333us 11 times, consider switching to WQ_UNBOUND
+[13938.446037] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[13938.448039] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[13939.999052] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-6), yielding (retry 1)
+[14198.748048] waynoway kernel: audit: type=1400 audit(1792778850.683:341): apparmor="DENIED" operation="open" class="file" profile="/usr/bin/wsdd" name="/usr/share/coreutils/locales/uucore/en-US.ftl" pid=163138 comm="wsdd" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[14268.082149] waynoway kernel: audit: type=1400 audit(1792778920.017:342): apparmor="DENIED" operation="open" class="file" profile="dig" name="/proc/sys/net/ipv4/ip_local_port_range" pid=164375 comm="dig" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[14268.082465] waynoway kernel: audit: type=1400 audit(1792778920.017:343): apparmor="DENIED" operation="open" class="file" profile="dig" name="/proc/sys/net/ipv4/ip_local_port_range" pid=164375 comm="dig" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[14268.092071] waynoway kernel: audit: type=1400 audit(1792778920.027:344): apparmor="DENIED" operation="open" class="file" profile="dig" name="/proc/164375/task/164377/comm" pid=164375 comm="dig" requested_mask="wr" denied_mask="wr" fsuid=1000 ouid=1000
+[14268.158097] waynoway kernel: audit: type=1400 audit(1792778920.093:345): apparmor="DENIED" operation="open" class="file" profile="dig" name="/proc/sys/net/ipv4/ip_local_port_range" pid=164378 comm="dig" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[14268.158263] waynoway kernel: audit: type=1400 audit(1792778920.093:346): apparmor="DENIED" operation="open" class="file" profile="dig" name="/proc/sys/net/ipv4/ip_local_port_range" pid=164378 comm="dig" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[14268.160083] waynoway kernel: audit: type=1400 audit(1792778920.095:347): apparmor="DENIED" operation="open" class="file" profile="dig" name="/proc/164378/task/164380/comm" pid=164378 comm="dig" requested_mask="wr" denied_mask="wr" fsuid=1000 ouid=1000
+[14437.860083] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[14437.862041] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[14468.460495] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-6), yielding (retry 1)
+[14538.214104] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-6), yielding (retry 1)
+[15168.350056] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[15168.353054] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[16918.010100] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[16918.012053] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[17153.328044] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[17153.337435] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[17173.949063] waynoway kernel: audit: type=1326 audit(1792781825.884:348): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200446 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77c17c4706eb code=0x50000
+[17174.191045] waynoway kernel: audit: type=1107 audit(1792781826.127:349): pid=2014 uid=996 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor="DENIED" operation="dbus_method_call"  bus="system" path="/" interface="org.freedesktop.DBus.Peer" member="Ping" mask="send" name="org.freedesktop.Avahi" pid=200446 label="snap.libreoffice.calc" peer_pid=2009 peer_label="unconfined"
+                                 exe="/usr/bin/dbus-daemon" sauid=996 hostname=? addr=? terminal=?'
+[17174.253108] waynoway kernel: audit: type=1326 audit(1792781826.189:350): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200446 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77c17c4706eb code=0x50000
+[17175.705036] waynoway kernel: audit: type=1107 audit(1792781827.641:351): pid=2014 uid=996 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor="DENIED" operation="dbus_method_call"  bus="system" path="/" interface="org.freedesktop.DBus.Peer" member="Ping" mask="send" name="org.freedesktop.Avahi" pid=200604 label="snap.libreoffice.calc" peer_pid=2009 peer_label="unconfined"
+                                 exe="/usr/bin/dbus-daemon" sauid=996 hostname=? addr=? terminal=?'
+[17176.006096] waynoway kernel: audit: type=1326 audit(1792781827.942:352): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17176.896028] waynoway kernel: audit: type=1400 audit(1792781828.832:353): apparmor="DENIED" operation="open" class="file" profile="snap.libreoffice.calc" name="/var/tmp/" pid=200604 comm="soffice.bin" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[17177.045039] waynoway kernel: audit: type=1326 audit(1792781828.981:354): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17178.563124] waynoway kernel: audit: type=1326 audit(1792781830.498:355): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17179.603038] waynoway kernel: audit: type=1326 audit(1792781831.538:356): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17180.641035] waynoway kernel: audit: type=1326 audit(1792781832.576:357): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17181.414042] waynoway kernel: audit: type=1326 audit(1792781833.349:358): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200218 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x7aff220e76eb code=0x50000
+[17181.670114] waynoway kernel: audit: type=1326 audit(1792781833.605:359): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200218 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x7aff220e76eb code=0x50000
+[17182.306121] waynoway kernel: audit: type=1326 audit(1792781834.241:360): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17183.368068] waynoway kernel: audit: type=1326 audit(1792781835.303:361): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17184.430060] waynoway kernel: audit: type=1326 audit(1792781836.365:362): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17188.429082] waynoway kernel: audit: type=1326 audit(1792781840.364:363): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17189.492083] waynoway kernel: audit: type=1326 audit(1792781841.426:364): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17193.612058] waynoway kernel: audit: type=1326 audit(1792781845.547:365): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17194.675079] waynoway kernel: audit: type=1326 audit(1792781846.610:366): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17195.737084] waynoway kernel: audit: type=1326 audit(1792781847.672:367): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17203.053147] waynoway kernel: audit: type=1326 audit(1792781854.988:368): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17204.121048] waynoway kernel: audit: type=1326 audit(1792781856.056:369): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17269.371069] waynoway kernel: audit: type=1326 audit(1792781921.305:370): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17270.436060] waynoway kernel: audit: type=1326 audit(1792781922.371:371): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17273.043090] waynoway kernel: audit: type=1326 audit(1792781924.978:372): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17274.106076] waynoway kernel: audit: type=1326 audit(1792781926.041:373): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17275.170069] waynoway kernel: audit: type=1326 audit(1792781927.105:374): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17305.140041] waynoway kernel: audit: type=1326 audit(1792781957.075:375): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=202149 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x799c650ac6eb code=0x50000
+[17305.251043] waynoway kernel: audit: type=1326 audit(1792781957.186:376): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=202149 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x799c650ac6eb code=0x50000
+[17305.930116] waynoway kernel: audit: type=1326 audit(1792781957.865:377): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17306.975073] waynoway kernel: audit: type=1326 audit(1792781958.910:378): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17308.037092] waynoway kernel: audit: type=1326 audit(1792781959.972:379): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17309.739146] waynoway kernel: audit: type=1326 audit(1792781961.673:380): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17310.799068] waynoway kernel: audit: type=1326 audit(1792781962.734:381): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17311.861138] waynoway kernel: audit: type=1326 audit(1792781963.796:382): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17313.442078] waynoway kernel: audit: type=1326 audit(1792781965.376:383): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000
+[17314.505078] waynoway kernel: audit: type=1326 audit(1792781966.440:384): auid=1000 uid=1000 gid=1000 ses=3 subj=snap.libreoffice.calc pid=200604 comm="configmgrWriter" exe="/snap/libreoffice/379/lib/libreoffice/program/soffice.bin" sig=0 arch=c000003e syscall=92 compat=0 ip=0x77380308a6eb code=0x50000

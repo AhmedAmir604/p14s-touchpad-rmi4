@@ -1,0 +1,19 @@
+[   64.566019] waynoway kernel: i2c_piix4: loading out-of-tree module taints kernel.
+[   64.566112] waynoway kernel: i2c_piix4: module verification failed: signature and/or required key missing - tainting kernel
+[   64.567010] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Controller at 0xb00, revision 0
+[   64.567299] waynoway kernel: piix4_smbus 0000:00:14.0: Using register 0x02 for SMBus port selection
+[   64.570010] waynoway kernel: ee1004 2-0050: 512 byte EE1004-compliant SPD EEPROM, read-only
+[   64.570335] waynoway kernel: i2c i2c-2: Successfully instantiated SPD at 0x50
+[   64.570608] waynoway kernel: piix4_smbus 0000:00:14.0: Auxiliary SMBus Host Controller at 0xb20
+[   64.570855] waynoway kernel: piix4_smbus 0000:00:14.0: ASF SMBus slave (SMB0001) at 0x0b20, GSI IRQ 7 (level/low)
+[   64.571085] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Notify enabled via ASF (IRQ 7)
+[   65.569024] waynoway kernel: psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
+[   65.605037] waynoway kernel: psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
+[   65.605456] waynoway kernel: psmouse serio1: synaptics: Trying to set up SMBus access
+[   65.605717] waynoway kernel: psmouse serio1: synaptics: intertouch pdata: nosleep=1 doze_interval=6
+[   65.641033] waynoway kernel: rmi4_smbus 4-002c: registering SMbus-connected sensor
+[   65.776035] waynoway kernel: rmi4_f01 rmi4-00.fn01: found RMI device, manufacturer: Synaptics, product: TM3471-030, fw id: 3942087
+[   65.871026] waynoway kernel: input: Synaptics TM3471-030 as /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/input/input35
+[   65.887026] waynoway kernel: serio: RMI4 PS/2 pass-through port at rmi4-00.fn03
+[   66.020030] waynoway kernel: psmouse serio3: trackpoint: Elan TrackPoint firmware: 0x12, buttons: 3/3
+[   66.056026] waynoway kernel: input: TPPS/2 Elan TrackPoint as /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/rmi4-00.fn03/serio3/input/input36

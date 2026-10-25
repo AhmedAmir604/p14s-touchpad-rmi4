@@ -1,0 +1,554 @@
+libinput version: 1.31.1
+event7  - Synaptics TM3471-030: is tagged by udev as: Touchpad
+  ... event7  - using pressure-based touch detection (25:30)
+  ... event7  - palm: pressure threshold is 130
+  ... event7  - thumb: enabled thumb detection (area, pressure)
+event7  - Synaptics TM3471-030: device is a touchpad
+-event7   DEVICE_ADDED                 Synaptics TM3471-030              seat0 default group1  cap:pg  size 97x65mm tap (dl off) left scroll-nat scroll-2fg-edge click-buttonareas-clickfinger dwt-on dwtp-on
+   2: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+   5: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +0.040s	1
+  10: event7  - tap: touch 0 (TOUCH_UPDATE), tap state TAP_STATE_TOUCH → TAP_EVENT_MOTION → TAP_STATE_DEAD
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_CANCEL → GESTURE_STATE_NONE
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_POINTER_MOTION_START → GESTURE_STATE_POINTER_MOTION
+  ... event7  - gesture: [1fg] state GESTURE_STATE_HOLD → GESTURE_STATE_POINTER_MOTION
+ event7   GESTURE_HOLD_END             +0.108s	1 cancelled
+ event7   POINTER_MOTION               +0.108s	 -4.69/-14.06 ( -6.00/-18.00)
+ event7   POINTER_MOTION            2  +0.123s	 -5.32/-23.07 ( -6.00/-26.00)
+ event7   POINTER_MOTION            3  +0.138s	 -5.53/-23.06 ( -6.00/-25.00)
+ event7   POINTER_MOTION            4  +0.153s	 -2.65/-17.69 ( -3.00/-20.00)
+ event7   POINTER_MOTION            5  +0.168s	 -0.88/-13.18 ( -1.00/-15.00)
+ event7   POINTER_MOTION            6  +0.183s	  0.00/ -7.91 ( +0.00/ -9.00)
+ event7   POINTER_MOTION            7  +0.198s	  0.88/ -2.64 ( +1.00/ -3.00)
+ event7   POINTER_MOTION            8  +0.213s	  5.27/ -2.64 ( +6.00/ -3.00)
+ event7   POINTER_MOTION            9  +0.228s	  7.03/  0.00 ( +8.00/ +0.00)
+ event7   POINTER_MOTION           10  +0.243s	  7.91/  3.51 ( +9.00/ +4.00)
+ event7   POINTER_MOTION           11  +0.257s	  7.91/  5.27 ( +9.00/ +6.00)
+ event7   POINTER_MOTION           12  +0.272s	  6.15/  4.39 ( +7.00/ +5.00)
+ event7   POINTER_MOTION           13  +0.287s	  5.27/  4.39 ( +6.00/ +5.00)
+ event7   POINTER_MOTION           14  +0.302s	  3.51/  3.51 ( +4.00/ +4.00)
+ event7   POINTER_MOTION           15  +0.317s	  2.64/  1.76 ( +3.00/ +2.00)
+ event7   POINTER_MOTION           16  +0.332s	  0.00/  0.87 ( +0.00/ +1.00)
+ event7   POINTER_MOTION           17  +0.347s	  0.87/  0.87 ( +1.00/ +1.00)
+ event7   POINTER_MOTION           18  +0.377s	  0.85/  0.85 ( +1.00/ +1.00)
+ event7   POINTER_MOTION           19  +0.407s	  0.00/  0.62 ( +0.00/ +1.00)
+ event7   POINTER_MOTION           20  +0.466s	  1.63/ -4.89 ( +2.00/ -6.00)
+ event7   POINTER_MOTION           21  +0.481s	  3.51/ -7.91 ( +4.00/ -9.00)
+ event7   POINTER_MOTION           22  +0.496s	  6.15/ -8.79 ( +7.00/-10.00)
+ event7   POINTER_MOTION           23  +0.511s	  9.67/ -7.91 (+11.00/ -9.00)
+ event7   POINTER_MOTION           24  +0.526s	 10.54/ -4.39 (+12.00/ -5.00)
+ event7   POINTER_MOTION           25  +0.541s	 11.42/ -1.76 (+13.00/ -2.00)
+ event7   POINTER_MOTION           26  +0.556s	 10.54/  0.88 (+12.00/ +1.00)
+ event7   POINTER_MOTION           27  +0.571s	  7.91/  5.27 ( +9.00/ +6.00)
+ event7   POINTER_MOTION           28  +0.586s	  7.03/  7.91 ( +8.00/ +9.00)
+ event7   POINTER_MOTION           29  +0.601s	  4.39/ 11.42 ( +5.00/+13.00)
+ event7   POINTER_MOTION           30  +0.615s	  0.00/ 16.70 ( +0.00/+19.00)
+ event7   POINTER_MOTION           31  +0.630s	 -3.51/ 16.70 ( -4.00/+19.00)
+ event7   POINTER_MOTION           32  +0.645s	 -7.03/ 15.82 ( -8.00/+18.00)
+ event7   POINTER_MOTION           33  +0.660s	 -8.79/ 15.82 (-10.00/+18.00)
+ event7   POINTER_MOTION           34  +0.675s	 -8.79/ 12.30 (-10.00/+14.00)
+ event7   POINTER_MOTION           35  +0.690s	 -9.67/  9.67 (-11.00/+11.00)
+ event7   POINTER_MOTION           36  +0.705s	-12.30/  7.03 (-14.00/ +8.00)
+ event7   POINTER_MOTION           37  +0.720s	-12.30/  2.64 (-14.00/ +3.00)
+ event7   POINTER_MOTION           38  +0.735s	-11.42/ -0.88 (-13.00/ -1.00)
+ event7   POINTER_MOTION           39  +0.750s	-11.42/ -6.15 (-13.00/ -7.00)
+ event7   POINTER_MOTION           40  +0.765s	 -9.67/ -7.91 (-11.00/ -9.00)
+ event7   POINTER_MOTION           41  +0.780s	 -8.79/ -8.79 (-10.00/-10.00)
+ event7   POINTER_MOTION           42  +0.795s	 -7.03/ -8.79 ( -8.00/-10.00)
+ event7   POINTER_MOTION           43  +0.809s	 -5.27/ -9.67 ( -6.00/-11.00)
+ event7   POINTER_MOTION           44  +0.824s	 -1.76/ -9.67 ( -2.00/-11.00)
+ event7   POINTER_MOTION           45  +0.839s	 -0.88/-11.42 ( -1.00/-13.00)
+ event7   POINTER_MOTION           46  +0.854s	  2.64/-10.54 ( +3.00/-12.00)
+ event7   POINTER_MOTION           47  +0.870s	  3.51/ -8.79 ( +4.00/-10.00)
+ event7   POINTER_MOTION           48  +0.885s	  5.27/ -7.91 ( +6.00/ -9.00)
+ event7   POINTER_MOTION           49  +0.899s	  6.15/ -6.15 ( +7.00/ -7.00)
+ event7   POINTER_MOTION           50  +0.914s	  8.79/ -7.03 (+10.00/ -8.00)
+ event7   POINTER_MOTION           51  +0.929s	  8.79/ -3.51 (+10.00/ -4.00)
+ event7   POINTER_MOTION           52  +0.944s	  8.79/ -0.88 (+10.00/ -1.00)
+ event7   POINTER_MOTION           53  +0.959s	  7.91/  0.00 ( +9.00/ +0.00)
+ event7   POINTER_MOTION           54  +0.974s	  5.27/  0.88 ( +6.00/ +1.00)
+ event7   POINTER_MOTION           55  +0.989s	  3.51/  1.76 ( +4.00/ +2.00)
+ event7   POINTER_MOTION           56  +1.003s	  1.76/  0.88 ( +2.00/ +1.00)
+ event7   POINTER_MOTION           57  +1.018s	  0.88/  0.88 ( +1.00/ +1.00)
+ event7   POINTER_MOTION           58  +1.033s	  0.87/  0.00 ( +1.00/ +0.00)
+ event7   POINTER_MOTION           59  +1.048s	  1.74/  3.49 ( +2.00/ +4.00)
+ event7   POINTER_MOTION           60  +1.063s	  0.00/  2.64 ( +0.00/ +3.00)
+ event7   POINTER_MOTION           61  +1.078s	 -1.76/  4.39 ( -2.00/ +5.00)
+ event7   POINTER_MOTION           62  +1.093s	 -1.76/  4.39 ( -2.00/ +5.00)
+ event7   POINTER_MOTION           63  +1.108s	 -3.51/  5.27 ( -4.00/ +6.00)
+ event7   POINTER_MOTION           64  +1.123s	 -2.64/  3.51 ( -3.00/ +4.00)
+ event7   POINTER_MOTION           65  +1.138s	 -2.64/  3.51 ( -3.00/ +4.00)
+ event7   POINTER_MOTION           66  +1.152s	 -1.76/  1.76 ( -2.00/ +2.00)
+ event7   POINTER_MOTION           67  +1.168s	 -1.76/  1.76 ( -2.00/ +2.00)
+ event7   POINTER_MOTION           68  +1.182s	 -0.87/  0.00 ( -1.00/ +0.00)
+ event7   POINTER_MOTION           69  +1.197s	 -0.87/  0.87 ( -1.00/ +1.00)
+ event7   POINTER_MOTION           70  +1.257s	 -1.68/  1.68 ( -2.00/ +2.00)
+ event7   POINTER_MOTION           71  +1.272s	 -0.85/  0.85 ( -1.00/ +1.00)
+ event7   POINTER_MOTION           72  +1.287s	 -2.64/  1.76 ( -3.00/ +2.00)
+ event7   POINTER_MOTION           73  +1.302s	 -3.51/  2.64 ( -4.00/ +3.00)
+ event7   POINTER_MOTION           74  +1.317s	 -3.51/  2.64 ( -4.00/ +3.00)
+ event7   POINTER_MOTION           75  +1.332s	 -5.27/  3.51 ( -6.00/ +4.00)
+ event7   POINTER_MOTION           76  +1.347s	 -8.79/  3.51 (-10.00/ +4.00)
+ event7   POINTER_MOTION           77  +1.361s	-12.30/  4.39 (-14.00/ +5.00)
+ event7   POINTER_MOTION           78  +1.376s	-14.94/  2.64 (-17.00/ +3.00)
+ event7   POINTER_MOTION           79  +1.391s	-17.57/  1.76 (-20.00/ +2.00)
+ event7   POINTER_MOTION           80  +1.406s	-19.33/  0.88 (-22.00/ +1.00)
+ event7   POINTER_MOTION           81  +1.421s	-18.45/ -0.88 (-21.00/ -1.00)
+ event7   POINTER_MOTION           82  +1.436s	-16.70/ -0.88 (-19.00/ -1.00)
+ event7   POINTER_MOTION           83  +1.451s	-14.06/ -0.88 (-16.00/ -1.00)
+ event7   POINTER_MOTION           84  +1.466s	-11.42/ -0.88 (-13.00/ -1.00)
+ event7   POINTER_MOTION           85  +1.481s	 -9.67/ -0.88 (-11.00/ -1.00)
+ event7   POINTER_MOTION           86  +1.496s	 -7.03/  0.00 ( -8.00/ +0.00)
+ event7   POINTER_MOTION           87  +1.511s	 -4.39/ -0.88 ( -5.00/ -1.00)
+ event7   POINTER_MOTION           88  +1.526s	 -4.39/ -0.88 ( -5.00/ -1.00)
+ event7   POINTER_MOTION           89  +1.541s	 -2.64/ -0.88 ( -3.00/ -1.00)
+ event7   POINTER_MOTION           90  +1.555s	 -2.64/  0.00 ( -3.00/ +0.00)
+ event7   POINTER_MOTION           91  +1.570s	 -0.87/  0.00 ( -1.00/ +0.00)
+ event7   POINTER_MOTION           92  +1.585s	 -0.87/ -0.87 ( -1.00/ -1.00)
+ event7   POINTER_MOTION           93  +1.615s	 -0.84/ -0.84 ( -1.00/ -1.00)
+ event7   POINTER_MOTION           94  +1.645s	 -0.62/  0.00 ( -1.00/ +0.00)
+ event7   POINTER_MOTION           95  +1.660s	  0.00/ -0.71 ( +0.00/ -1.00)
+ event7   POINTER_MOTION           96  +1.675s	 -0.85/  0.00 ( -1.00/ +0.00)
+ event7   POINTER_MOTION           97  +1.689s	  0.00/ -0.85 ( +0.00/ -1.00)
+ event7   POINTER_MOTION           98  +1.720s	  0.00/ -0.71 ( +0.00/ -1.00)
+ event7   POINTER_MOTION           99  +1.764s	  0.00/ -0.52 ( +0.00/ -1.00)
+ event7   POINTER_MOTION          100  +1.794s	  0.00/ -0.52 ( +0.00/ -1.00)
+ event7   POINTER_MOTION          101  +1.809s	 -0.83/ -1.65 ( -1.00/ -2.00)
+ event7   POINTER_MOTION          102  +1.824s	  0.00/ -1.76 ( +0.00/ -2.00)
+ event7   POINTER_MOTION          103  +1.839s	  0.00/ -2.64 ( +0.00/ -3.00)
+ event7   POINTER_MOTION          104  +1.854s	  0.00/ -2.64 ( +0.00/ -3.00)
+ event7   POINTER_MOTION          105  +1.869s	 -0.88/ -2.64 ( -1.00/ -3.00)
+ event7   POINTER_MOTION          106  +1.884s	  0.00/ -1.76 ( +0.00/ -2.00)
+ event7   POINTER_MOTION          107  +1.899s	  0.00/ -1.76 ( +0.00/ -2.00)
+ event7   POINTER_MOTION          108  +1.913s	  0.00/ -0.87 ( +0.00/ -1.00)
+ event7   POINTER_MOTION          109  +1.928s	  0.00/ -0.85 ( +0.00/ -1.00)
+ event7   POINTER_MOTION          110  +1.943s	  0.00/ -0.84 ( +0.00/ -1.00)
+ event7   POINTER_MOTION          111  +1.958s	  0.00/ -0.84 ( +0.00/ -1.00)
+ event7   POINTER_MOTION          112  +2.003s	  0.69/ -0.69 ( +1.00/ -1.00)
+ event7   POINTER_MOTION          113  +2.018s	  0.78/ -0.78 ( +1.00/ -1.00)
+ event7   POINTER_MOTION          114  +2.033s	  4.39/  0.00 ( +5.00/ +0.00)
+ event7   POINTER_MOTION          115  +2.048s	  3.51/ -0.88 ( +4.00/ -1.00)
+ event7   POINTER_MOTION          116  +2.063s	  5.27/  0.88 ( +6.00/ +1.00)
+ event7   POINTER_MOTION          117  +2.078s	  4.39/  0.00 ( +5.00/ +0.00)
+ 138: event7  - pressure: end touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_POINTER_MOTION → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_DEAD → TAP_EVENT_RELEASE → TAP_STATE_IDLE
+ 140: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 143: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +6.258s	1
+ 144: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +6.262s	1
+ event7   POINTER_BUTTON               +6.217s	BTN_LEFT (272) pressed, seat count: 1
+ 145: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +6.262s	BTN_LEFT (272) released, seat count: 0
+ 146: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 148: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +7.249s	1
+ 152: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +7.299s	1
+ event7   POINTER_BUTTON               +7.209s	BTN_LEFT (272) pressed, seat count: 1
+ 153: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +7.299s	BTN_LEFT (272) released, seat count: 0
+ 154: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 157: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +8.414s	1
+ 161: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +8.477s	1
+ event7   POINTER_BUTTON               +8.374s	BTN_LEFT (272) pressed, seat count: 1
+ 162: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +8.477s	BTN_LEFT (272) released, seat count: 0
+ 163: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 166: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +9.458s	1
+ 170: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +9.506s	1
+ event7   POINTER_BUTTON               +9.418s	BTN_LEFT (272) pressed, seat count: 1
+ 171: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +9.506s	BTN_LEFT (272) released, seat count: 0
+ 172: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 175: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +10.413s	1
+ 179: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +10.461s	1
+ event7   POINTER_BUTTON               +10.373s	BTN_LEFT (272) pressed, seat count: 1
+ 180: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +10.461s	BTN_LEFT (272) released, seat count: 0
+ 181: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 184: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +11.316s	1
+ 190: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +11.393s	1
+ event7   POINTER_BUTTON               +11.276s	BTN_LEFT (272) pressed, seat count: 1
+ 191: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +11.393s	BTN_LEFT (272) released, seat count: 0
+ 192: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 195: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +12.174s	1
+ 198: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +12.207s	1
+ event7   POINTER_BUTTON               +12.134s	BTN_LEFT (272) pressed, seat count: 1
+ 199: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +12.207s	BTN_LEFT (272) released, seat count: 0
+ 200: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 203: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +13.195s	1
+ 207: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +13.244s	1
+ event7   POINTER_BUTTON               +13.155s	BTN_LEFT (272) pressed, seat count: 1
+ 208: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +13.244s	BTN_LEFT (272) released, seat count: 0
+ 209: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 211: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +14.180s	1
+ 215: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +14.228s	1
+ event7   POINTER_BUTTON               +14.140s	BTN_LEFT (272) pressed, seat count: 1
+ 216: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +14.228s	BTN_LEFT (272) released, seat count: 0
+ 217: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 219: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +15.031s	1
+ 221: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +15.049s	1
+ event7   POINTER_BUTTON               +14.991s	BTN_LEFT (272) pressed, seat count: 1
+ 222: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +15.049s	BTN_LEFT (272) released, seat count: 0
+ 223: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 224: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +15.724s	1
+ 227: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +15.757s	1
+ event7   POINTER_BUTTON               +15.684s	BTN_LEFT (272) pressed, seat count: 1
+ 228: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +15.757s	BTN_LEFT (272) released, seat count: 0
+ 229: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 231: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +16.477s	1
+ 233: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +16.511s	1
+ event7   POINTER_BUTTON               +16.437s	BTN_LEFT (272) pressed, seat count: 1
+ 234: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +16.511s	BTN_LEFT (272) released, seat count: 0
+ 235: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 238: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +17.253s	1
+ 243: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +17.317s	1
+ event7   POINTER_BUTTON               +17.213s	BTN_LEFT (272) pressed, seat count: 1
+ 244: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +17.317s	BTN_LEFT (272) released, seat count: 0
+ 245: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 248: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +17.902s	1
+ 252: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +17.966s	1
+ event7   POINTER_BUTTON               +17.862s	BTN_LEFT (272) pressed, seat count: 1
+ 253: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +17.966s	BTN_LEFT (272) released, seat count: 0
+ 254: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 257: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +18.514s	1
+ 263: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +18.607s	1
+ event7   POINTER_BUTTON               +18.474s	BTN_LEFT (272) pressed, seat count: 1
+ 264: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +18.607s	BTN_LEFT (272) released, seat count: 0
+ 265: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 268: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +19.081s	1
+ 271: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +19.129s	1
+ event7   POINTER_BUTTON               +19.041s	BTN_LEFT (272) pressed, seat count: 1
+ 272: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +19.129s	BTN_LEFT (272) released, seat count: 0
+ 273: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 275: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +19.663s	1
+ 277: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +19.696s	1
+ event7   POINTER_BUTTON               +19.623s	BTN_LEFT (272) pressed, seat count: 1
+ 278: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +19.696s	BTN_LEFT (272) released, seat count: 0
+ 279: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 282: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +20.245s	1
+ 287: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +20.308s	1
+ event7   POINTER_BUTTON               +20.205s	BTN_LEFT (272) pressed, seat count: 1
+ 288: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +20.308s	BTN_LEFT (272) released, seat count: 0
+ 289: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 291: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +20.812s	1
+ 299: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +20.920s	1
+ event7   POINTER_BUTTON               +20.772s	BTN_LEFT (272) pressed, seat count: 1
+ 300: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +20.920s	BTN_LEFT (272) released, seat count: 0
+ 301: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 304: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +21.371s	1
+ 311: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +21.494s	1
+ event7   POINTER_BUTTON               +21.331s	BTN_LEFT (272) pressed, seat count: 1
+ 312: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +21.494s	BTN_LEFT (272) released, seat count: 0
+ 313: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 315: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +22.259s	1
+ 321: event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_TOUCH → TAP_EVENT_RELEASE → TAP_STATE_1FGTAP_TAPPED
+ event7   GESTURE_HOLD_END             +22.352s	1
+ event7   POINTER_BUTTON               +22.219s	BTN_LEFT (272) pressed, seat count: 1
+ 322: event7  - tap: touch -1 (), tap state TAP_STATE_1FGTAP_TAPPED → TAP_EVENT_TIMEOUT → TAP_STATE_IDLE
+ event7   POINTER_BUTTON               +22.352s	BTN_LEFT (272) released, seat count: 0
+ 323: event7  - pressure: begin touch 0
+  ... event7  - thumb: touch 0, THUMB_STATE_FINGER → THUMB_STATE_JAILED
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_BOTTOM_M to BUTTON_STATE_BOTTOM 
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+ 324: event7  - tap: touch 0 (TOUCH_UPDATE), tap state TAP_STATE_TOUCH → TAP_EVENT_THUMB → TAP_STATE_IDLE
+ 335: event7  - thumb: touch 0, THUMB_STATE_JAILED → THUMB_STATE_FINGER
+ 363: event7  - pressure: end touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_BOTTOM  event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+ 365: event7  - pressure: begin touch 0
+  ... event7  - thumb: touch 0, THUMB_STATE_FINGER → THUMB_STATE_JAILED
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_BOTTOM_M to BUTTON_STATE_BOTTOM 
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+ 366: event7  - tap: touch 0 (TOUCH_UPDATE), tap state TAP_STATE_TOUCH → TAP_EVENT_THUMB → TAP_STATE_IDLE
+ 455: event7  - button state: touch 0 from BUTTON_STATE_BOTTOM  event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+ 456: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_BOTTOM_L to BUTTON_STATE_BOTTOM 
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+ 469: event7  - tap: touch -1 (), tap state TAP_STATE_TOUCH → TAP_EVENT_TIMEOUT → TAP_STATE_HOLD
+ 487: event7  - tap: touch 0 (TOUCH_UPDATE), tap state TAP_STATE_HOLD → TAP_EVENT_MOTION → TAP_STATE_DEAD
+ event7   POINTER_BUTTON               +33.365s	BTN_LEFT (272) pressed, seat count: 1
+ event7   POINTER_BUTTON               +33.380s	BTN_LEFT (272) released, seat count: 0
+ 498: event7  - button state: touch 0 from BUTTON_STATE_BOTTOM  event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_DEAD → TAP_EVENT_RELEASE → TAP_STATE_IDLE
+ 499: event7  - pressure: begin touch 0
+  ... event7  - thumb: touch 0, THUMB_STATE_FINGER → THUMB_STATE_JAILED
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_BOTTOM_R to BUTTON_STATE_BOTTOM 
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+ 500: event7  - tap: touch 0 (TOUCH_UPDATE), tap state TAP_STATE_TOUCH → TAP_EVENT_THUMB → TAP_STATE_IDLE
+ 535: event7  - button state: touch 0 from BUTTON_STATE_BOTTOM  event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+ 536: event7  - pressure: begin touch 0
+  ... event7  - thumb: touch 0, THUMB_STATE_FINGER → THUMB_STATE_JAILED
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_BOTTOM_R to BUTTON_STATE_BOTTOM 
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+ 537: event7  - tap: touch 0 (TOUCH_UPDATE), tap state TAP_STATE_TOUCH → TAP_EVENT_THUMB → TAP_STATE_IDLE
+ 547: event7  - pressure: end touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_BOTTOM  event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+ 552: event7  - pressure: begin touch 0
+  ... event7  - thumb: touch 0, THUMB_STATE_FINGER → THUMB_STATE_JAILED
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_BOTTOM_R to BUTTON_STATE_BOTTOM 
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+ 553: event7  - tap: touch 0 (TOUCH_UPDATE), tap state TAP_STATE_TOUCH → TAP_EVENT_THUMB → TAP_STATE_IDLE
+ 591: event7  - pressure: end touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_BOTTOM  event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+ 593: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 596: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +35.754s	1
+ 607: event7  - tap: touch -1 (), tap state TAP_STATE_TOUCH → TAP_EVENT_TIMEOUT → TAP_STATE_HOLD
+ 608: event7  - tap: touch 0 (TOUCH_UPDATE), tap state TAP_STATE_HOLD → TAP_EVENT_MOTION → TAP_STATE_DEAD
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_CANCEL → GESTURE_STATE_NONE
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_POINTER_MOTION_START → GESTURE_STATE_POINTER_MOTION
+  ... event7  - gesture: [1fg] state GESTURE_STATE_HOLD → GESTURE_STATE_POINTER_MOTION
+ event7   GESTURE_HOLD_END             +35.908s	1 cancelled
+ event7   POINTER_MOTION               +35.908s	 -1.62/  3.25 ( -2.00/ +4.00)
+ event7   POINTER_MOTION            2  +35.923s	 -0.74/  0.74 ( -1.00/ +1.00)
+ event7   POINTER_MOTION            3  +35.938s	  0.00/  0.87 ( +0.00/ +1.00)
+ event7   POINTER_MOTION            4  +35.953s	 -0.87/  0.87 ( -1.00/ +1.00)
+ 612: event7  - gesture: [1fg] event GESTURE_STATE_POINTER_MOTION → GESTURE_EVENT_END → GESTURE_STATE_NONE
+ event7   POINTER_BUTTON               +35.969s	BTN_LEFT (272) pressed, seat count: 1
+ event7   POINTER_BUTTON               +35.999s	BTN_LEFT (272) released, seat count: 0
+ 616: event7  - pressure: end touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_DEAD → TAP_EVENT_RELEASE → TAP_STATE_IDLE
+ 618: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 620: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +36.329s	1
+ 623: event7  - tap: touch 0 (TOUCH_UPDATE), tap state TAP_STATE_TOUCH → TAP_EVENT_MOTION → TAP_STATE_DEAD
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_CANCEL → GESTURE_STATE_NONE
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_POINTER_MOTION_START → GESTURE_STATE_POINTER_MOTION
+  ... event7  - gesture: [1fg] state GESTURE_STATE_HOLD → GESTURE_STATE_POINTER_MOTION
+ event7   GESTURE_HOLD_END             +36.363s	1 cancelled
+ event7   POINTER_MOTION               +36.363s	 14.06/  2.64 (+16.00/ +3.00)
+ event7   POINTER_MOTION            2  +36.378s	 17.57/  8.79 (+20.00/+10.00)
+ event7   POINTER_MOTION            3  +36.393s	 18.98/ 14.46 (+21.00/+16.00)
+ event7   POINTER_MOTION            4  +36.407s	 15.79/ 17.65 (+17.00/+19.00)
+ event7   POINTER_MOTION            5  +36.423s	 13.12/ 23.44 (+14.00/+25.00)
+ event7   POINTER_MOTION            6  +36.438s	  5.57/ 22.27 ( +6.00/+24.00)
+ event7   POINTER_MOTION            7  +36.453s	 -0.91/ 23.63 ( -1.00/+26.00)
+ event7   POINTER_MOTION            8  +36.468s	 -5.45/ 21.81 ( -6.00/+24.00)
+ event7   POINTER_MOTION            9  +36.483s	 -8.02/ 19.61 ( -9.00/+22.00)
+ event7   POINTER_MOTION           10  +36.497s	 -7.04/ 14.07 ( -8.00/+16.00)
+ event7   POINTER_MOTION           11  +36.512s	 -3.51/  6.15 ( -4.00/ +7.00)
+ event7   POINTER_MOTION           12  +36.527s	 -2.64/  2.64 ( -3.00/ +3.00)
+ 635: event7  - pressure: end touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_AREA    event BUTTON_EVENT_UP          to BUTTON_STATE_NONE   
+  ... event7  - gesture: [1fg] event GESTURE_STATE_POINTER_MOTION → GESTURE_EVENT_END → GESTURE_STATE_NONE
+  ... event7  - tap: touch 0 (TOUCH_END), tap state TAP_STATE_DEAD → TAP_EVENT_RELEASE → TAP_STATE_IDLE
+ 637: event7  - pressure: begin touch 0
+  ... event7  - button state: touch 0 from BUTTON_STATE_NONE    event BUTTON_EVENT_IN_AREA     to BUTTON_STATE_AREA   
+  ... event7  - tap: touch 0 (TOUCH_BEGIN), tap state TAP_STATE_IDLE → TAP_EVENT_TOUCH → TAP_STATE_TOUCH
+  ... event7  - gesture: [1fg] event GESTURE_STATE_NONE → GESTURE_EVENT_FINGER_DETECTED → GESTURE_STATE_UNKNOWN
+  ... event7  - gesture: [1fg] state GESTURE_STATE_NONE → GESTURE_STATE_UNKNOWN
+ 640: event7  - gesture: [1fg] event GESTURE_STATE_UNKNOWN → GESTURE_EVENT_HOLD_TIMEOUT → GESTURE_STATE_HOLD
+ event7   GESTURE_HOLD_BEGIN           +36.627s	1
+ 641: event7  - tap: touch 0 (TOUCH_UPDATE), tap state TAP_STATE_TOUCH → TAP_EVENT_MOTION → TAP_STATE_DEAD
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_CANCEL → GESTURE_STATE_NONE
+  ... event7  - gesture: [1fg] event GESTURE_STATE_HOLD → GESTURE_EVENT_POINTER_MOTION_START → GESTURE_STATE_POINTER_MOTION
+  ... event7  - gesture: [1fg] state GESTURE_STATE_HOLD → GESTURE_STATE_POINTER_MOTION
+ event7   GESTURE_HOLD_END             +36.632s	1 cancelled
+ event7   POINTER_MOTION               +36.632s	  0.88/ -7.91 ( +1.00/ -9.00)
+ event7   POINTER_MOTION            2  +36.647s	  2.64/ -5.27 ( +3.00/ -6.00)
+ event7   POINTER_MOTION            3  +36.662s	  5.27/ -3.51 ( +6.00/ -4.00)
+ event7   POINTER_MOTION            4  +36.676s	  7.03/ -0.88 ( +8.00/ -1.00)
+ event7   POINTER_MOTION            5  +36.692s	  6.15/  1.76 ( +7.00/ +2.00)
+ event7   POINTER_MOTION            6  +36.706s	  5.27/  5.27 ( +6.00/ +6.00)
+ event7   POINTER_MOTION            7  +36.721s	  4.39/ 10.54 ( +5.00/+12.00)
+ event7   POINTER_MOTION            8  +36.736s	  1.76/ 12.30 ( +2.00/+14.00)
+ event7   POINTER_MOTION            9  +36.751s	 -2.64/ 12.30 ( -3.00/+14.00)
+ event7   POINTER_MOTION           10  +36.766s	 -3.51/ 14.94 ( -4.00/+17.00)
+ event7   POINTER_MOTION           11  +36.781s	 -4.39/ 14.94 ( -5.00/+17.00)
+ event7   POINTER_MOTION           12  +36.796s	 -5.27/ 14.06 ( -6.00/+16.00)
+ event7   POINTER_MOTION           13  +36.811s	 -6.15/ 11.42 ( -7.00/+13.00)
+ event7   POINTER_MOTION           14  +36.826s	 -6.15/  9.67 ( -7.00/+11.00)

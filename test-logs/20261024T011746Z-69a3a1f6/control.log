@@ -1,0 +1,5 @@
+Run 20261024T011746Z-69a3a1f6 (soak)
+This script will perform exactly one patched load and then restore stock.
+ABORT: this boot already contains a patched-module load
+Logs: /home/report-israel/kernelhack/test-logs/20261024T011746Z-69a3a1f6
+Preflight stopped before any module or IRQ change.

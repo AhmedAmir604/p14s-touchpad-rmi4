@@ -1,0 +1,14 @@
+event0	Power Button
+event1	Lid Switch
+event10	HD-Audio Generic HDMI/DP,pcm=3
+event11	HD-Audio Generic HDMI/DP,pcm=7
+event12	HD-Audio Generic HDMI/DP,pcm=8
+event13	HD-Audio Generic HDMI/DP,pcm=9
+event14	HD-Audio Generic Mic
+event15	HD-Audio Generic Headphone
+event2	Sleep Button
+event3	Power Button
+event4	AT Translated Set 2 keyboard
+event5	Video Bus
+event6	RAYD0001:00 2386:4B4E
+event9	ThinkPad Extra Buttons

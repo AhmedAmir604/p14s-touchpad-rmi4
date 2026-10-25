@@ -1,0 +1,80 @@
+Input driver version is 1.0.1
+Input device ID: bus 0x11 vendor 0x2 product 0xa version 0x0
+Input device name: "TPPS/2 Elan TrackPoint"
+Supported events:
+  Event type 0 (EV_SYN)
+  Event type 1 (EV_KEY)
+    Event code 272 (BTN_LEFT)
+    Event code 273 (BTN_RIGHT)
+    Event code 274 (BTN_MIDDLE)
+  Event type 2 (EV_REL)
+    Event code 0 (REL_X)
+    Event code 1 (REL_Y)
+Properties:
+  Property type 0 (INPUT_PROP_POINTER)
+  Property type 5 (INPUT_PROP_POINTING_STICK)
+Testing ... (interrupt to exit)
+Event: time 1792738328.001819, type 1 (EV_KEY), code 272 (BTN_LEFT), value 1
+Event: time 1792738328.001819, -------------- SYN_REPORT ------------
+Event: time 1792738328.133343, type 1 (EV_KEY), code 272 (BTN_LEFT), value 0
+Event: time 1792738328.133343, -------------- SYN_REPORT ------------
+Event: time 1792738329.346829, type 1 (EV_KEY), code 272 (BTN_LEFT), value 1
+Event: time 1792738329.346829, -------------- SYN_REPORT ------------
+Event: time 1792738329.478297, type 1 (EV_KEY), code 272 (BTN_LEFT), value 0
+Event: time 1792738329.478297, -------------- SYN_REPORT ------------
+Event: time 1792738331.130867, type 1 (EV_KEY), code 272 (BTN_LEFT), value 1
+Event: time 1792738331.130867, -------------- SYN_REPORT ------------
+Event: time 1792738331.382340, type 1 (EV_KEY), code 272 (BTN_LEFT), value 0
+Event: time 1792738331.382340, -------------- SYN_REPORT ------------
+Event: time 1792738332.595820, type 1 (EV_KEY), code 272 (BTN_LEFT), value 1
+Event: time 1792738332.595820, -------------- SYN_REPORT ------------
+Event: time 1792738332.666866, type 1 (EV_KEY), code 272 (BTN_LEFT), value 0
+Event: time 1792738332.666866, -------------- SYN_REPORT ------------
+Event: time 1792738335.462852, type 1 (EV_KEY), code 272 (BTN_LEFT), value 1
+Event: time 1792738335.462852, -------------- SYN_REPORT ------------
+Event: time 1792738335.713850, type 1 (EV_KEY), code 272 (BTN_LEFT), value 0
+Event: time 1792738335.713850, -------------- SYN_REPORT ------------
+Event: time 1792738354.842425, type 1 (EV_KEY), code 274 (BTN_MIDDLE), value 1
+Event: time 1792738354.842425, -------------- SYN_REPORT ------------
+Event: time 1792738355.033861, type 1 (EV_KEY), code 274 (BTN_MIDDLE), value 0
+Event: time 1792738355.033861, -------------- SYN_REPORT ------------
+Event: time 1792738358.207311, type 1 (EV_KEY), code 274 (BTN_MIDDLE), value 1
+Event: time 1792738358.207311, -------------- SYN_REPORT ------------
+Event: time 1792738358.338304, type 1 (EV_KEY), code 274 (BTN_MIDDLE), value 0
+Event: time 1792738358.338304, -------------- SYN_REPORT ------------
+Event: time 1792738361.512305, type 1 (EV_KEY), code 274 (BTN_MIDDLE), value 1
+Event: time 1792738361.512305, -------------- SYN_REPORT ------------
+Event: time 1792738361.642818, type 1 (EV_KEY), code 274 (BTN_MIDDLE), value 0
+Event: time 1792738361.642818, -------------- SYN_REPORT ------------
+Event: time 1792738364.377782, type 1 (EV_KEY), code 274 (BTN_MIDDLE), value 1
+Event: time 1792738364.377782, -------------- SYN_REPORT ------------
+Event: time 1792738364.628817, type 1 (EV_KEY), code 274 (BTN_MIDDLE), value 0
+Event: time 1792738364.628817, -------------- SYN_REPORT ------------
+Event: time 1792738366.401314, type 1 (EV_KEY), code 274 (BTN_MIDDLE), value 1
+Event: time 1792738366.401314, -------------- SYN_REPORT ------------
+Event: time 1792738366.592300, type 1 (EV_KEY), code 274 (BTN_MIDDLE), value 0
+Event: time 1792738366.592300, -------------- SYN_REPORT ------------
+Event: time 1792738374.570832, type 1 (EV_KEY), code 273 (BTN_RIGHT), value 1
+Event: time 1792738374.570832, -------------- SYN_REPORT ------------
+Event: time 1792738374.820857, type 1 (EV_KEY), code 273 (BTN_RIGHT), value 0
+Event: time 1792738374.820857, -------------- SYN_REPORT ------------
+Event: time 1792738376.713777, type 1 (EV_KEY), code 273 (BTN_RIGHT), value 1
+Event: time 1792738376.713777, -------------- SYN_REPORT ------------
+Event: time 1792738376.904862, type 1 (EV_KEY), code 273 (BTN_RIGHT), value 0
+Event: time 1792738376.904862, -------------- SYN_REPORT ------------
+Event: time 1792738379.038864, type 1 (EV_KEY), code 273 (BTN_RIGHT), value 1
+Event: time 1792738379.038864, -------------- SYN_REPORT ------------
+Event: time 1792738379.289828, type 1 (EV_KEY), code 273 (BTN_RIGHT), value 0
+Event: time 1792738379.289828, -------------- SYN_REPORT ------------
+Event: time 1792738381.904342, type 1 (EV_KEY), code 273 (BTN_RIGHT), value 1
+Event: time 1792738381.904342, -------------- SYN_REPORT ------------
+Event: time 1792738382.154835, type 1 (EV_KEY), code 273 (BTN_RIGHT), value 0
+Event: time 1792738382.154835, -------------- SYN_REPORT ------------
+Event: time 1792738384.889856, type 1 (EV_KEY), code 273 (BTN_RIGHT), value 1
+Event: time 1792738384.889856, -------------- SYN_REPORT ------------
+Event: time 1792738385.140302, type 1 (EV_KEY), code 273 (BTN_RIGHT), value 0
+Event: time 1792738385.140302, -------------- SYN_REPORT ------------
+Event: time 1792738386.792853, type 1 (EV_KEY), code 273 (BTN_RIGHT), value 1
+Event: time 1792738386.792853, -------------- SYN_REPORT ------------
+Event: time 1792738386.863237, type 1 (EV_KEY), code 273 (BTN_RIGHT), value 0
+Event: time 1792738386.863237, -------------- SYN_REPORT ------------

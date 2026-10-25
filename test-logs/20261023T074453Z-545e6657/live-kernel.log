@@ -1,0 +1,178 @@
+[   85.073041] waynoway kernel: i2c_piix4: loading out-of-tree module taints kernel.
+[   85.073163] waynoway kernel: i2c_piix4: module verification failed: signature and/or required key missing - tainting kernel
+[   85.074022] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Controller at 0xb00, revision 0
+[   85.074371] waynoway kernel: piix4_smbus 0000:00:14.0: Using register 0x02 for SMBus port selection
+[   85.077025] waynoway kernel: ee1004 2-0050: 512 byte EE1004-compliant SPD EEPROM, read-only
+[   85.077373] waynoway kernel: i2c i2c-2: Successfully instantiated SPD at 0x50
+[   85.077671] waynoway kernel: piix4_smbus 0000:00:14.0: Auxiliary SMBus Host Controller at 0xb20
+[   85.078012] waynoway kernel: piix4_smbus 0000:00:14.0: ASF SMBus slave (SMB0001) at 0x0b20, GSI IRQ 7 (level/low)
+[   85.078321] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Notify enabled via ASF (IRQ 7)
+[   86.027079] waynoway kernel: psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
+[   86.065142] waynoway kernel: psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
+[   86.065716] waynoway kernel: psmouse serio1: synaptics: Trying to set up SMBus access
+[   86.066348] waynoway kernel: psmouse serio1: synaptics: intertouch pdata: nosleep=0 doze_interval=6
+[   86.102056] waynoway kernel: rmi4_smbus 4-002c: registering SMbus-connected sensor
+[   86.239207] waynoway kernel: rmi4_f01 rmi4-00.fn01: found RMI device, manufacturer: Synaptics, product: TM3471-030, fw id: 3942087
+[   86.337098] waynoway kernel: input: Synaptics TM3471-030 as /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/input/input22
+[   86.353028] waynoway kernel: serio: RMI4 PS/2 pass-through port at rmi4-00.fn03
+[   86.480042] waynoway kernel: psmouse serio3: trackpoint: Elan TrackPoint firmware: 0x12, buttons: 3/3
+[   86.517016] waynoway kernel: input: TPPS/2 Elan TrackPoint as /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/rmi4-00.fn03/serio3/input/input23
+[  301.517061] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  301.520022] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  310.478028] waynoway kernel: audit: type=1400 audit(1792741720.278:336): apparmor="AUDIT" operation="userns_create" class="namespace" info="Userns create - transitioning profile" profile="unconfined" pid=11468 comm="(ubuntu-insigh)" requested="userns_create" target="unprivileged_userns" execpath="/usr/lib/systemd/systemd-executor"
+[  310.478115] waynoway kernel: audit: type=1400 audit(1792741720.278:337): apparmor="DENIED" operation="capable" class="cap" profile="unprivileged_userns" pid=11468 comm="(ubuntu-insigh)" capability=21  capname="sys_admin"
+[  310.556058] waynoway kernel: audit: type=1400 audit(1792741720.356:338): apparmor="DENIED" operation="getattr" class="file" info="Failed name lookup - disconnected path" error=-13 profile="unprivileged_userns" name="" pid=11477 comm="systemd-detect-" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[  316.941364] waynoway kernel: PM: suspend entry (s2idle)
+[  316.941572] waynoway kernel: Filesystems sync: 0.000 seconds
+[  319.076752] waynoway kernel: Freezing user space processes
+[  319.076878] waynoway kernel: Freezing user space processes completed (elapsed 0.002 seconds)
+[  319.076936] waynoway kernel: OOM killer disabled.
+[  319.076965] waynoway kernel: Freezing remaining freezable tasks
+[  319.077011] waynoway kernel: Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
+[  319.077044] waynoway kernel: printk: Suspending console(s) (use no_console_suspend to debug)
+[  319.077998] waynoway kernel: atkbd serio0: Disabling IRQ1 wakeup source to avoid platform firmware bug
+[  319.078842] waynoway kernel: wlp3s0: deauthenticating from e8:84:c6:9a:a5:d8 by local choice (Reason: 3=DEAUTH_LEAVING)
+[  319.078976] waynoway kernel: amdgpu 0000:07:00.0: [drm] *ERROR* dc_dmub_srv_log_diagnostic_data: DMCUB error - collecting diagnostic data
+[  319.081392] waynoway kernel: amdgpu 0000:07:00.0: [drm] *ERROR* dc_dmub_srv_log_diagnostic_data: DMCUB error - collecting diagnostic data
+[  319.081799] waynoway kernel: ACPI: EC: interrupt blocked
+[  319.081882] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[  319.081971] waynoway kernel: 
+[  319.082191] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[  319.082757] waynoway kernel: 
+[  319.083513] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[  319.083921] waynoway kernel:   Arg0:   000000007c49b164 <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[  319.084059] waynoway kernel:   Arg1:   000000003a58d51b <Obj>           Integer 0000000000000000
+[  319.084203] waynoway kernel:   Arg2:   0000000039637f0a <Obj>           Integer 0000000000000003
+[  319.084366] waynoway kernel:   Arg3:   000000009ba87aed <Obj>           Package 000000009ba87aed
+[  319.084526] waynoway kernel: 
+[  319.084661] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[  319.084686] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[  319.085245] waynoway kernel: 
+[  319.085657] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[  319.085675] waynoway kernel: 
+[  319.085806] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[  319.085934] waynoway kernel:   Arg0:   000000009ba87aed <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[  319.086084] waynoway kernel:   Arg1:   0000000039637f0a <Obj>           Integer 0000000000000000
+[  319.086210] waynoway kernel:   Arg2:   000000003a58d51b <Obj>           Integer 0000000000000007
+[  319.086332] waynoway kernel:   Arg3:   000000007c49b164 <Obj>           Package 000000007c49b164
+[  319.086350] waynoway kernel: 
+[  319.086475] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[  319.086592] waynoway kernel: ACPI: button: The lid device is not compliant to SW_LID.
+[  319.086724] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[  319.086736] waynoway kernel: 
+[  319.086857] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[  319.086977] waynoway kernel: 
+[  319.086990] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[  319.087009] waynoway kernel:   Arg0:   000000003dfb47a5 <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[  319.087136] waynoway kernel:   Arg1:   000000007c49b164 <Obj>           Integer 0000000000000000
+[  319.087264] waynoway kernel:   Arg2:   000000003a58d51b <Obj>           Integer 0000000000000008
+[  319.087395] waynoway kernel:   Arg3:   00000000b79f1c97 <Obj>           Package 00000000b79f1c97
+[  319.087416] waynoway kernel: 
+[  319.087540] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[  319.087670] waynoway kernel: ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.LPC0.EC0.HKEY.MSCB], AE_NOT_FOUND (20251212/psargs-332)
+[  319.087687] waynoway kernel: 
+[  319.087926] waynoway kernel: No Local Variables are initialized for Method [_DSM]
+[  319.087941] waynoway kernel: 
+[  319.088075] waynoway kernel: Initialized Arguments for Method [_DSM]:  (4 arguments defined for method invocation)
+[  319.088204] waynoway kernel:   Arg0:   00000000b79f1c97 <Obj>           Buffer(16) 56 0D E0 11 64 CE CE 47
+[  319.088340] waynoway kernel:   Arg1:   000000003a58d51b <Obj>           Integer 0000000000000000
+[  319.088458] waynoway kernel:   Arg2:   000000007c49b164 <Obj>           Integer 0000000000000004
+[  319.088480] waynoway kernel:   Arg3:   000000003dfb47a5 <Obj>           Package 000000003dfb47a5
+[  319.088642] waynoway kernel: 
+[  319.088798] waynoway kernel: ACPI Error: Aborting method \_SB.PEP._DSM due to previous error (AE_NOT_FOUND) (20251212/psparse-529)
+[  319.088814] waynoway kernel: ACPI: EC: interrupt unblocked
+[  319.088969] waynoway kernel: usb usb5: root hub lost power or was reset
+[  319.089779] waynoway kernel: usb usb6: root hub lost power or was reset
+[  319.090054] waynoway kernel: xhci-pci-renesas 0000:06:00.0: Zeroing 64bit base registers, expecting fault
+[  319.090325] waynoway kernel: amdgpu 0000:07:00.0: [drm] PCIE GART of 1024M enabled.
+[  319.090577] waynoway kernel: amdgpu 0000:07:00.0: [drm] PTB located at 0x000000F4FFC00000
+[  319.090791] waynoway kernel: amdgpu 0000:07:00.0: SMU is resuming...
+[  319.091018] waynoway kernel: amdgpu 0000:07:00.0: dpm has been disabled
+[  319.091534] waynoway kernel: amdgpu 0000:07:00.0: SMU is resumed successfully!
+[  319.091786] waynoway kernel: nvme nvme0: 16/0/0 default/read/poll queues
+[  319.091993] waynoway kernel: r8169 0000:02:00.0 enp2s0f0: Link is Down
+[  319.093194] waynoway kernel: amdgpu 0000:07:00.0: ring gfx uses VM inv eng 0 on hub 0
+[  319.094913] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.0.0 uses VM inv eng 1 on hub 0
+[  319.096651] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.1.0 uses VM inv eng 4 on hub 0
+[  319.098312] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.2.0 uses VM inv eng 5 on hub 0
+[  319.099892] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.3.0 uses VM inv eng 6 on hub 0
+[  319.101797] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.0.1 uses VM inv eng 7 on hub 0
+[  319.103994] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.1.1 uses VM inv eng 8 on hub 0
+[  319.105578] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.2.1 uses VM inv eng 9 on hub 0
+[  319.107485] waynoway kernel: amdgpu 0000:07:00.0: ring comp_1.3.1 uses VM inv eng 10 on hub 0
+[  319.111526] waynoway kernel: amdgpu 0000:07:00.0: ring kiq_0.2.1.0 uses VM inv eng 11 on hub 0
+[  319.116269] waynoway kernel: amdgpu 0000:07:00.0: ring sdma0 uses VM inv eng 0 on hub 8
+[  319.122569] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_dec uses VM inv eng 1 on hub 8
+[  319.125300] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_enc0 uses VM inv eng 4 on hub 8
+[  319.127134] waynoway kernel: amdgpu 0000:07:00.0: ring vcn_enc1 uses VM inv eng 5 on hub 8
+[  319.129279] waynoway kernel: amdgpu 0000:07:00.0: ring jpeg_dec uses VM inv eng 6 on hub 8
+[  319.131961] waynoway kernel: r8169 0000:05:00.0 enp5s0: Link is Down
+[  319.134508] waynoway kernel: usb 5-2: reset high-speed USB device number 2 using xhci-pci-renesas
+[  319.136580] waynoway kernel: OOM killer enabled.
+[  319.136867] waynoway kernel: Restarting tasks: Starting
+[  319.137741] waynoway kernel: Restarting tasks: Done
+[  319.137895] waynoway kernel: efivarfs: resyncing variable state
+[  319.146018] waynoway kernel: efivarfs: finished resyncing variable state
+[  319.146088] waynoway kernel: random: crng reseeded on system resumption
+[  319.153027] waynoway kernel: PM: suspend exit
+[  322.622066] waynoway kernel: wlp3s0: authenticate with e8:84:c6:9a:a5:d8 (local address=04:d3:b0:8b:e9:80)
+[  322.624064] waynoway kernel: wlp3s0: send auth to e8:84:c6:9a:a5:d8 (try 1/3)
+[  322.640138] waynoway kernel: wlp3s0: authenticated
+[  322.640233] waynoway kernel: wlp3s0: associate with e8:84:c6:9a:a5:d8 (try 1/3)
+[  322.658070] waynoway kernel: wlp3s0: RX AssocResp from e8:84:c6:9a:a5:d8 (capab=0x1431 status=0 aid=29)
+[  322.669055] waynoway kernel: wlp3s0: associated
+[  364.000091] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  364.002045] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  376.474062] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  376.476025] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  376.646041] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  376.648027] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  377.986040] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  377.988025] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  378.072034] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  378.074045] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  378.086065] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-6), yielding (retry 1)
+[  378.934045] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-6), yielding (retry 1)
+[  379.190134] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  379.192024] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  382.729069] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  382.731302] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  382.744035] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-6), yielding (retry 1)
+[  464.003134] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-6), yielding (retry 1)
+[  486.523043] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  486.525047] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  490.479033] waynoway kernel: audit: type=1400 audit(1792741930.428:339): apparmor="AUDIT" operation="userns_create" class="namespace" info="Userns create - transitioning profile" profile="unconfined" pid=15362 comm="(ubuntu-insigh)" requested="userns_create" target="unprivileged_userns" execpath="/usr/lib/systemd/systemd-executor"
+[  490.479132] waynoway kernel: audit: type=1400 audit(1792741930.428:340): apparmor="DENIED" operation="capable" class="cap" profile="unprivileged_userns" pid=15362 comm="(ubuntu-insigh)" capability=21  capname="sys_admin"
+[  490.519044] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-6), yielding (retry 1)
+[  499.305046] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  499.307029] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  502.292045] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  502.294030] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  502.341626] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  502.343047] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  503.140046] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  503.142027] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  533.376030] waynoway kernel: warning: `ThreadPoolForeg' uses wireless extensions which will stop working for Wi-Fi 7 hardware; use nl80211
+[  572.235044] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-6), yielding (retry 1)
+[  573.696081] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  573.698049] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  651.945037] waynoway kernel: audit: type=1400 audit(1792742091.894:341): apparmor="DENIED" operation="open" class="file" profile="/usr/bin/wsdd" name="/usr/share/coreutils/locales/uucore/en-US.ftl" pid=17881 comm="wsdd" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[  683.952040] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  683.954025] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  715.387041] waynoway kernel: i2c i2c-4: Bus collision! SMBus may be locked until next hard reset. (sorry!)
+[  715.389036] waynoway kernel: i2c i2c-4: ASF: xfer to 0x2c lost the bus (-11), yielding (retry 1)
+[  731.962042] waynoway kernel: rmi4_physical rmi4-00: rmi_driver_clear_irq_bits: Failed to change enabled interrupts!
+[  732.361124] waynoway kernel: piix4_smbus 0000:00:14.0: SMBus Host Controller at 0xb00, revision 0
+[  732.361612] waynoway kernel: piix4_smbus 0000:00:14.0: Using register 0x02 for SMBus port selection
+[  732.365032] waynoway kernel: ee1004 2-0050: 512 byte EE1004-compliant SPD EEPROM, read-only
+[  732.365490] waynoway kernel: i2c i2c-2: Successfully instantiated SPD at 0x50
+[  732.365766] waynoway kernel: piix4_smbus 0000:00:14.0: Auxiliary SMBus Host Controller at 0xb20
+[  733.429151] waynoway kernel: psmouse serio1: synaptics: queried max coordinates: x [..5678], y [..4694]
+[  733.479296] waynoway kernel: psmouse serio1: synaptics: queried min coordinates: x [1266..], y [1162..]
+[  733.479831] waynoway kernel: psmouse serio1: synaptics: Trying to set up SMBus access
+[  733.482215] waynoway kernel: psmouse serio1: synaptics: SMbus companion is not ready yet
+[  733.547268] waynoway kernel: psmouse serio1: synaptics: Touchpad model: 1, fw: 10.32, id: 0x1e2a1, caps: 0xf01ea3/0x940300/0x12e800/0x500000, board id: 3471, fw id: 3942087
+[  733.547819] waynoway kernel: psmouse serio1: synaptics: serio: Synaptics pass-through port at isa0060/serio1/input0
+[  733.592033] waynoway kernel: input: SynPS/2 Synaptics TouchPad as /devices/platform/i8042/serio1/input/input25
+[  734.197166] waynoway kernel: psmouse serio4: trackpoint: Elan TrackPoint firmware: 0x12, buttons: 3/3
+[  734.467064] waynoway kernel: input: TPPS/2 Elan TrackPoint as /devices/platform/i8042/serio1/serio4/input/input26

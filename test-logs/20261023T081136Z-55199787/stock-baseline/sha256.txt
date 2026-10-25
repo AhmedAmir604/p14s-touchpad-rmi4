@@ -1,0 +1,4 @@
+75e371edf4ad368c40d867c3f9cd2628751e191c95651ca4786b22015accf9b4  /home/report-israel/kernelhack/i2c-piix4.c
+7366a169d8303108f00a12d5ad71fd50c197368098baf70f12d1442e9a089a19  /home/report-israel/kernelhack/exp2/drivers/i2c/busses/i2c-piix4.ko
+44e02610ecc3f0e148a786aa12ef998490dbeda71995721692170206e5eb118e  /home/report-israel/kernelhack/exp2/drivers/input/rmi4/rmi_smbus.ko
+45ed3a0f7218603055ccd63f3f7af115d411a92f843fc1b0d4b738ab63bbe00f  /home/report-israel/kernelhack/exp2/drivers/input/mouse/psmouse.ko

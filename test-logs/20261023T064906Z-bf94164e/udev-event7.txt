@@ -1,0 +1,26 @@
+P: /devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/input/input22/event7
+M: event7
+R: 7
+J: c13:71
+U: input
+D: c 13:71
+N: input/event7
+L: 0
+S: input/by-path/pci-0000:00:14.0-event-mouse
+E: DEVPATH=/devices/pci0000:00/0000:00:14.0/i2c-4/4-002c/rmi4-00/input/input22/event7
+E: DEVNAME=/dev/input/event7
+E: MAJOR=13
+E: MINOR=71
+E: SUBSYSTEM=input
+E: USEC_INITIALIZED=87137770
+E: ID_INPUT=1
+E: ID_INPUT_TOUCHPAD=1
+E: ID_INPUT_WIDTH_MM=96
+E: ID_INPUT_HEIGHT_MM=64
+E: ID_BUS=rmi
+E: ID_SERIAL=noserial
+E: ID_PATH=pci-0000:00:14.0
+E: ID_PATH_TAG=pci-0000_00_14_0
+E: LIBINPUT_DEVICE_GROUP=1d/6cb/0:rmi4-00
+E: DEVLINKS=/dev/input/by-path/pci-0000:00:14.0-event-mouse
+

@@ -1,0 +1,22 @@
+Run 20260725T173705Z-63d9306a
+This script will perform exactly one patched load and then restore stock.
+Removing stock psmouse and i2c_piix4...
+Loading the local module's i2c-smbus dependency...
+Loading event-driven module...
+Reloading psmouse with synaptics_intertouch=1...
+Waiting for the RMI4 touchpad and F03 TrackPoint input devices...
+probe-settle: 3s remaining
+Capturing /dev/input/event7: Synaptics TM3471-030
+Capturing /dev/input/event8: TPPS/2 Elan TrackPoint
+
+HANDS OFF the touchpad and upper buttons for the idle baseline.
+idle-hands-off: 30s remaining
+idle-hands-off: 25s remaining
+[ 2076.258029] waynoway kernel: i2c i2c-4: ASF bus collision; disabling the auxiliary bus
+[ 2076.258621] waynoway kernel: i2c i2c-4: RMI4 transaction failed: err=-5 rw=R cmd=05 size=5 len=0 first=00 pre=00/00/80 idle=00/00/80 host=0a live=00 control=14 asf=00 slave=00 bank=80 sem=01 enable=c3 timer=20
+[ 2076.258995] waynoway kernel: rmi4_f12 rmi4-00.fn12: Failed to read object data. Code: -5.
+ABORT: a transport or RMI error appeared in the kernel log
+Restoring the stock PS/2 path...
+Stock modules, SynPS/2 touchpad, and TrackPoint are present.
+Logs: /home/report-israel/kernelhack/test-logs/20260725T173705Z-63d9306a
+A reboot is still required to restore IRQ 7's original route.
